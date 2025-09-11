@@ -11,6 +11,7 @@
 #include "stepmotor.h"     //可选，步进电机
 #include "uart1.h"         //可选，uart1（串口1通信）头文件。
 #include "uart2.h"         //可选，uart2（串口2通信）头文件。
+#include "EXT.h"           //EXT（扩展接口）头文件。
 
 
 code unsigned long SysClock = 11059200;  // 必须。定义系统工作时钟频率(Hz)，用户必须修改成与实际工作频率（下载时选择的）一致
@@ -104,7 +105,16 @@ code char decode_table[] = {
 #endif
 
 void my100mS_callback(void) {
-
+    int distan = ultrasonic_get_distance();
+    if (distan < 10) {
+        Seg7Print(10,10,10,10,distan,10,10,10);
+    } else if (distan < 100) {
+        Seg7Print(10,10,10,distan/10,distan%10,10,10,10);
+    } else if (distan < 1000) {
+        Seg7Print(10,10,10,distan/100,distan/10%10,distan%10,10,10);
+    } else {
+        Seg7Print(10,10,10,12,12,10,10,10); // 超出范围显示特殊符号
+    }
 }
 
 void myKey_callback(void) {
@@ -122,6 +132,7 @@ void main() {
 	AdcInit(ADCincEXT);          //模数转换ADC模块驱动（含温度、光照、导航按键与按键Key3、EXT扩展接口上的ADC）
 	StepMotorInit();    //步进电机模块驱动	                  
 	// IrInit(NEC_R05d);         //38KHz红外通信模块驱动
+    EXTInit(enumEXTUltraSonic);  //扩展接口模块驱动（含超声波、舵机等）
     SetDisplayerArea(0, 7);
     SetEventCallBack(enumEventSys100mS, my100mS_callback);
     SetEventCallBack(enumEventKey, myKey_callback);
