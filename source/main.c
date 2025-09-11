@@ -103,28 +103,24 @@ code char decode_table[] = {
 
 #endif
 
-void my100mS_callback(void) {
-
-}
-
 void myKey_callback(void) {
     
 }
 
 void main() {
     MySTC_Init(); // 系统初始化，必须。
-	DisplayerInit();      //显示模块驱动 
-	KeyInit();           //按键模块驱动
-	BeepInit();	      //蜂鸣器模块驱动
-	MusicPlayerInit();    //蜂鸣器播放音乐驱动
-	HallInit();          //霍尔传感器模块驱动                      
-	VibInit();          //振动传感器模块驱动          
-	AdcInit(ADCincEXT);          //模数转换ADC模块驱动（含温度、光照、导航按键与按键Key3、EXT扩展接口上的ADC）
-	StepMotorInit();    //步进电机模块驱动	                  
-	// IrInit(NEC_R05d);         //38KHz红外通信模块驱动
+		DisplayerInit();      //显示模块驱动 
+		KeyInit();           //按键模块驱动
+		BeepInit();	      //蜂鸣器模块驱动
+		MusicPlayerInit();    //蜂鸣器播放音乐驱动
+		HallInit();          //霍尔传感器模块驱动                      
+		VibInit();          //振动传感器模块驱动          
+		AdcInit(ADCincEXT);          //模数转换ADC模块驱动（含温度、光照、导航按键与按键Key3、EXT扩展接口上的ADC）
+		StepMotorInit();    //步进电机模块驱动	                  
+		// IrInit(NEC_R05d);         //38KHz红外通信模块驱动
     SetDisplayerArea(0, 7);
-    SetEventCallBack(enumEventSys100mS, my100mS_callback);
-    SetEventCallBack(enumEventKey, myKey_callback);
+    SetEventCallBack(enumEventSys1S, GetTime);
+    //SetEventCallBack(enumEventKey, myKey_callback);
     while (1) {
         MySTC_OS();
     }
