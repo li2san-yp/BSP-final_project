@@ -1,24 +1,25 @@
-BL51 BANKED LINKER/LOCATER V6.22                                                        09/10/2025  23:23:06  PAGE 1
+BL51 BANKED LINKER/LOCATER V6.22                                                        09/10/2025  09:38:56  PAGE 1
 
 
 BL51 BANKED LINKER/LOCATER V6.22, INVOKED BY:
-D:\KEIL\C51\BIN\BL51.EXE OUTPUT\MAIN.OBJ, SOURCE\STCBSP_V3.6.LIB TO OUTPUT\BSP_DEMO
+D:\KEIL\C51\BIN\BL51.EXE D:\BSP\BSP-FINAL_PROJECT\SOURCE\..\OUTPUT\MAIN.OBJ, D:\BSP\BSP-FINAL_PROJECT\SOURCE\..\SOURCE\S
+>> TCBSP_V3.6.LIB TO D:\BSP\BSP-FINAL_PROJECT\SOURCE\..\OUTPUT\BSP_DEMO
 
 
 MEMORY MODEL: SMALL
 
 
 INPUT MODULES INCLUDED:
-  OUTPUT\MAIN.OBJ (MAIN)
-  SOURCE\STCBSP_V3.6.LIB (ADC)
-  SOURCE\STCBSP_V3.6.LIB (BEEP)
-  SOURCE\STCBSP_V3.6.LIB (DISPLAYER)
-  SOURCE\STCBSP_V3.6.LIB (HALL)
-  SOURCE\STCBSP_V3.6.LIB (KEY)
-  SOURCE\STCBSP_V3.6.LIB (STEPMOTOR)
-  SOURCE\STCBSP_V3.6.LIB (SYS)
-  SOURCE\STCBSP_V3.6.LIB (VIB)
-  SOURCE\STCBSP_V3.6.LIB (MUSIC)
+  D:\BSP\BSP-FINAL_PROJECT\SOURCE\..\OUTPUT\MAIN.OBJ (MAIN)
+  D:\BSP\BSP-FINAL_PROJECT\SOURCE\..\SOURCE\STCBSP_V3.6.LIB (ADC)
+  D:\BSP\BSP-FINAL_PROJECT\SOURCE\..\SOURCE\STCBSP_V3.6.LIB (BEEP)
+  D:\BSP\BSP-FINAL_PROJECT\SOURCE\..\SOURCE\STCBSP_V3.6.LIB (DISPLAYER)
+  D:\BSP\BSP-FINAL_PROJECT\SOURCE\..\SOURCE\STCBSP_V3.6.LIB (HALL)
+  D:\BSP\BSP-FINAL_PROJECT\SOURCE\..\SOURCE\STCBSP_V3.6.LIB (KEY)
+  D:\BSP\BSP-FINAL_PROJECT\SOURCE\..\SOURCE\STCBSP_V3.6.LIB (STEPMOTOR)
+  D:\BSP\BSP-FINAL_PROJECT\SOURCE\..\SOURCE\STCBSP_V3.6.LIB (SYS)
+  D:\BSP\BSP-FINAL_PROJECT\SOURCE\..\SOURCE\STCBSP_V3.6.LIB (VIB)
+  D:\BSP\BSP-FINAL_PROJECT\SOURCE\..\SOURCE\STCBSP_V3.6.LIB (MUSIC)
   D:\KEIL\C51\LIB\C51S.LIB (?C_STARTUP)
   D:\KEIL\C51\LIB\C51S.LIB (?C?CLDOPTR)
   D:\KEIL\C51\LIB\C51S.LIB (?C?IMUL)
@@ -37,7 +38,7 @@ INPUT MODULES INCLUDED:
   D:\KEIL\C51\LIB\C51S.LIB (?C_INIT)
 
 
-LINK MAP OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
+LINK MAP OF MODULE:  D:\BSP\BSP-FINAL_PROJECT\SOURCE\..\OUTPUT\BSP_DEMO (MAIN)
 
 
             TYPE    BASE      LENGTH    RELOCATION   SEGMENT NAME
@@ -58,10 +59,10 @@ LINK MAP OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
             DATA    002DH     0008H     UNIT         ?DT?_SETMUSIC?MUSIC
             DATA    0035H     0001H     UNIT         ?DT?_SETSTEPMOTOR?STEPMOTOR
             DATA    0036H     0001H     UNIT         ?DT?VIB
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  09:38:56  PAGE 2
+
+
             DATA    0037H     0001H     UNIT         ?C?LIB_DATA
-BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  23:23:06  PAGE 2
-
-
             IDATA   0038H     0001H     UNIT         ?STACK
 
             * * * * * * *  X D A T A   M E M O R Y  * * * * * * *
@@ -118,10 +119,10 @@ LINK MAP OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
             CODE    1EE9H     002BH     UNIT         ?PR?SYS_TASK_1S?SYS
             CODE    1F14H     0028H     UNIT         ?PR?_?SYS_BEEP_DRV?BEEP
             CODE    1F3CH     0028H     UNIT         ?PR?_SETPLAYERMODE?MUSIC
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  09:38:56  PAGE 3
+
+
             CODE    1F64H     0020H     UNIT         ?PR?BEEPINIT?BEEP
-BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  23:23:06  PAGE 3
-
-
             CODE    1F84H     0020H     UNIT         ?PR?_SEG7PRINT?DISPLAYER
             CODE    1FA4H     001DH     UNIT         ?PR?HALLINIT?HALL
             CODE    1FC1H     001DH     UNIT         ?PR?KEYINIT?KEY
@@ -157,7 +158,7 @@ LINK MAP OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
 
 
 
-OVERLAY MAP OF MODULE:   OUTPUT\BSP_DEMO (MAIN)
+OVERLAY MAP OF MODULE:   D:\BSP\BSP-FINAL_PROJECT\SOURCE\..\OUTPUT\BSP_DEMO (MAIN)
 
 
 SEGMENT                                     DATA_GROUP 
@@ -178,10 +179,10 @@ SEGMENT                                     DATA_GROUP
   +--> ?PR?_ADCINIT?ADC
   +--> ?PR?STEPMOTORINIT?STEPMOTOR
   +--> ?PR?_SETDISPLAYERAREA?DISPLAYER
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  09:38:56  PAGE 4
+
+
   +--> ?PR?MY100MS_CALLBACK?MAIN
-BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  23:23:06  PAGE 4
-
-
   +--> ?PR?_SETEVENTCALLBACK?SYS
   +--> ?PR?MYKEY_CALLBACK?MAIN
   +--> ?PR?MYSTC_OS?SYS
@@ -238,10 +239,10 @@ SEGMENT                                     DATA_GROUP
 
 ?PR?HALLINIT?HALL                         -----    -----
   +--> ?PR?_?SYS_GET_HALLEVENT?HALL
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  09:38:56  PAGE 5
+
+
   +--> ?PR?_?SYS_HALL_DRV?HALL
-BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  23:23:06  PAGE 5
-
-
 
 ?PR?VIBINIT?VIB                           -----    -----
   +--> ?PR?_?SYS_GET_SVEVENT?VIB
@@ -276,10 +277,62 @@ SEGMENT                                     DATA_GROUP
 
 
 
-SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
+SYMBOL TABLE OF MODULE:  D:\BSP\BSP-FINAL_PROJECT\SOURCE\..\OUTPUT\BSP_DEMO (MAIN)
 
   VALUE           TYPE          NAME
   ----------------------------------
+
+  -------         MODULE        MAIN
+  C:0000H         SYMBOL        _ICE_DUMMY_
+  D:0080H         PUBLIC        P0
+  D:0090H         PUBLIC        P1
+  D:00A0H         PUBLIC        P2
+  D:00B0H         PUBLIC        P3
+  D:00C0H         PUBLIC        P4
+  D:00C8H         PUBLIC        P5
+  D:00E8H         PUBLIC        P6
+  D:00F8H         PUBLIC        P7
+  D:00A8H         PUBLIC        IE
+  D:00B8H         PUBLIC        IP
+  D:00D8H         PUBLIC        CCON
+  C:2115H         PUBLIC        MYKEY_CALLBACK
+  C:1DCAH         PUBLIC        MAIN
+  C:1D49H         PUBLIC        SYSCLOCK
+  D:0098H         PUBLIC        SCON
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  09:38:56  PAGE 6
+
+
+  D:0088H         PUBLIC        TCON
+  C:2114H         PUBLIC        MY100MS_CALLBACK
+  C:1D4DH         PUBLIC        DECODE_TABLE
+  D:00D0H         PUBLIC        PSW
+  -------         PROC          MY100MS_CALLBACK
+  -------         ENDPROC       MY100MS_CALLBACK
+  C:2114H         LINE#         106
+  C:2114H         LINE#         108
+  -------         PROC          MYKEY_CALLBACK
+  -------         ENDPROC       MYKEY_CALLBACK
+  C:2115H         LINE#         110
+  C:2115H         LINE#         112
+  -------         PROC          MAIN
+  -------         ENDPROC       MAIN
+  C:1DCAH         LINE#         114
+  C:1DCAH         LINE#         115
+  C:1DCDH         LINE#         116
+  C:1DD0H         LINE#         117
+  C:1DD3H         LINE#         118
+  C:1DD6H         LINE#         119
+  C:1DD9H         LINE#         120
+  C:1DDCH         LINE#         121
+  C:1DDFH         LINE#         122
+  C:1DE4H         LINE#         123
+  C:1DE7H         LINE#         125
+  C:1DEEH         LINE#         126
+  C:1DF9H         LINE#         127
+  C:1E04H         LINE#         128
+  C:1E04H         LINE#         129
+  C:1E07H         LINE#         130
+  -------         ENDMOD        MAIN
 
   -------         MODULE        ADC
   C:0000H         SYMBOL        _ICE_DUMMY_
@@ -299,9 +352,6 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   D:00B8H         PUBLIC        IP
   D:0097H         PUBLIC        CLK_DIV
   C:1EB8H         PUBLIC        _AdcInit
-BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  23:23:06  PAGE 6
-
-
   D:00D8H         PUBLIC        CCON
   C:206BH         PUBLIC        _?sys_get_EXTADCEvent
   X:0070H         PUBLIC        AD_res
@@ -309,6 +359,9 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   D:0098H         PUBLIC        SCON
   D:0088H         PUBLIC        TCON
   C:0F89H         PUBLIC        _?sys_ADC_drv
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  09:38:56  PAGE 7
+
+
   B:0021H.7       PUBLIC        flag_ADC
   X:007AH         PUBLIC        sys_KN
   D:009DH         PUBLIC        P1ASF
@@ -359,9 +412,6 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   C:109CH         LINE#         59
   C:10ADH         LINE#         60
   C:10AFH         LINE#         61
-BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  23:23:06  PAGE 7
-
-
   C:10AFH         LINE#         62
   C:10B1H         LINE#         64
   C:10C8H         LINE#         65
@@ -369,6 +419,9 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   C:10DCH         LINE#         67
   C:10DCH         LINE#         68
   C:10DCH         LINE#         69
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  09:38:56  PAGE 8
+
+
   C:10FFH         LINE#         70
   C:1110H         LINE#         71
   C:1114H         LINE#         72
@@ -419,9 +472,6 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   C:20E8H         LINE#         108
   C:20EEH         LINE#         109
   -------         ENDPROC       GETADC
-BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  23:23:06  PAGE 8
-
-
   -------         PROC          _GETADCNAVACT
   D:0007H         SYMBOL        Nav_button
   -------         DO            
@@ -429,6 +479,9 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   -------         ENDDO         
   C:1C79H         LINE#         111
   C:1C79H         LINE#         112
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  09:38:56  PAGE 9
+
+
   C:1C79H         LINE#         113
   C:1C89H         LINE#         114
   C:1CA4H         LINE#         115
@@ -479,9 +532,6 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   -------         PROC          BEEPINIT
   C:1F64H         LINE#         17
   C:1F64H         LINE#         18
-BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  23:23:06  PAGE 9
-
-
   C:1F64H         LINE#         19
   C:1F67H         LINE#         20
   C:1F6AH         LINE#         21
@@ -489,6 +539,9 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   C:1F70H         LINE#         23
   C:1F73H         LINE#         24
   C:1F75H         LINE#         25
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  09:38:56  PAGE 10
+
+
   C:1F83H         LINE#         26
   -------         ENDPROC       BEEPINIT
   -------         PROC          _SETBEEP
@@ -539,9 +592,6 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   D:00E8H         PUBLIC        P6
   D:00F8H         PUBLIC        P7
   D:00A8H         PUBLIC        IE
-BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  23:23:06  PAGE 10
-
-
   D:00B8H         PUBLIC        IP
   D:00D8H         PUBLIC        CCON
   C:20FCH         PUBLIC        _LedPrint
@@ -549,6 +599,9 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   B:00A0H.1       PUBLIC        P21
   D:0098H         PUBLIC        SCON
   B:00A0H.2       PUBLIC        P22
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  09:38:56  PAGE 11
+
+
   D:0088H         PUBLIC        TCON
   B:00A0H.3       PUBLIC        P23
   C:1FFBH         PUBLIC        DisplayerInit
@@ -599,9 +652,6 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   C:20C5H         LINE#         52
   C:20CAH         LINE#         53
   C:20CDH         LINE#         54
-BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  23:23:06  PAGE 11
-
-
   -------         ENDPROC       _SETDISPLAYERAREA
   -------         PROC          _SEG7PRINT
   D:0007H         SYMBOL        d0
@@ -609,6 +659,9 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   D:0003H         SYMBOL        d2
   D:0026H         SYMBOL        d3
   D:0027H         SYMBOL        d4
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  09:38:56  PAGE 12
+
+
   D:0028H         SYMBOL        d5
   D:0029H         SYMBOL        d6
   D:002AH         SYMBOL        d7
@@ -659,9 +712,6 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   X:00C8H         SYMBOL        counter
   X:00C9H         SYMBOL        hall_count
   X:00CAH         SYMBOL        hall_last_count
-BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  23:23:06  PAGE 12
-
-
   -------         ENDDO         
   C:1CBFH         LINE#         14
   C:1CBFH         LINE#         19
@@ -669,6 +719,9 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   C:1CD0H         LINE#         21
   C:1CD3H         LINE#         22
   C:1CDBH         LINE#         23
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  09:38:56  PAGE 13
+
+
   C:1CE1H         LINE#         24
   C:1CE5H         LINE#         25
   C:1CE7H         LINE#         26
@@ -719,9 +772,6 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   D:0090H         PUBLIC        P1
   D:00A0H         PUBLIC        P2
   D:00B0H         PUBLIC        P3
-BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  23:23:06  PAGE 13
-
-
   D:00C0H         PUBLIC        P4
   D:00C8H         PUBLIC        P5
   D:00E8H         PUBLIC        P6
@@ -729,6 +779,9 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   D:00A8H         PUBLIC        IE
   D:001FH         PUBLIC        sys_keyEvent
   D:00B8H         PUBLIC        IP
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  09:38:56  PAGE 14
+
+
   D:00D8H         PUBLIC        CCON
   C:2087H         PUBLIC        _?sys_get_keyEvent
   D:0098H         PUBLIC        SCON
@@ -779,9 +832,6 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   C:208DH         LINE#         58
   C:2090H         LINE#         59
   C:2092H         LINE#         60
-BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  23:23:06  PAGE 14
-
-
   -------         ENDPROC       _?SYS_GET_KEYEVENT
   -------         PROC          KEYINIT
   C:1FC1H         LINE#         62
@@ -789,6 +839,9 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   C:1FC1H         LINE#         64
   C:1FCFH         LINE#         65
   C:1FDDH         LINE#         66
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  09:38:56  PAGE 15
+
+
   -------         ENDPROC       KEYINIT
   -------         PROC          _GETKEYACT
   D:0007H         SYMBOL        Key
@@ -839,9 +892,6 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   -------         DO            
   i:0000H         SYMBOL        i
   X:008CH         SYMBOL        SM23
-BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  23:23:06  PAGE 15
-
-
   -------         ENDDO         
   C:0AF6H         LINE#         20
   C:0AF8H         LINE#         23
@@ -849,6 +899,9 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   C:0B49H         LINE#         25
   C:0B71H         LINE#         26
   C:0BA1H         LINE#         27
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  09:38:56  PAGE 16
+
+
   C:0BC7H         LINE#         28
   C:0BE9H         LINE#         29
   C:0C1BH         LINE#         30
@@ -899,9 +952,6 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   C:2019H         LINE#         75
   C:201CH         LINE#         76
   C:201FH         LINE#         77
-BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  23:23:06  PAGE 16
-
-
   C:202DH         LINE#         78
   -------         ENDPROC       STEPMOTORINIT
   -------         PROC          _SETSTEPMOTOR
@@ -909,6 +959,9 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   D:0005H         SYMBOL        speed
   D:0002H         SYMBOL        steps
   C:1651H         LINE#         80
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  09:38:56  PAGE 17
+
+
   C:1653H         LINE#         81
   C:1686H         LINE#         82
   C:16AEH         LINE#         83
@@ -959,9 +1012,6 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   D:00C8H         PUBLIC        P5
   X:0003H         PUBLIC        T2
   B:00A8H.7       PUBLIC        EA
-BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  23:23:06  PAGE 17
-
-
   D:00E8H         PUBLIC        P6
   D:00F8H         PUBLIC        P7
   D:0009H         PUBLIC        IrDatNum
@@ -969,6 +1019,9 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   B:0020H.2       PUBLIC        Ir_Coder
   B:0020H.3       PUBLIC        Ir_RxBusy
   D:00A8H         PUBLIC        IE
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  09:38:56  PAGE 18
+
+
   B:0020H.4       PUBLIC        Ir_TxBusy
   X:0005H         PUBLIC        userfunccall
   D:00FAH         PUBLIC        CCAP0H
@@ -1019,9 +1072,6 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   D:008AH         PUBLIC        TL0
   D:0014H         PUBLIC        PollingMisses
   X:0067H         PUBLIC        sys_BP
-BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  23:23:06  PAGE 18
-
-
   B:0088H.4       PUBLIC        TR0
   C:1EE9H         PUBLIC        sys_task_1S
   C:20EFH         PUBLIC        GetSysPerformance
@@ -1029,6 +1079,9 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   X:006DH         PUBLIC        count_100mS
   B:0021H.2       PUBLIC        Ir_BitBusy
   D:0015H         PUBLIC        IrDat_count
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  09:38:56  PAGE 19
+
+
   D:0016H         PUBLIC        IrMute_count
   B:0021H.3       PUBLIC        newFrame1
   C:1C32H         PUBLIC        sys_Timer0_Init
@@ -1079,9 +1132,6 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   C:1BC3H         LINE#         119
   C:1BC6H         LINE#         120
   C:1BC8H         LINE#         122
-BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  23:23:06  PAGE 19
-
-
   C:1BCBH         LINE#         123
   C:1BCDH         LINE#         124
   C:1BD2H         LINE#         125
@@ -1089,6 +1139,9 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   C:1BD4H         LINE#         128
   C:1BDDH         LINE#         129
   C:1BDFH         LINE#         130
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  09:38:56  PAGE 20
+
+
   C:1BE5H         LINE#         131
   C:1BE5H         LINE#         132
   C:1BE5H         LINE#         133
@@ -1139,9 +1192,6 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   C:17A6H         LINE#         165
   C:17B9H         LINE#         167
   C:17C0H         LINE#         168
-BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  23:23:06  PAGE 20
-
-
   C:17C7H         LINE#         169
   C:17CAH         LINE#         170
   C:17CCH         LINE#         171
@@ -1149,6 +1199,9 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   C:17E3H         LINE#         173
   C:17E6H         LINE#         174
   C:17E8H         LINE#         175
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  09:38:56  PAGE 21
+
+
   C:17EAH         LINE#         177
   C:17FEH         LINE#         178
   C:1801H         LINE#         179
@@ -1199,9 +1252,6 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   C:19F2H         LINE#         224
   C:19F4H         LINE#         225
   C:19F7H         LINE#         226
-BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  23:23:06  PAGE 21
-
-
   C:19F7H         LINE#         227
   -------         ENDPROC       SYS_TASK_IR
   -------         PROC          SYS_TASK_1MS
@@ -1209,6 +1259,9 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   C:147BH         LINE#         230
   C:1483H         LINE#         231
   C:1486H         LINE#         232
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  09:38:56  PAGE 22
+
+
   C:1488H         LINE#         233
   C:1490H         LINE#         234
   C:1493H         LINE#         235
@@ -1259,9 +1312,6 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   -------         ENDPROC       SYS_TASK_10MS
   -------         PROC          SYS_TASK_100MS
   C:1E09H         LINE#         282
-BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  23:23:06  PAGE 22
-
-
   C:1E09H         LINE#         283
   C:1E15H         LINE#         284
   C:1E30H         LINE#         285
@@ -1269,6 +1319,9 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   -------         ENDPROC       SYS_TASK_100MS
   -------         PROC          SYS_TASK_1S
   C:1EE9H         LINE#         289
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  09:38:56  PAGE 23
+
+
   C:1EE9H         LINE#         290
   C:1EF7H         LINE#         291
   C:1EFDH         LINE#         292
@@ -1319,9 +1372,6 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   C:1A74H         LINE#         336
   -------         ENDPROC       _SETEVENTCALLBACK
   -------         PROC          GETSYSPERFORMANCE
-BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  23:23:06  PAGE 23
-
-
   C:20EFH         LINE#         338
   C:20EFH         LINE#         339
   C:20F5H         LINE#         340
@@ -1329,6 +1379,9 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   -------         ENDMOD        SYS
 
   -------         MODULE        VIB
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  09:38:56  PAGE 24
+
+
   C:0000H         SYMBOL        _ICE_DUMMY_
   D:0080H         PUBLIC        P0
   D:0090H         PUBLIC        P1
@@ -1379,9 +1432,6 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   -------         PROC          _?GETVIBACT
   -------         DO            
   i:0000H         SYMBOL        a
-BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  23:23:06  PAGE 24
-
-
   -------         ENDDO         
   C:203FH         LINE#         34
   C:2041H         LINE#         36
@@ -1389,6 +1439,9 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   C:204BH         LINE#         38
   C:204BH         LINE#         39
   -------         ENDPROC       _?GETVIBACT
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  09:38:56  PAGE 25
+
+
   -------         ENDMOD        VIB
 
   -------         MODULE        MUSIC
@@ -1439,9 +1492,6 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   -------         ENDPROC       _PLAYTONE
   -------         PROC          _?SYS_MUSIC_DRV
   -------         DO            
-BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  23:23:06  PAGE 25
-
-
   i:0000H         SYMBOL        a
   i:0001H         SYMBOL        b
   X:00A2H         SYMBOL        scale
@@ -1449,6 +1499,9 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   -------         ENDDO         
   C:0800H         LINE#         44
   C:0804H         LINE#         48
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  09:38:56  PAGE 26
+
+
   C:0825H         LINE#         49
   C:0829H         LINE#         50
   C:0833H         LINE#         52
@@ -1499,9 +1552,6 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   C:0AF1H         LINE#         101
   -------         ENDPROC       _?SYS_MUSIC_DRV
   -------         PROC          MUSICPLAYERINIT
-BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  23:23:06  PAGE 26
-
-
   C:204EH         LINE#         103
   C:204EH         LINE#         104
   C:204EH         LINE#         105
@@ -1509,6 +1559,9 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   -------         ENDPROC       MUSICPLAYERINIT
   -------         PROC          _SETMUSIC
   D:0007H         SYMBOL        beatsPM
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  09:38:56  PAGE 27
+
+
   D:0005H         SYMBOL        tone
   D:0001H         SYMBOL        pt
   D:0032H         SYMBOL        datasize
@@ -1559,15 +1612,15 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
   -------         ENDMOD        ?C?IILDX
 
   -------         MODULE        ?C?ILDIX
-BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  23:23:06  PAGE 27
-
-
   C:0E14H         PUBLIC        ?C?ILDIX
   -------         ENDMOD        ?C?ILDIX
 
   -------         MODULE        ?C?LMUL
   C:0E2AH         PUBLIC        ?C?LMUL
   -------         ENDMOD        ?C?LMUL
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  09:38:56  PAGE 28
+
 
   -------         MODULE        ?C?ULDIV
   C:0EB5H         PUBLIC        ?C?ULDIV
@@ -1619,15 +1672,15 @@ SYMBOL TABLE OF MODULE:  OUTPUT\BSP_DEMO (MAIN)
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_EMSTOP?STEPMOTOR
-BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  23:23:06  PAGE 28
-
-
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_GETSTEPMOTORSTATUS?STEPMOTOR
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?GETULTRASONIC?SYS
+
+BL51 BANKED LINKER/LOCATER V6.22                                                      09/10/2025  09:38:56  PAGE 29
+
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?GETSYSPERFORMANCE?SYS

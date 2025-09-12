@@ -360,6 +360,21 @@
               <FileType>4</FileType>
               <FilePath>.\source\STCBSP_V3.6.LIB</FilePath>
             </File>
+            <File>
+              <FileName>rtc_module.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\rtc_module.c</FilePath>
+            </File>
+            <File>
+              <FileName>speed_module.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\speed_module.c</FilePath>
+            </File>
+            <File>
+              <FileName>temp_module.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\source\temp_module.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

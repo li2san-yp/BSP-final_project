@@ -1,10 +1,10 @@
-C51 COMPILER V9.51   MAIN                                                                  09/08/2025 04:40:46 PAGE 1   
+C51 COMPILER V9.51   MAIN                                                                  09/11/2025 21:46:38 PAGE 1   
 
 
 C51 COMPILER V9.51, COMPILATION OF MODULE MAIN
 OBJECT MODULE PLACED IN .\output\main.obj
-COMPILER INVOKED BY: D:\Keil\C51\BIN\C51.EXE source\main.c BROWSE INCDIR(.\inc) DEBUG OBJECTEXTEND PRINT(.\list\main.lst
-                    -) TABS(2) OBJECT(.\output\main.obj)
+COMPILER INVOKED BY: D:\Keil_C51\C51\BIN\C51.EXE source\main.c BROWSE INCDIR(.\inc) DEBUG OBJECTEXTEND PRINT(.\list\main
+                    -.lst) TABS(2) OBJECT(.\output\main.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   50              // 'J' (´óÐ´ J)£¬index = 35
   51              0x1E,
   52              // 'L' (´óÐ´ L)£¬index = 36
-C51 COMPILER V9.51   MAIN                                                                  09/08/2025 04:40:46 PAGE 2   
+C51 COMPILER V9.51   MAIN                                                                  09/11/2025 21:46:38 PAGE 2   
 
   53              0x38,
   54              // 'O' (´óÐ´ O)£¬index = 37
@@ -117,39 +117,58 @@ line level    source
  103          
  104          #endif
  105          
- 106          void my100mS_callback(void) {
- 107   1      
- 108   1      }
- 109          
- 110          void myKey_callback(void) {
- 111   1          
- 112   1      }
- 113          
- 114          void main() {
-C51 COMPILER V9.51   MAIN                                                                  09/08/2025 04:40:46 PAGE 3   
+ 106          extern void ShowTime(void);
+ 107          extern void ShowTemp(void);
+ 108          extern void ShowSpeed(void);    
+ 109              
+ 110          /*
+ 111          char displayMode = 0;
+ 112          void KeyHandler(void)
+ 113          {
+ 114              char k1 = GetKeyAct(enumKey1);
+C51 COMPILER V9.51   MAIN                                                                  09/11/2025 21:46:38 PAGE 3   
 
- 115   1          MySTC_Init(); // ÏµÍ³³õÊ¼»¯£¬±ØÐë¡£
- 116   1        DisplayerInit();      //ÏÔÊ¾Ä£¿éÇý¶¯ 
- 117   1        KeyInit();           //°´¼üÄ£¿éÇý¶¯
- 118   1        BeepInit();       //·äÃùÆ÷Ä£¿éÇý¶¯
- 119   1        MusicPlayerInit();    //·äÃùÆ÷²¥·ÅÒôÀÖÇý¶¯
- 120   1        HallInit();          //»ô¶û´«¸ÐÆ÷Ä£¿éÇý¶¯                      
- 121   1        VibInit();          //Õñ¶¯´«¸ÐÆ÷Ä£¿éÇý¶¯          
- 122   1        AdcInit(ADCincEXT);          //Ä£Êý×ª»»ADCÄ£¿éÇý¶¯£¨º¬ÎÂ¶È¡¢¹âÕÕ¡¢µ¼º½°´¼üÓë°´¼üKey3¡¢EXTÀ©Õ¹½Ó¿ÚÉÏµÄADC£
+ 115              if (k1 == enumKeyPress) {
+ 116                  if (displayMode == 0)
+ 117                      displayMode = 1;
+ 118                  else 
+ 119                      displayMode = 0;
+ 120              }
+ 121          }
+ 122          
+ 123          void my1S_callback(void)
+ 124          {
+ 125              if (displayMode == 0)
+ 126                  GetTemp();
+ 127              else 
+ 128                  GetTime(); 
+ 129          }
+ 130          */
+ 131          
+ 132          void main() {
+ 133   1          AdcInit(ADCexpEXT);         //Ä£Êý×ª»»ADCÄ£¿éÇý¶¯£¨º¬ÎÂ¶È¡¢¹âÕÕ¡¢µ¼º½°´¼üÓë°´¼üKey3¡¢EXTÀ©Õ¹½Ó¿ÚÉÏµÄADC£
              -©
- 123   1        StepMotorInit();    //²½½øµç»úÄ£¿éÇý¶¯                    
- 124   1        // IrInit(NEC_R05d);         //38KHzºìÍâÍ¨ÐÅÄ£¿éÇý¶¯
- 125   1          SetDisplayerArea(0, 7);
- 126   1          SetEventCallBack(enumEventSys100mS, my100mS_callback);
- 127   1          SetEventCallBack(enumEventKey, myKey_callback);
- 128   1          while (1) {
- 129   2              MySTC_OS();
- 130   2          }
- 131   1      }
+ 134   1          DisplayerInit();      //ÏÔÊ¾Ä£¿éÇý¶¯ 
+ 135   1          KeyInit();           //°´¼üÄ£¿éÇý¶¯
+ 136   1          //BeepInit();       //·äÃùÆ÷Ä£¿éÇý¶¯
+ 137   1          //MusicPlayerInit();    //·äÃùÆ÷²¥·ÅÒôÀÖÇý¶¯
+ 138   1          //HallInit();          //»ô¶û´«¸ÐÆ÷Ä£¿éÇý¶¯                      
+ 139   1          //VibInit();          //Õñ¶¯´«¸ÐÆ÷Ä£¿éÇý¶¯  
+ 140   1          
+ 141   1          //StepMotorInit();    //²½½øµç»úÄ£¿éÇý¶¯                    
+ 142   1          // IrInit(NEC_R05d);         //38KHzºìÍâÍ¨ÐÅÄ£¿éÇý¶¯
+ 143   1          SetDisplayerArea(0, 7);
+ 144   1          SetEventCallBack(enumEventSys1S, ShowTime);
+ 145   1          //SetEventCallBack(enumEventKey, KeyHandler);
+ 146   1          MySTC_Init(); // ÏµÍ³³õÊ¼»¯£¬±ØÐë¡£
+ 147   1          while (1) {
+ 148   2              MySTC_OS();
+ 149   2          }
+ 150   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     65    ----
+   CODE SIZE        =     37    ----
    CONSTANT SIZE    =     65    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
