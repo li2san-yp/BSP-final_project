@@ -12,6 +12,7 @@
 #include "uart1.h"         //可选，uart1（串口1通信）头文件。
 #include "uart2.h"         //可选，uart2（串口2通信）头文件。
 #include "EXT.h"           //EXT（扩展接口）头文件。
+#include "ultrasonic_bsp.h" //自定义，超声波测距模块头文件
 
 
 code unsigned long SysClock = 11059200;  // 必须。定义系统工作时钟频率(Hz)，用户必须修改成与实际工作频率（下载时选择的）一致
@@ -104,7 +105,13 @@ code char decode_table[] = {
 
 #endif
 
-void my100mS_callback(void) {
+void my1s_callback(void) {
+    static unsigned char led_state = 0;
+    
+    // LED 闪烁指示回调正在运行
+    led_state = ~led_state;
+    LedPrint(led_state ? 0x01 : 0x00);
+    
     int distan = ultrasonic_get_distance();
     if (distan < 10) {
         Seg7Print(10,10,10,10,distan,10,10,10);
@@ -134,7 +141,12 @@ void main() {
 	// IrInit(NEC_R05d);         //38KHz红外通信模块驱动
     EXTInit(enumEXTUltraSonic);  //扩展接口模块驱动（含超声波、舵机等）
     SetDisplayerArea(0, 7);
-    SetEventCallBack(enumEventSys100mS, my100mS_callback);
+    
+    // 初始显示测试
+    Seg7Print(1,2,3,4,5,6,7,8);  // 显示12345678测试数码管
+    LedPrint(0xFF);  // 点亮所有LED测试
+    
+    SetEventCallBack(enumEventSys1S, my1s_callback);
     SetEventCallBack(enumEventKey, myKey_callback);
     while (1) {
         MySTC_OS();
