@@ -13,3 +13,7 @@
 *.map
 *.hex
 *.htm
+source/main.LST
+output/BSP_DEMO.M51
+output/BSP_DEMO
+study.txt

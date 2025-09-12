@@ -1,4 +1,4 @@
-C51 COMPILER V9.51   MAIN                                                                  09/10/2025 23:23:06 PAGE 1   
+C51 COMPILER V9.51   MAIN                                                                  09/11/2025 23:13:36 PAGE 1   
 
 
 C51 COMPILER V9.51, COMPILATION OF MODULE MAIN
@@ -21,207 +21,314 @@ line level    source
   11          #include "stepmotor.h"     //¿ÉÑ¡£¬²½½øµç»ú
   12          #include "uart1.h"         //¿ÉÑ¡£¬uart1£¨´®¿Ú1Í¨ÐÅ£©Í·ÎÄ¼þ¡£
   13          #include "uart2.h"         //¿ÉÑ¡£¬uart2£¨´®¿Ú2Í¨ÐÅ£©Í·ÎÄ¼þ¡£
-  14          
+  14          #include "EXT.h"           //EXT£¨À©Õ¹½Ó¿Ú£©Í·ÎÄ¼þ¡£
   15          
-  16          code unsigned long SysClock = 11059200;  // ±ØÐë¡£¶¨ÒåÏµÍ³¹¤×÷Ê±ÖÓÆµÂÊ(Hz)£¬ÓÃ»§±ØÐëÐÞ¸Ä³ÉÓëÊµ¼Ê¹¤×÷ÆµÂÊ£¨
+  16          
+  17          code unsigned long SysClock = 11059200;  // ±ØÐë¡£¶¨ÒåÏµÍ³¹¤×÷Ê±ÖÓÆµÂÊ(Hz)£¬ÓÃ»§±ØÐëÐÞ¸Ä³ÉÓëÊµ¼Ê¹¤×÷ÆµÂÊ£¨
              -ÏÂÔØÊ±Ñ¡ÔñµÄ£©Ò»ÖÂ
-  17          #ifdef _displayer_H_                     // ÏÔÊ¾Ä£¿éÑ¡ÓÃÊ±±ØÐë¡££¨ÊýÂë¹ÜÏÔÊ¾ÒëÂë±í£¬ÓÃ‘ô¿ÉÐÞ¸Ä¡¢Ôö¼ÓµÈ£©
-  18          code char decode_table[] = {
-  19              // [0]-[9] Êý×Ö
-  20              0x3f, 0x06, 0x5b, 0x4f, 0x66,
-  21              0x6d, 0x7d, 0x07, 0x7f, 0x6f,
-  22          
-  23              0x00,  // ÎÞ- index = 10
-  24              0x08,  // ÏÂ- index = 11
-  25              0x40,  // ÖÐ- index = 12
-  26              0x01,  // ÉÏ- index = 13
-  27              0x41,  // ÉÏÖÐ- index = 14
-  28              0x48,  // ÖÐÏÂ- index = 15
-  29          
-  30              // [16]-[25] ´øÐ¡ÊýµãµÄÊý×Ö
-  31              0x3f | 0x80, 0x06 | 0x80, 0x5b | 0x80, 0x4f | 0x80, 0x66 | 0x80, 0x6d | 0x80, 0x7d | 0x80, 0x07 | 0x80
+  18          #ifdef _displayer_H_                     // ÏÔÊ¾Ä£¿éÑ¡ÓÃÊ±±ØÐë¡££¨ÊýÂë¹ÜÏÔÊ¾ÒëÂë±í£¬ÓÃ‘ô¿ÉÐÞ¸Ä¡¢Ôö¼ÓµÈ£©
+  19          code char decode_table[] = {
+  20              // [0]-[9] Êý×Ö
+  21              0x3f, 0x06, 0x5b, 0x4f, 0x66,
+  22              0x6d, 0x7d, 0x07, 0x7f, 0x6f,
+  23          
+  24              0x00,  // ÎÞ- index = 10
+  25              0x08,  // ÏÂ- index = 11
+  26              0x40,  // ÖÐ- index = 12
+  27              0x01,  // ÉÏ- index = 13
+  28              0x41,  // ÉÏÖÐ- index = 14
+  29              0x48,  // ÖÐÏÂ- index = 15
+  30          
+  31              // [16]-[25] ´øÐ¡ÊýµãµÄÊý×Ö
+  32              0x3f | 0x80, 0x06 | 0x80, 0x5b | 0x80, 0x4f | 0x80, 0x66 | 0x80, 0x6d | 0x80, 0x7d | 0x80, 0x07 | 0x80
              -, 0x7f | 0x80, 0x6f | 0x80,
-  32              // 'A' (´óÐ´ A)£¬index = 26
-  33              0x77,
-  34              // 'B' (´óÐ´ B)£¬index = 27
-  35              0x7f,
-  36              // 'C' (´óÐ´ C)£¬index = 28
-  37              0x39,
-  38              // 'D' (´óÐ´ D)£¬index = 29
-  39              0x3f,
-  40              // 'E' (´óÐ´ E)£¬index = 30
-  41              0x79,
-  42              // 'F' (´óÐ´ F)£¬index = 31
-  43              0x71,
-  44              // 'G' (´óÐ´ G)£¬index = 32
-  45              0x7D,
-  46              // 'H' (´óÐ´ H)£¬index = 33
-  47              0x76,
-  48              // 'I' (´óÐ´ I)£¬index = 34
-  49              0x06,
-  50              // 'J' (´óÐ´ J)£¬index = 35
-  51              0x1E,
-  52              // 'L' (´óÐ´ L)£¬index = 36
-C51 COMPILER V9.51   MAIN                                                                  09/10/2025 23:23:06 PAGE 2   
+  33              // 'A' (´óÐ´ A)£¬index = 26
+  34              0x77,
+  35              // 'B' (´óÐ´ B)£¬index = 27
+  36              0x7f,
+  37              // 'C' (´óÐ´ C)£¬index = 28
+  38              0x39,
+  39              // 'D' (´óÐ´ D)£¬index = 29
+  40              0x3f,
+  41              // 'E' (´óÐ´ E)£¬index = 30
+  42              0x79,
+  43              // 'F' (´óÐ´ F)£¬index = 31
+  44              0x71,
+  45              // 'G' (´óÐ´ G)£¬index = 32
+  46              0x7D,
+  47              // 'H' (´óÐ´ H)£¬index = 33
+  48              0x76,
+  49              // 'I' (´óÐ´ I)£¬index = 34
+  50              0x06,
+  51              // 'J' (´óÐ´ J)£¬index = 35
+  52              0x1E,
+C51 COMPILER V9.51   MAIN                                                                  09/11/2025 23:13:36 PAGE 2   
 
-  53              0x38,
-  54              // 'O' (´óÐ´ O)£¬index = 37
-  55              0x3F,
-  56              // 'P' (´óÐ´ P)£¬index = 38
-  57              0x73,
-  58              // 'S' (´óÐ´ S)£¬index = 39
-  59              0x6D,
-  60              // 'U' (´óÐ´ U)£¬index = 40
-  61              0x3E,
-  62              // 'Y' (´óÐ´ Y)£¬index = 41
-  63              0x6E,
-  64          
-  65              // 'a' (Ð¡Ð´ a)£¬index = 42
-  66              0x5F,
-  67              // 'b' (Ð¡Ð´ b)£¬index = 43
-  68              0x7C,
-  69              // 'c' (Ð¡Ð´ c)£¬index = 44
-  70              0x58,
-  71              // 'd' (Ð¡Ð´ d)£¬index = 45
-  72              0x5E,
-  73              // 'e' (Ð¡Ð´ e)£¬index = 46
-  74              0x7B,
-  75              // 'f' (Ð¡Ð´ f)£¬index = 47
-  76              0x71,
-  77              // 'g' (Ð¡Ð´ g)£¬index = 48
-  78              0x6F,
-  79              // 'h' (Ð¡Ð´ h)£¬index = 49
-  80              0x74,
-  81              // 'i' (Ð¡Ð´ i)£¬index = 50
-  82              0x10,
-  83              // 'l' (Ð¡Ð´ l)£¬index = 51
-  84              0x38,
-  85              // 'n' (Ð¡Ð´ n)£¬index = 52
-  86              0x54,
-  87              // 'o' (Ð¡Ð´ o)£¬index = 53
-  88              0x5C,
-  89              // 'p' (Ð¡Ð´ p)£¬index = 54
-  90              0x73,
-  91              // 'q' (Ð¡Ð´ q)£¬index = 55
-  92              0x67,
-  93              // 'r' (Ð¡Ð´ r)£¬index = 56
-  94              0x50,
-  95              // 's' (Ð¡Ð´ s)£¬index = 57
-  96              0x6D,
-  97              // 't' (Ð¡Ð´ t)£¬index = 58
-  98              0x78,
-  99              // 'u' (Ð¡Ð´ u)£¬index = 59
- 100              0x1C,
- 101              // 'y' (Ð¡Ð´ y)£¬index = 60
- 102              0x6E};
- 103          
- 104          #endif
- 105          
- 106          void my100mS_callback(void) {
- 107   1      
- 108   1      }
- 109          
- 110          void myKey_callback(void) {
- 111   1          
- 112   1      }
- 113          
- 114          void main() {
-C51 COMPILER V9.51   MAIN                                                                  09/10/2025 23:23:06 PAGE 3   
+  53              // 'L' (´óÐ´ L)£¬index = 36
+  54              0x38,
+  55              // 'O' (´óÐ´ O)£¬index = 37
+  56              0x3F,
+  57              // 'P' (´óÐ´ P)£¬index = 38
+  58              0x73,
+  59              // 'S' (´óÐ´ S)£¬index = 39
+  60              0x6D,
+  61              // 'U' (´óÐ´ U)£¬index = 40
+  62              0x3E,
+  63              // 'Y' (´óÐ´ Y)£¬index = 41
+  64              0x6E,
+  65          
+  66              // 'a' (Ð¡Ð´ a)£¬index = 42
+  67              0x5F,
+  68              // 'b' (Ð¡Ð´ b)£¬index = 43
+  69              0x7C,
+  70              // 'c' (Ð¡Ð´ c)£¬index = 44
+  71              0x58,
+  72              // 'd' (Ð¡Ð´ d)£¬index = 45
+  73              0x5E,
+  74              // 'e' (Ð¡Ð´ e)£¬index = 46
+  75              0x7B,
+  76              // 'f' (Ð¡Ð´ f)£¬index = 47
+  77              0x71,
+  78              // 'g' (Ð¡Ð´ g)£¬index = 48
+  79              0x6F,
+  80              // 'h' (Ð¡Ð´ h)£¬index = 49
+  81              0x74,
+  82              // 'i' (Ð¡Ð´ i)£¬index = 50
+  83              0x10,
+  84              // 'l' (Ð¡Ð´ l)£¬index = 51
+  85              0x38,
+  86              // 'n' (Ð¡Ð´ n)£¬index = 52
+  87              0x54,
+  88              // 'o' (Ð¡Ð´ o)£¬index = 53
+  89              0x5C,
+  90              // 'p' (Ð¡Ð´ p)£¬index = 54
+  91              0x73,
+  92              // 'q' (Ð¡Ð´ q)£¬index = 55
+  93              0x67,
+  94              // 'r' (Ð¡Ð´ r)£¬index = 56
+  95              0x50,
+  96              // 's' (Ð¡Ð´ s)£¬index = 57
+  97              0x6D,
+  98              // 't' (Ð¡Ð´ t)£¬index = 58
+  99              0x78,
+ 100              // 'u' (Ð¡Ð´ u)£¬index = 59
+ 101              0x1C,
+ 102              // 'y' (Ð¡Ð´ y)£¬index = 60
+ 103              0x6E};
+ 104          
+ 105          #endif
+ 106          
+ 107          void my100mS_callback(void) {
+ 108   1          int distan = ultrasonic_get_distance();
+*** WARNING C206 IN LINE 108 OF source\main.c: 'ultrasonic_get_distance': missing function-prototype
+ 109   1          if (distan < 10) {
+ 110   2              Seg7Print(10,10,10,10,distan,10,10,10);
+ 111   2          } else if (distan < 100) {
+ 112   2              Seg7Print(10,10,10,distan/10,distan%10,10,10,10);
+ 113   2          } else if (distan < 1000) {
+C51 COMPILER V9.51   MAIN                                                                  09/11/2025 23:13:36 PAGE 3   
 
- 115   1          MySTC_Init(); // ÏµÍ³³õÊ¼»¯£¬±ØÐë¡£
- 116   1              DisplayerInit();      //ÏÔÊ¾Ä£¿éÇý¶¯ 
- 117   1              KeyInit();           //°´¼üÄ£¿éÇý¶¯
- 118   1              BeepInit();           //·äÃùÆ÷Ä£¿éÇý¶¯
- 119   1              MusicPlayerInit();    //·äÃùÆ÷²¥·ÅÒôÀÖÇý¶¯
- 120   1              HallInit();          //»ô¶û´«¸ÐÆ÷Ä£¿éÇý¶¯                      
- 121   1              VibInit();          //Õñ¶¯´«¸ÐÆ÷Ä£¿éÇý¶¯          
- 122   1              AdcInit(ADCincEXT);          //Ä£Êý×ª»»ADCÄ£¿éÇý¶¯£¨º¬ÎÂ¶È¡¢¹âÕÕ¡¢µ¼º½°´¼üÓë°´¼üKey3¡¢EXTÀ©Õ¹½Ó¿ÚÉÏµÄADC£
+ 114   2              Seg7Print(10,10,10,distan/100,distan/10%10,distan%10,10,10);
+ 115   2          } else {
+ 116   2              Seg7Print(10,10,10,12,12,10,10,10); // ³¬³ö·¶Î§ÏÔÊ¾ÌØÊâ·ûºÅ
+ 117   2          }
+ 118   1      }
+ 119          
+ 120          void myKey_callback(void) {
+ 121   1          
+ 122   1      }
+ 123          
+ 124          void main() {
+ 125   1          MySTC_Init(); // ÏµÍ³³õÊ¼»¯£¬±ØÐë¡£
+ 126   1              DisplayerInit();      //ÏÔÊ¾Ä£¿éÇý¶¯ 
+ 127   1              KeyInit();           //°´¼üÄ£¿éÇý¶¯
+ 128   1              BeepInit();           //·äÃùÆ÷Ä£¿éÇý¶¯
+ 129   1              MusicPlayerInit();    //·äÃùÆ÷²¥·ÅÒôÀÖÇý¶¯
+ 130   1              HallInit();          //»ô¶û´«¸ÐÆ÷Ä£¿éÇý¶¯                      
+ 131   1              VibInit();          //Õñ¶¯´«¸ÐÆ÷Ä£¿éÇý¶¯          
+ 132   1              AdcInit(ADCincEXT);          //Ä£Êý×ª»»ADCÄ£¿éÇý¶¯£¨º¬ÎÂ¶È¡¢¹âÕÕ¡¢µ¼º½°´¼üÓë°´¼üKey3¡¢EXTÀ©Õ¹½Ó¿ÚÉÏµÄADC£
              -©
- 123   1              StepMotorInit();    //²½½øµç»úÄ£¿éÇý¶¯                    
- 124   1              // IrInit(NEC_R05d);         //38KHzºìÍâÍ¨ÐÅÄ£¿éÇý¶¯
- 125   1          SetDisplayerArea(0, 7);
- 126   1          SetEventCallBack(enumEventSys100mS, my100mS_callback);
- 127   1          SetEventCallBack(enumEventKey, myKey_callback);
- 128   1          while (1) {
- 129   2              MySTC_OS();
- 130   2          }
- 131   1      }
-C51 COMPILER V9.51   MAIN                                                                  09/10/2025 23:23:06 PAGE 4   
+ 133   1              StepMotorInit();    //²½½øµç»úÄ£¿éÇý¶¯                    
+ 134   1              // IrInit(NEC_R05d);         //38KHzºìÍâÍ¨ÐÅÄ£¿éÇý¶¯
+ 135   1          EXTInit(enumEXTUltraSonic);  //À©Õ¹½Ó¿ÚÄ£¿éÇý¶¯£¨º¬³¬Éù²¨¡¢¶æ»úµÈ£©
+ 136   1          SetDisplayerArea(0, 7);
+ 137   1          SetEventCallBack(enumEventSys100mS, my100mS_callback);
+ 138   1          SetEventCallBack(enumEventKey, myKey_callback);
+ 139   1          while (1) {
+ 140   2              MySTC_OS();
+ 141   2          }
+ 142   1      }
+C51 COMPILER V9.51   MAIN                                                                  09/11/2025 23:13:36 PAGE 4   
 
 ASSEMBLY LISTING OF GENERATED OBJECT CODE
 
 
              ; FUNCTION my100mS_callback (BEGIN)
-                                           ; SOURCE LINE # 106
+                                           ; SOURCE LINE # 107
                                            ; SOURCE LINE # 108
-0000 22                RET     
+0000 120000      E     LCALL   ultrasonic_get_distance
+0003 8E00        R     MOV     distan,R6
+0005 8F00        R     MOV     distan+01H,R7
+                                           ; SOURCE LINE # 109
+0007 C3                CLR     C
+0008 E500        R     MOV     A,distan+01H
+000A 940A              SUBB    A,#0AH
+000C E500        R     MOV     A,distan
+000E 6480              XRL     A,#080H
+0010 9480              SUBB    A,#080H
+0012 5008              JNC     ?C0001
+                                           ; SOURCE LINE # 110
+0014 75000A      E     MOV     ?_Seg7Print?BYTE+03H,#0AH
+0017 850000      E     MOV     ?_Seg7Print?BYTE+04H,distan+01H
+                                           ; SOURCE LINE # 111
+001A 8027              SJMP    ?C0013
+001C         ?C0001:
+001C C3                CLR     C
+001D E500        R     MOV     A,distan+01H
+001F 9464              SUBB    A,#064H
+0021 E500        R     MOV     A,distan
+0023 6480              XRL     A,#080H
+0025 9480              SUBB    A,#080H
+0027 501F              JNC     ?C0003
+                                           ; SOURCE LINE # 112
+0029 AE00        R     MOV     R6,distan
+002B AF00        R     MOV     R7,distan+01H
+002D 7C00              MOV     R4,#00H
+002F 7D0A              MOV     R5,#0AH
+0031 120000      E     LCALL   ?C?SIDIV
+0034 8F00        E     MOV     ?_Seg7Print?BYTE+03H,R7
+0036 AE00        R     MOV     R6,distan
+0038 AF00        R     MOV     R7,distan+01H
+003A 7C00              MOV     R4,#00H
+003C 7D0A              MOV     R5,#0AH
+003E 120000      E     LCALL   ?C?SIDIV
+0041 8D00        E     MOV     ?_Seg7Print?BYTE+04H,R5
+0043         ?C0013:
+0043 75000A      E     MOV     ?_Seg7Print?BYTE+05H,#0AH
+                                           ; SOURCE LINE # 113
+0046 8048              SJMP    ?C0014
+0048         ?C0003:
+0048 C3                CLR     C
+0049 E500        R     MOV     A,distan+01H
+004B 94E8              SUBB    A,#0E8H
+004D E500        R     MOV     A,distan
+004F 6480              XRL     A,#080H
+0051 9483              SUBB    A,#083H
+0053 5032              JNC     ?C0005
+                                           ; SOURCE LINE # 114
+0055 AE00        R     MOV     R6,distan
+0057 AF00        R     MOV     R7,distan+01H
+0059 7C00              MOV     R4,#00H
+005B 7D64              MOV     R5,#064H
+005D 120000      E     LCALL   ?C?SIDIV
+0060 AB07              MOV     R3,AR7
+C51 COMPILER V9.51   MAIN                                                                  09/11/2025 23:13:36 PAGE 5   
+
+0062 AE00        R     MOV     R6,distan
+0064 AF00        R     MOV     R7,distan+01H
+0066 7C00              MOV     R4,#00H
+0068 7D0A              MOV     R5,#0AH
+006A 120000      E     LCALL   ?C?SIDIV
+006D 7C00              MOV     R4,#00H
+006F 7D0A              MOV     R5,#0AH
+0071 120000      E     LCALL   ?C?SIDIV
+0074 8D00        E     MOV     ?_Seg7Print?BYTE+04H,R5
+0076 8B00        E     MOV     ?_Seg7Print?BYTE+03H,R3
+0078 AE00        R     MOV     R6,distan
+007A AF00        R     MOV     R7,distan+01H
+007C 7C00              MOV     R4,#00H
+007E 7D0A              MOV     R5,#0AH
+0080 120000      E     LCALL   ?C?SIDIV
+0083 8D00        E     MOV     ?_Seg7Print?BYTE+05H,R5
+                                           ; SOURCE LINE # 115
+0085 8009              SJMP    ?C0012
+0087         ?C0005:
+                                           ; SOURCE LINE # 116
+0087 75000C      E     MOV     ?_Seg7Print?BYTE+03H,#0CH
+008A 75000C      E     MOV     ?_Seg7Print?BYTE+04H,#0CH
+008D 75000A      E     MOV     ?_Seg7Print?BYTE+05H,#0AH
+0090         ?C0012:
+0090         ?C0014:
+0090 75000A      E     MOV     ?_Seg7Print?BYTE+06H,#0AH
+0093 75000A      E     MOV     ?_Seg7Print?BYTE+07H,#0AH
+0096 7B0A              MOV     R3,#0AH
+0098 7D0A              MOV     R5,#0AH
+009A 7F0A              MOV     R7,#0AH
+009C 120000      E     LCALL   _Seg7Print
+                                           ; SOURCE LINE # 117
+                                           ; SOURCE LINE # 118
+009F         ?C0007:
+009F 22                RET     
              ; FUNCTION my100mS_callback (END)
 
              ; FUNCTION myKey_callback (BEGIN)
-                                           ; SOURCE LINE # 110
-                                           ; SOURCE LINE # 112
+                                           ; SOURCE LINE # 120
+                                           ; SOURCE LINE # 122
 0000 22                RET     
              ; FUNCTION myKey_callback (END)
 
              ; FUNCTION main (BEGIN)
-                                           ; SOURCE LINE # 114
-                                           ; SOURCE LINE # 115
+                                           ; SOURCE LINE # 124
+                                           ; SOURCE LINE # 125
 0000 120000      E     LCALL   MySTC_Init
-                                           ; SOURCE LINE # 116
+                                           ; SOURCE LINE # 126
 0003 120000      E     LCALL   DisplayerInit
-                                           ; SOURCE LINE # 117
+                                           ; SOURCE LINE # 127
 0006 120000      E     LCALL   KeyInit
-                                           ; SOURCE LINE # 118
+                                           ; SOURCE LINE # 128
 0009 120000      E     LCALL   BeepInit
-                                           ; SOURCE LINE # 119
+                                           ; SOURCE LINE # 129
 000C 120000      E     LCALL   MusicPlayerInit
-                                           ; SOURCE LINE # 120
+                                           ; SOURCE LINE # 130
 000F 120000      E     LCALL   HallInit
-                                           ; SOURCE LINE # 121
+                                           ; SOURCE LINE # 131
 0012 120000      E     LCALL   VibInit
-                                           ; SOURCE LINE # 122
+                                           ; SOURCE LINE # 132
 0015 7F9B              MOV     R7,#09BH
 0017 120000      E     LCALL   _AdcInit
-                                           ; SOURCE LINE # 123
+C51 COMPILER V9.51   MAIN                                                                  09/11/2025 23:13:36 PAGE 6   
+
+                                           ; SOURCE LINE # 133
 001A 120000      E     LCALL   StepMotorInit
-                                           ; SOURCE LINE # 125
-001D 7D07              MOV     R5,#07H
-001F E4                CLR     A
-0020 FF                MOV     R7,A
-0021 120000      E     LCALL   _SetDisplayerArea
-                                           ; SOURCE LINE # 126
-0024 7BFF              MOV     R3,#0FFH
-0026 7A00        R     MOV     R2,#HIGH my100mS_callback
-0028 7900        R     MOV     R1,#LOW my100mS_callback
-002A 7F02              MOV     R7,#02H
-002C 120000      E     LCALL   _SetEventCallBack
-                                           ; SOURCE LINE # 127
-002F 7BFF              MOV     R3,#0FFH
-0031 7A00        R     MOV     R2,#HIGH myKey_callback
-0033 7900        R     MOV     R1,#LOW myKey_callback
-0035 7F04              MOV     R7,#04H
-0037 120000      E     LCALL   _SetEventCallBack
-003A         ?C0003:
-                                           ; SOURCE LINE # 128
-                                           ; SOURCE LINE # 129
-003A 120000      E     LCALL   MySTC_OS
-                                           ; SOURCE LINE # 130
-003D 80FB              SJMP    ?C0003
+                                           ; SOURCE LINE # 135
+001D 7F03              MOV     R7,#03H
+001F 120000      E     LCALL   _EXTInit
+                                           ; SOURCE LINE # 136
+0022 7D07              MOV     R5,#07H
+0024 E4                CLR     A
+0025 FF                MOV     R7,A
+0026 120000      E     LCALL   _SetDisplayerArea
+                                           ; SOURCE LINE # 137
+0029 7BFF              MOV     R3,#0FFH
+002B 7A00        R     MOV     R2,#HIGH my100mS_callback
+002D 7900        R     MOV     R1,#LOW my100mS_callback
+002F 7F02              MOV     R7,#02H
+0031 120000      E     LCALL   _SetEventCallBack
+                                           ; SOURCE LINE # 138
+0034 7BFF              MOV     R3,#0FFH
+0036 7A00        R     MOV     R2,#HIGH myKey_callback
+0038 7900        R     MOV     R1,#LOW myKey_callback
+003A 7F04              MOV     R7,#04H
+003C 120000      E     LCALL   _SetEventCallBack
+003F         ?C0009:
+                                           ; SOURCE LINE # 139
+                                           ; SOURCE LINE # 140
+003F 120000      E     LCALL   MySTC_OS
+                                           ; SOURCE LINE # 141
+0042 80FB              SJMP    ?C0009
              ; FUNCTION main (END)
 
 
-C51 COMPILER V9.51   MAIN                                                                  09/10/2025 23:23:06 PAGE 5   
-
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     65    ----
+   CODE SIZE        =    229    ----
    CONSTANT SIZE    =     65    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
-   DATA SIZE        =   ----    ----
+   DATA SIZE        =   ----       2
    IDATA SIZE       =   ----    ----
    BIT SIZE         =   ----    ----
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
