@@ -1,0 +1,22 @@
+#include "IR.h"
+#include "STC15F2K60S2.H"
+#include "Vib.h"
+#include "adc.h"
+#include "beep.H"
+#include "displayer.H"
+#include "hall.H"
+#include "key.H"
+#include "music.h"
+#include "stepmotor.h"
+#include "sys.H"
+#include "uart1.h"
+#include "uart2.h"
+
+#include "temp_module.h"
+#include "speed_module.h"
+#include "Nav_handler.h"
+#include "rtc_module.h"
+#include "voice_module.h"
+#include "my_uart1.h"
+
+void my1S_callback();

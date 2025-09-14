@@ -1,19 +1,5 @@
-#include "IR.h"
-#include "Nav_handler.h"
-#include "STC15F2K60S2.H"
-#include "Vib.h"
-#include "adc.h"
-#include "beep.H"
-#include "displayer.H"
-#include "hall.H"
-#include "key.H"
-#include "music.h"
-#include "rtc_module.h"
-#include "stepmotor.h"
-#include "sys.H"
-#include "uart1.h"
-#include "uart2.h"
-#include "voice_module.h"
+#include "core.h"
+
 code unsigned long SysClock = 11059200;
 #ifdef _displayer_H_
 code char decode_table[] = {
@@ -73,7 +59,7 @@ void main() {
     Uart2Init(2400, Uart2UsedforEXT);
     SetUart2Rxd(&Uart2RxBuf, 1, &Uart2RxBuf, 0);
     SetEventCallBack(enumEventNav, NavHandler);
-    SetEventCallBack(enumEventSys1S, ShowStatus);
+    SetEventCallBack(enumEventSys1S, my1S_callback);
     MySTC_Init();
     while (1) {
         MySTC_OS();
