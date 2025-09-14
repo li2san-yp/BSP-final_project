@@ -214,8 +214,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\rtc_module.c</PathWithFileName>
-      <FilenameWithoutPath>rtc_module.c</FilenameWithoutPath>
+      <PathWithFileName>.\source\temp_module.c</PathWithFileName>
+      <FilenameWithoutPath>temp_module.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -226,8 +226,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\speed_module.c</PathWithFileName>
-      <FilenameWithoutPath>speed_module.c</FilenameWithoutPath>
+      <PathWithFileName>.\source\Nav_handler.c</PathWithFileName>
+      <FilenameWithoutPath>Nav_handler.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -238,8 +238,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\source\temp_module.c</PathWithFileName>
-      <FilenameWithoutPath>temp_module.c</FilenameWithoutPath>
+      <PathWithFileName>.\source\rtc_module.c</PathWithFileName>
+      <FilenameWithoutPath>rtc_module.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -250,8 +250,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\Nav_handler.c</PathWithFileName>
-      <FilenameWithoutPath>Nav_handler.c</FilenameWithoutPath>
+      <PathWithFileName>.\source\speed_module.c</PathWithFileName>
+      <FilenameWithoutPath>speed_module.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -262,7 +262,7 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\voice_module.c</PathWithFileName>
+      <PathWithFileName>.\source\voice_module.c</PathWithFileName>
       <FilenameWithoutPath>voice_module.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>

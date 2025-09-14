@@ -387,16 +387,6 @@
               <FilePath>.\source\STCBSP_V3.6.LIB</FilePath>
             </File>
             <File>
-              <FileName>rtc_module.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\rtc_module.c</FilePath>
-            </File>
-            <File>
-              <FileName>speed_module.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>.\speed_module.c</FilePath>
-            </File>
-            <File>
               <FileName>temp_module.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\source\temp_module.c</FilePath>
@@ -404,12 +394,22 @@
             <File>
               <FileName>Nav_handler.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\Nav_handler.c</FilePath>
+              <FilePath>.\source\Nav_handler.c</FilePath>
+            </File>
+            <File>
+              <FileName>rtc_module.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\source\rtc_module.c</FilePath>
+            </File>
+            <File>
+              <FileName>speed_module.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\source\speed_module.c</FilePath>
             </File>
             <File>
               <FileName>voice_module.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\voice_module.c</FilePath>
+              <FilePath>.\source\voice_module.c</FilePath>
             </File>
           </Files>
         </Group>

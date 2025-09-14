@@ -1,10 +1,10 @@
-C51 COMPILER V9.60.7.0   MAIN                                                              09/14/2025 20:58:18 PAGE 1   
+C51 COMPILER V9.60.7.0   MAIN                                                              09/14/2025 23:29:14 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
 OBJECT MODULE PLACED IN .\output\main.obj
-COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE source\main.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\inc) DEBUG OBJECTEXTEND 
-                    -PRINT(.\list\main.lst) TABS(2) OBJECT(.\output\main.obj)
+COMPILER INVOKED BY: D:\Software\keil5\core\C51\BIN\C51.EXE source\main.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\inc) DEBUG O
+                    -BJECTEXTEND PRINT(.\list\main.lst) TABS(2) OBJECT(.\output\main.obj)
 
 line level    source
 
@@ -62,7 +62,7 @@ line level    source
   47              // 'G' (��д G)��index = 32
   48              0x7D,
   49              // 'H' (��д H)��index = 33
-C51 COMPILER V9.60.7.0   MAIN                                                              09/14/2025 20:58:18 PAGE 2   
+C51 COMPILER V9.60.7.0   MAIN                                                              09/14/2025 23:29:14 PAGE 2   
 
   50              0x76,
   51              // 'I' (��д I)��index = 34
@@ -126,7 +126,7 @@ line level    source
  109          void main() {
  110   1        AdcInit(ADCincEXT);         //ģ��ת��ADCģ�����������¶ȡ����ա�
              -���������밴��Key3��EXT��չ�ӿ��ϵ�ADC��
-C51 COMPILER V9.60.7.0   MAIN                                                              09/14/2025 20:58:18 PAGE 3   
+C51 COMPILER V9.60.7.0   MAIN                                                              09/14/2025 23:29:14 PAGE 3   
 
  111   1        DisplayerInit();      //��ʾģ������ 
  112   1        KeyInit();           //����ģ������
