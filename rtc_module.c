@@ -2,17 +2,17 @@
 #include "sys.H"
 #include "DS1302.H"
 #include "displayer.H"
-
-extern int GetSpeed();
+#include "speed_module.h"
+#include "rtc_module.h"
 int vv;
 unsigned int dist = 1737; // m
 struct_DS1302_RTC rtc_time = {0, 0, 0, 0, 0, 0};
 bit mode = 0; 
-
+TimeInfo tinfo = {0, 0};
 void ResetTimer()
 {
     unsigned int total_seconds;
-		vv = GetSpeed();
+	vv = GetSpeed();
     if (mode == 0) {
         total_seconds = dist * 3.6 / vv; 
     } 
@@ -23,7 +23,12 @@ void ResetTimer()
     rtc_time.second = total_seconds % 60;
     RTC_Write(rtc_time);
 }
-
+void GetETA()
+{
+    rtc_time = RTC_Read();
+    tinfo.seconds = rtc_time.minute * 60 + rtc_time.second;
+    tinfo.time_mode = mode;  // 直接返回当前全局 mode
+}
 void ShowTime()
 {
     rtc_time = RTC_Read();
@@ -31,6 +36,9 @@ void ShowTime()
         mode = !mode;
         ResetTimer();
     } 
+    else if (rtc_time.second > 60 || rtc_time.minute > 2){
+        ResetTimer();
+    }
 	else if (rtc_time.second == 0) {
         rtc_time.second = 59;
         rtc_time.minute--;
@@ -39,6 +47,5 @@ void ShowTime()
         rtc_time.second--;
 	}
     RTC_Write(rtc_time);
-
     Seg7Print(0, 0, 10, rtc_time.minute / 10, rtc_time.minute % 10, 10, rtc_time.second / 10, rtc_time.second % 10);
 }

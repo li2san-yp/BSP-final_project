@@ -11,6 +11,9 @@
 #include "stepmotor.h"     //��ѡ���������
 #include "uart1.h"         //��ѡ��uart1������1ͨ�ţ�ͷ�ļ���
 #include "uart2.h"         //��ѡ��uart2������2ͨ�ţ�ͷ�ļ���
+#include "Nav_handler.h"   // 导航键处理模块头文件
+#include "rtc_module.h"
+#include "voice_module.h" // 语音模块头文件
 
 
 code unsigned long SysClock = 11059200;  // ���롣����ϵͳ����ʱ��Ƶ��(Hz)���û������޸ĳ���ʵ�ʹ���Ƶ�ʣ�����ʱѡ��ģ�һ��
@@ -101,49 +104,25 @@ code char decode_table[] = {
     // 'y' (Сд y)��index = 60
     0x6E};
 
-#endif
-
-extern void ShowTime(void);
-extern void ShowTemp(void);
-extern void ShowSpeed(void);		
-		
-/*
-char displayMode = 0;
-void KeyHandler(void)
-{
-    char k1 = GetKeyAct(enumKey1);
-    if (k1 == enumKeyPress) {
-        if (displayMode == 0)
-            displayMode = 1;
-        else 
-            displayMode = 0;
-    }
-}
-
-void my1S_callback(void)
-{
-    if (displayMode == 0)
-        GetTemp();
-    else 
-        GetTime(); 
-}
-*/
+#endif		
 
 void main() {
-	AdcInit(ADCexpEXT);         //ģ��ת��ADCģ�����������¶ȡ����ա����������밴��Key3��EXT��չ�ӿ��ϵ�ADC��
+	AdcInit(ADCincEXT);         //ģ��ת��ADCģ�����������¶ȡ����ա����������밴��Key3��EXT��չ�ӿ��ϵ�ADC��
 	DisplayerInit();      //��ʾģ������ 
 	KeyInit();           //����ģ������
 	//BeepInit();	      //������ģ������
 	//MusicPlayerInit();    //������������������
 	//HallInit();          //����������ģ������                      
 	//VibInit();          //�񶯴�����ģ������  
-		
 	//StepMotorInit();    //�������ģ������	                  
     // IrInit(NEC_R05d);         //38KHz����ͨ��ģ������
     SetDisplayerArea(0, 7);
-    SetEventCallBack(enumEventSys1S, ShowTime);
+    Uart2Init(2400, Uart2UsedforEXT); 
+    SetUart2Rxd(&Uart2RxBuf, 1, &Uart2RxBuf,0);
+    SetEventCallBack(enumEventNav, NavHandler);
+	SetEventCallBack(enumEventSys1S, ShowStatus);
     //SetEventCallBack(enumEventKey, KeyHandler);
-		MySTC_Init(); // ϵͳ��ʼ�������롣
+	MySTC_Init(); // ϵͳ��ʼ�������롣
     while (1) {
         MySTC_OS();
     }
