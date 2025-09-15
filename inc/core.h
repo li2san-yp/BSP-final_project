@@ -22,9 +22,13 @@
 #include "speed_module.h"
 #include "Nav_handler.h"
 #include "rtc_module.h"
+#include "temp_controlled_fan.h"
 #include "voice_module.h"
 #include "ultrasonic_module.h"
 // #include "my_uart1.h"
+
+// 添加直流电机温控模块
+extern void DC_motor(void);
 
 extern code unsigned long SysClock;
 extern xdata uchar is_door_open[4];   // 门状态，1=开门 0=关门
