@@ -2,7 +2,9 @@
 #include "sys.H"
 #include "displayer.H"
 
-int v = 56; // km/h
+unsigned char xdata speed[4]={50,45,50,55}; // 每辆地铁的当前速度，改为char节省内存
+
+int v = 200; // km/h
 int GetSpeed()
 {
 	return v;

@@ -411,6 +411,16 @@
               <FileType>1</FileType>
               <FilePath>.\source\voice_module.c</FilePath>
             </File>
+            <File>
+              <FileName>core.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\source\core.c</FilePath>
+            </File>
+            <File>
+              <FileName>decode_table.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\source\decode_table.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

@@ -1,0 +1,18 @@
+{
+    "files.associations": {
+        "key.h": "c",
+        "core.h": "c",
+        "string.h": "c",
+        "rtc_module.h": "c",
+        "uart2.h": "c",
+        "sys.h": "c",
+        "stc15f2k60s2.h": "c",
+        "STC15F2K60S2.H": "cpp",
+        "voice_module.h": "c",
+        "speed_module.h": "c",
+        "my_uart1.h": "c"
+    },
+    "python-envs.defaultEnvManager": "ms-python.python:conda",
+    "python-envs.defaultPackageManager": "ms-python.python:conda",
+    "python-envs.pythonProjects": []
+}

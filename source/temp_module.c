@@ -1,8 +1,7 @@
-#include "STC15F2K60S2.H"        //���롣
-#include "sys.H"                 //���롣
-#include "displayer.H"
-#include "ADC.H"
+#include "core.h"
 
+unsigned char xdata temperature[4];		// 当前温度值，改为char节省内存
+unsigned char xdata tempThresholds[4];	// 温度报警阈值，改为char节省内存
 struct_ADC adc_temp;
 int rt, temp;
 code int tempdata[]={239,197,175,160,150,142,135,129,124,120,116,113,109,107,104,101, 

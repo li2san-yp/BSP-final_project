@@ -3,12 +3,13 @@
 */
 
 #include "my_uart1.h"
+#include "core.h"
+
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 
 // 全局变量定义
-DeviceData_t g_deviceData = {0};
 char g_rxBuffer[MY_UART1_RX_BUFFER_SIZE] = {0};
 char g_txBuffer[MY_UART1_TX_BUFFER_SIZE] = {0};
 static MyUart1RxStatus_t s_rxStatus = MY_UART1_RX_IDLE;
@@ -29,6 +30,12 @@ static void Uart1RxdCallback(void)
     if (newlinePos != 0) {
         *newlinePos = '\0';
         s_rxStatus = MY_UART1_RX_COMPLETE;
+        
+        // 立即解析并处理接收到的数据
+        ParseCommand(g_rxBuffer);
+        
+        // 清空接收缓冲区，准备下次接收
+        MyUart1ClearRxBuffer();
     } else {
         s_rxStatus = MY_UART1_RX_ERROR;
     }
@@ -48,85 +55,23 @@ void MyUart1Init(void)
 }
 
 /**
- * @brief 发送设备数据到上位机（固定32字节）
- */
-char MyUart1SendDeviceData(DeviceData_t *data)
-{
-    if (data == 0) {
-        return enumUart1TxFailure;
-    }
-    if (GetUart1TxStatus() == enumUart1TxBusy) {
-        return enumUart1TxFailure;
-    }
-    // 清空发送缓冲区，确保后面都是0
-    memset(g_txBuffer, 0, MY_UART1_TX_BUFFER_SIZE);
-    int pos = 0;
-    // 拼接包头
-    strcpy(g_txBuffer, MY_UART1_FRAME_HEADER);
-    pos = strlen(g_txBuffer);
-    g_txBuffer[pos++] = ',';
-    // 拼接各字段
-    pos += my_utoa(data->carId, &g_txBuffer[pos]);
-    g_txBuffer[pos++] = ',';
-    pos += my_utoa(data->temp, &g_txBuffer[pos]);
-    g_txBuffer[pos++] = ',';
-    pos += my_utoa(data->tempThresholds, &g_txBuffer[pos]);
-    g_txBuffer[pos++] = ',';
-    pos += my_utoa(data->speed, &g_txBuffer[pos]);
-    g_txBuffer[pos++] = ',';
-    pos += my_utoa(data->etaMin, &g_txBuffer[pos]);
-    g_txBuffer[pos++] = ',';
-    pos += my_utoa(data->etaSec, &g_txBuffer[pos]);
-    g_txBuffer[pos++] = ',';
-    pos += my_utoa(data->door, &g_txBuffer[pos]);
-    g_txBuffer[pos++] = ',';
-    pos += my_utoa(data->alarm, &g_txBuffer[pos]);
-    // 结尾换行
-    g_txBuffer[pos++] = '\n';
-    // 检查数据长度是否超出缓冲区
-    if (pos >= MY_UART1_TX_BUFFER_SIZE) {
-        return enumUart1TxFailure;
-    }
-    // 固定发送32字节（包含换行符后的0填充）
-    return Uart1Print(g_txBuffer, MY_UART1_TX_BUFFER_SIZE);
-}
-
-/**
- * @brief 获取接收状态
- */
-MyUart1RxStatus_t MyUart1GetRxStatus(void)
-{
-    return s_rxStatus;
-}
-
-/**
- * @brief 获取接收到的数据
- */
-char* MyUart1GetRxData(void)
-{
-    if (s_rxStatus == MY_UART1_RX_COMPLETE) {
-        return g_rxBuffer;
-    }
-    return 0;
-}
-
-/**
  * @brief 清空接收缓冲区
  */
 void MyUart1ClearRxBuffer(void)
 {
     memset(g_rxBuffer, 0, MY_UART1_RX_BUFFER_SIZE);
     s_rxStatus = MY_UART1_RX_IDLE;
-    SetUart1Rxd(g_rxBuffer, MY_UART1_RX_BUFFER_SIZE, s_headerMatch, MY_UART1_HEADER_SIZE);
 }
 
 /**
- * @brief 处理接收到的数据
+ * @brief 处理接收错误状态（可选调用）
  */
 void MyUart1ProcessRxData(void)
 {
-    if (s_rxStatus == MY_UART1_RX_COMPLETE) {
-        MyUart1ProcessCommand();
+    // 检查是否有接收错误需要处理
+    if (s_rxStatus == MY_UART1_RX_ERROR) {
+        // 发生错误时清空缓冲区重新开始
+        MyUart1ClearRxBuffer();
     }
 }
 
@@ -191,31 +136,23 @@ static int ParseCommand(char *cmdStr)
         return -1;
     }
     
-    g_deviceData.carId = tempCarId;
-    g_deviceData.temp = tempTemp;
-    g_deviceData.tempThresholds = tempTempThresholds;
-    g_deviceData.speed = tempSpeed;
-    g_deviceData.etaMin = tempEtaMin;
-    g_deviceData.etaSec = tempEtaSec;
-    g_deviceData.door = tempDoor;
-    g_deviceData.alarm = tempAlarm;
+    // 直接更新各模块的全局变量
+    // id = tempCarId;  // 全局车辆ID固定，不需要更新
+    
+    // temp, etaMin, etaSec 这三个值在现实中不可直接修改，不接受上位机修改
+    // temp[id] = tempTemp;  // 注释掉：温度值应由传感器读取
+    
+    tempThresholds[id] = tempTempThresholds;  // 温度阈值可以设置
+    
+    speed[id] = tempSpeed;  // 速度可以设置
+    
+    // rtc_time[id].minute = tempEtaMin;  // 注释掉：ETA由系统计算
+    // rtc_time[id].second = tempEtaSec;  // 注释掉：ETA由系统计算
+    
+    is_door_open[id] = tempDoor;  // 门状态可以控制
+    is_alarm[id] = tempAlarm;     // 报警状态可以控制
     
     return 0;
-}
-
-/**
- * @brief 处理完整的接收命令
- */
-int MyUart1ProcessCommand(void)
-{
-    if (s_rxStatus != MY_UART1_RX_COMPLETE) {
-        return -1;
-    }
-    
-    int result = ParseCommand(g_rxBuffer);
-    MyUart1ClearRxBuffer();
-    
-    return result;
 }
 
 // 整形转字符串（无符号，十进制，返回写入的字符数）
@@ -242,3 +179,59 @@ static int my_utoa(unsigned int value, char *buf)
     buf[len] = '\0';
     return len;
 }
+
+/**
+ * @brief 从系统全局变量获取当前状态并发送给上位机
+ * @return 发送结果
+ */
+char MyUart1SendCurrentStatus(void)
+{
+    if (GetUart1TxStatus() == enumUart1TxBusy) {
+        return enumUart1TxFailure;
+    }
+    
+    // 清空发送缓冲区
+    memset(g_txBuffer, 0, MY_UART1_TX_BUFFER_SIZE);
+    int pos = 0;
+    
+    // 拼接包头
+    strcpy(g_txBuffer, MY_UART1_FRAME_HEADER);
+    pos = strlen(g_txBuffer);
+    g_txBuffer[pos++] = ',';
+    
+    // 拼接各字段，从全局变量获取实时数据
+    pos += my_utoa(id, &g_txBuffer[pos]);  // 使用全局变量id
+    g_txBuffer[pos++] = ',';
+    
+    pos += my_utoa(temperature[id], &g_txBuffer[pos]);   // 当前温度（使用数组）
+    g_txBuffer[pos++] = ',';
+    
+    pos += my_utoa(tempThresholds[id], &g_txBuffer[pos]);  // 温度阈值
+    g_txBuffer[pos++] = ',';
+    
+    pos += my_utoa(speed[id], &g_txBuffer[pos]);  // 当前速度
+    g_txBuffer[pos++] = ',';
+    
+    pos += my_utoa(rtc_time[id].minute, &g_txBuffer[pos]);  // ETA分钟
+    g_txBuffer[pos++] = ',';
+    
+    pos += my_utoa(rtc_time[id].second, &g_txBuffer[pos]);  // ETA秒数
+    g_txBuffer[pos++] = ',';
+    
+    pos += my_utoa(is_door_open[id], &g_txBuffer[pos]);  // 门状态
+    g_txBuffer[pos++] = ',';
+    
+    pos += my_utoa(is_alarm[id], &g_txBuffer[pos]);  // 报警状态
+    
+    // 结尾换行
+    g_txBuffer[pos++] = '\n';
+    
+    // 检查数据长度是否超出缓冲区
+    if (pos >= MY_UART1_TX_BUFFER_SIZE) {
+        return enumUart1TxFailure;
+    }
+    
+    // 固定发送32字节
+    return Uart1Print(g_txBuffer, MY_UART1_TX_BUFFER_SIZE);
+}
+

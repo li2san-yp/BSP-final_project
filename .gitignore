@@ -1,4 +1,4 @@
-/.vscode
+# /.vscode
 /build_hex.bat
 /VS_Code_编译说明.md
 *.uvopt
@@ -11,5 +11,5 @@
 *.obj
 *.__i
 *.map
-*.hex
+# *.hex
 *.htm

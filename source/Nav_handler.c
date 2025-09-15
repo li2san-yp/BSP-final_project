@@ -6,7 +6,8 @@
 #include "rtc_module.h"
 #include "speed_module.h"
 
-int displayMode = 0;   // 0=时间 1=温度 2=速度
+// Use data segment for frequently accessed variables
+unsigned char xdata displayMode = 0;   // 移至xdata段以节省data空间
 // 导航键事件回调
 void NavHandler()
 {

@@ -1,88 +1,38 @@
-C51 COMPILER V9.60.7.0   MAIN                                                              09/15/2025 00:35:01 PAGE 1   
+C51 COMPILER V9.60.7.0   MAIN                                                              09/15/2025 21:31:52 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
 OBJECT MODULE PLACED IN .\output\main.obj
-COMPILER INVOKED BY: D:\Software\keil5\core\C51\BIN\C51.EXE source\main.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\inc) DEBUG O
-                    -BJECTEXTEND PRINT(.\list\main.lst) TABS(2) OBJECT(.\output\main.obj)
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE source\main.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\inc) DEBUG OBJECTEXTEND 
+                    -PRINT(.\list\main.lst) TABS(2) OBJECT(.\output\main.obj)
 
 line level    source
 
    1          #include "core.h"
    2          
-   3          code unsigned long SysClock = 11059200;
-   4          #ifdef _displayer_H_
-   5          code char decode_table[] = {
-   6              0x3f, 0x06, 0x5b, 0x4f, 0x66,
-   7              0x6d, 0x7d, 0x07, 0x7f, 0x6f,
-   8              0x00,
-   9              0x08,
-  10              0x40,
-  11              0x01,
-  12              0x41,
-  13              0x48,
-  14              0x3f | 0x80, 0x06 | 0x80, 0x5b | 0x80, 0x4f | 0x80, 0x66 | 0x80, 0x6d | 0x80, 0x7d | 0x80, 0x07 | 0x80
-             -, 0x7f | 0x80, 0x6f | 0x80,
-  15              // 大写
-  16              0x77,  // A
-  17              0x7C,  // B
-  18              0x39,  // C
-  19              0x5E,  // D
-  20              0x79,  // E
-  21              0x71,  // F
-  22              0x3D,  // G
-  23              0x76,  // H
-  24              0x06,  // I
-  25              0x38,  // L
-  26              0x3F,  // O
-  27              0x73,  // P
-  28              0x6D,  // S
-  29              0x3E,  // U
-  30              0x6E,  // Y
-  31          
-  32              // 小写
-  33              0x5F,  // a
-  34              0x7C,  // b
-  35              0x58,  // c
-  36              0x5E,  // d
-  37              0x7B,  // e
-  38              0x71,  // f
-  39              0x6F,  // g
-  40              0x74,  // h
-  41              0x10,  // i
-  42              0x38,  // l
-  43              0x54,  // n
-  44              0x5C,  // o
-  45              0x73,  // p
-  46              0x67,  // q
-  47              0x50,  // r
-  48              0x6D,  // s
-  49              0x78,  // t
-  50              0x1C,  // u
-  51              0x6E,  // y
-  52          };
-  53          #endif
-C51 COMPILER V9.60.7.0   MAIN                                                              09/15/2025 00:35:01 PAGE 2   
-
-  54          void main() {
-  55   1          AdcInit(ADCincEXT);
-  56   1          DisplayerInit();
-  57   1          KeyInit();
-  58   1          SetDisplayerArea(0, 7);
-  59   1          Uart2Init(2400, Uart2UsedforEXT);
-  60   1          SetUart2Rxd(&Uart2RxBuf, 1, &Uart2RxBuf, 0);
-  61   1          SetEventCallBack(enumEventNav, NavHandler);
-  62   1          SetEventCallBack(enumEventSys1S, my1S_callback);
-  63   1          MySTC_Init();
-  64   1          while (1) {
-  65   2              MySTC_OS();
-  66   2          }
-  67   1      }
+   3          // 将decode_table移到displayer.h中管理，减少main.c的内存占用
+   4          void main() {
+   5   1          AdcInit(ADCexpEXT);
+   6   1          DisplayerInit();
+   7   1          KeyInit();
+   8   1          SetDisplayerArea(0, 7);
+   9   1          Uart2Init(9600, Uart2UsedforEXT);
+  10   1          // MyUart1Init();
+  11   1          BeepInit();
+  12   1          SetUart2Rxd(&Uart2RxBuf, 1, &Uart2RxBuf,0);  // 单字节接收，不匹配包头
+  13   1          SetEventCallBack(enumEventSys1S, my1S_callback);
+  14   1          SetEventCallBack(enumEventUart2Rxd, myUart2Rxd_callback);
+  15   1          SetEventCallBack(enumEventNav, NavHandler);
+  16   1          MySTC_Init();
+  17   1          while (1) {
+  18   2              MySTC_OS();
+  19   2          }
+  20   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =     85    ----
-   CONSTANT SIZE    =     64    ----
+   CODE SIZE        =     99    ----
+   CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =   ----    ----
