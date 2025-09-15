@@ -421,6 +421,16 @@
               <FileType>1</FileType>
               <FilePath>.\source\decode_table.c</FilePath>
             </File>
+            <File>
+              <FileName>nv_temp_threshold.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\source\nv_temp_threshold.c</FilePath>
+            </File>
+            <File>
+              <FileName>my_uart1.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\source\my_uart1.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

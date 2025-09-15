@@ -1,7 +1,7 @@
 #include "core.h"
-// 静态变量存储当前距离值
-static int current_distance = 0;
-static unsigned char ultrasonic_initialized = 0;
+// 静态变量存储当前距离值（放入 xdata 减少 data 段占用）
+static int xdata current_distance = 0;
+static unsigned char xdata ultrasonic_initialized = 0;
 
 /**
  * @brief 初始化超声波模块

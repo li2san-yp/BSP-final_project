@@ -18,6 +18,8 @@
 #include "uart1.h"
 #include "uart2.h"
 #include "EXT.H"
+#include "M24C02.h"
+
 #include "temp_module.h"
 #include "speed_module.h"
 #include "Nav_handler.h"
@@ -25,7 +27,8 @@
 #include "temp_controlled_fan.h"
 #include "voice_module.h"
 #include "ultrasonic_module.h"
-// #include "my_uart1.h"
+#include "my_uart1.h"
+#include "nv_temp_threshold.h"
 
 // 添加直流电机温控模块
 extern void DC_motor(void);

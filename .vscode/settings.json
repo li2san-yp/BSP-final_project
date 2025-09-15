@@ -10,7 +10,8 @@
         "STC15F2K60S2.H": "cpp",
         "voice_module.h": "c",
         "speed_module.h": "c",
-        "my_uart1.h": "c"
+        "my_uart1.h": "c",
+        "ultrasonic_module.h": "c"
     },
     "python-envs.defaultEnvManager": "ms-python.python:conda",
     "python-envs.defaultPackageManager": "ms-python.python:conda",

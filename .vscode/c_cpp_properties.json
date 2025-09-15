@@ -3,9 +3,9 @@
         {
             "name": "Target 1",
             "includePath": [
-                "d:\\BSP-final_project\\inc",
-                "D:\\Keil_v5\\C51\\INC",
-                "d:\\BSP-final_project\\source"
+                "c:\\Users\\75990\\Desktop\\BSP-final_project\\inc",
+                "D:\\Software\\keil5\\core\\C51\\INC",
+                "c:\\Users\\75990\\Desktop\\BSP-final_project\\source"
             ],
             "defines": [
                 "__C51__",

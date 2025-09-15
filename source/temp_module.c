@@ -2,8 +2,8 @@
 
 unsigned char xdata temperature[4];		// 当前温度值，改为char节省内存
 unsigned char xdata tempThresholds[4];	// 温度报警阈值，改为char节省内存
-struct_ADC adc_temp;
-int rt, temp;
+struct_ADC xdata adc_temp;
+int xdata rt, temp;
 code int tempdata[]={239,197,175,160,150,142,135,129,124,120,116,113,109,107,104,101, 
 					  99, 97, 95, 93, 91, 90, 88, 86, 85, 84, 82, 81, 80, 78, 77, 76, 
 					  75, 74, 73, 72, 71, 70, 69, 68, 67, 67, 66, 65, 64, 63, 63, 62, 

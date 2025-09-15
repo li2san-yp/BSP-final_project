@@ -4,7 +4,7 @@
 
 unsigned char xdata speed[4]={50,45,50,55}; // 每辆地铁的当前速度，改为char节省内存
 
-int v = 200; // km/h
+int xdata v = 200; // km/h
 int GetSpeed()
 {
 	return v;

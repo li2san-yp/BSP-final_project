@@ -6,7 +6,9 @@
 ".\output\speed_module.obj",
 ".\output\voice_module.obj",
 ".\output\core.obj",
-".\output\decode_table.obj" 
+".\output\decode_table.obj",
+".\output\nv_temp_threshold.obj",
+".\output\my_uart1.obj" 
 TO ".\output\BSP_Demo" 
 PRINT(".\list\BSP_Demo.m51") RAMSIZE(256) 
 XDATA( 0X0000-0X07FF )

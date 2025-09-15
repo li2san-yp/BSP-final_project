@@ -11,8 +11,8 @@ unsigned char xdata displayMode = 0;   // 移至xdata段以节省data空间
 // 导航键事件回调
 void NavHandler()
 {
-    char navUp = GetAdcNavAct(enumAdcNavKeyUp);
-    char navDown = GetAdcNavAct(enumAdcNavKeyDown);
+    char xdata navUp = GetAdcNavAct(enumAdcNavKeyUp);
+    char xdata navDown = GetAdcNavAct(enumAdcNavKeyDown);
 
     if (navUp == enumKeyPress) {     // 向上键
         displayMode++;
