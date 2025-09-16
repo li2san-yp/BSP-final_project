@@ -1,10 +1,4 @@
-#include "STC15F2K60S2.H"  //���룬"STC-Bѧϰ��"ʹ��MCUָ����ͷ�ļ�
-#include "sys.H"           //���룬sys��MySTC_OS���ȳ���ͷ�ļ�
-#include "adc.h"           //��ѡ��adc��������������������������չ�ӿ�ADC��ͷ�ļ�
-#include "Key.H"
-#include "temp_module.h"   // 温度显示模块头文件
-#include "rtc_module.h"
-#include "speed_module.h"
+#include "core.h"
 
 // Use data segment for frequently accessed variables
 unsigned char xdata displayMode = 0;   // 移至xdata段以节省data空间
@@ -13,6 +7,8 @@ void NavHandler()
 {
     char xdata navUp = GetAdcNavAct(enumAdcNavKeyUp);
     char xdata navDown = GetAdcNavAct(enumAdcNavKeyDown);
+    char xdata navLeft = GetAdcNavAct(enumAdcNavKeyLeft);
+    char xdata navRight = GetAdcNavAct(enumAdcNavKeyRight);
 
     if (navUp == enumKeyPress) {     // 向上键
         displayMode++;
@@ -22,14 +18,27 @@ void NavHandler()
         displayMode--;
         if (displayMode < 0) displayMode = 2;  // 循环切换
     }
+    if (navLeft == enumKeyPress) {
+        if (radio_config.volume > 0) {
+            radio_config.volume--;        // 音量减1
+            SetFMRadio(radio_config);     // 应用新音量
+        }
+    }
+    
+    // 检查右键（音量升高）
+    if (navRight == enumKeyPress) {
+        if (radio_config.volume < 15) {
+            radio_config.volume++;        // 音量加1
+            SetFMRadio(radio_config);     // 应用新音量
+        }
+    }
 }
 
 void ShowStatus()
 {
-	switch (displayMode) {
+    switch (displayMode) {
       case 0: ShowTime();  break;
       case 1: ShowTemp();  break;
       case 2: ShowSpeed(); break;
   }
 }
-

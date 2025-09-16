@@ -1,92 +1,138 @@
+/**
+ * @file ultrasonic.c
+ * @brief 自动门控制系统实现文件
+ * @version 2.0
+ * @date 2025-09-15
+ */
+
 #include "core.h"
-// 静态变量存储当前距离值（放入 xdata 减少 data 段占用）
-static int xdata current_distance = 0;
-static unsigned char xdata ultrasonic_initialized = 0;
+
+// 全局变量定义
+unsigned int g_distance = 0;               // 当前距离值
 
 /**
- * @brief 初始化超声波模块
+ * @brief 初始化自动门系统
  */
 void UltrasonicInit(void) {
-    if (!ultrasonic_initialized) {
-        EXTInit(enumEXTUltraSonic);
-        ultrasonic_initialized = 1;
-        current_distance = 0;
-    }
+    // 初始化超声波模块 (使用EXT外设)
+    EXTInit(enumEXTUltraSonic);
+    
+    // 初始化门状态
+    is_door_open[id] = 0;  // 门初始为关闭状态 
+    g_distance = 0;
 }
 
 /**
- * @brief 获取超声波测距值
+ * @brief 获取超声波距离
+ * @return 距离值 (cm)，1024表示无效
  */
-int UltrasonicGetDistance(void) {
-    if (!ultrasonic_initialized) {
-        UltrasonicInit();
+static unsigned int GetUltrasonicDistance(void) {
+    unsigned int distance;
+    
+    // 读取EXT外设的超声波数据
+    distance = GetUltraSonic();
+    
+    // 检查数据有效性
+    if (distance >= DISTANCE_INVALID) {
+        return DISTANCE_INVALID;
     }
     
-    current_distance = GetUltraSonic();
-    return current_distance;
+    return distance;
 }
 
 /**
- * @brief 显示距离到数码管
+ * @brief 自动门系统主要更新函数
  */
-void UltrasonicDisplayDistance(int distance) {
-    // 错误值显示
-    if (distance == 4096) {
-        Seg7Print(4,0,9,6,10,10,10,10);  // 显示 "4096"
-        return;
-    }
-    if (distance == 1024) {
-        Seg7Print(1,0,2,4,10,10,10,10);  // 显示 "1024"
-        return;
+void UltrasonicUpdateAndDisplay(void) {
+    
+    // 获取当前距离
+    g_distance = GetUltrasonicDistance();
+    
+    // 处理门控制逻辑
+    if (g_distance < DOOR_TRIGGER_DISTANCE && g_distance != DISTANCE_INVALID) {
+        // 距离小于10cm且门是关闭的，开门
+        if (is_door_open[id] == 0 && tinfo.time_mode == 1) { //关门且车停止
+            AutoDoor_Open();
+            // SetBeep(800, 500);  // 关闭开门蜂鸣声
+        }
     }
     
-    // 正常距离显示
-    if (distance < 0) {
-        // 负值显示为 "----"
-        Seg7Print(12,12,12,12,10,10,10,10);
-    }
-    else if (distance == 0) {
-        // 零值显示为 "   0"
-        Seg7Print(10,10,10,0,10,10,10,10);
-    }
-    else if (distance < 10) {
-        // 个位数: "   X"
-        Seg7Print(10,10,10,distance,10,10,10,10);
-    }
-    else if (distance < 100) {
-        // 两位数: "  XX"
-        Seg7Print(10,10,distance/10,distance%10,10,10,10,10);
-    }
-    else if (distance < 1000) {
-        // 三位数: " XXX"
-        Seg7Print(10,distance/100,(distance/10)%10,distance%10,10,10,10,10);
-    }
-    else {
-        // 超大值显示为 "----"
-        Seg7Print(12,12,12,12,10,10,10,10);
-    }
+    // 更新显示
+    //AutoDoor_UpdateDisplay();
 }
 
 /**
- * @brief 检查距离值是否有效
+ * @brief 开门操作
  */
-int UltrasonicIsValidDistance(int distance) {
-    // 常见的错误返回值
-    if (distance == 1024 || distance == 4096) {
-        return 0;  // 无效
-    }
-    
-    // 合理的距离范围 (0-500cm)
-    if (distance >= 0 && distance <= 500) {
-        return 1;  // 有效
-    }
-    
-    return 0;  // 其他情况视为无效
+void AutoDoor_Open(void) {
+    is_door_open[id] = 1;           // 设置门状态为开启
+    //todo: 加 电机开始
+    //g_door_timer = DOOR_OPEN_TIME;      // 启动倒计时
 }
 
 /**
- * @brief 获取当前存储的距离值
+ * @brief 关门操作
  */
-int UltrasonicGetCurrentDistance(void) {
-    return current_distance;
+void AutoDoor_Close(void) {
+    is_door_open[id] = 0;         // 设置门状态为关闭
+    //加 关电机
+    // g_door_timer = 0;                   // 停止倒计时
+    // SetBeep(600, 200);               // 关闭关门蜂鸣声
+}
+
+/**
+ * @brief 更新显示
+ */
+void AutoDoor_UpdateDisplay(void) {
+    unsigned char d0, d1, d2, d3;
+    
+    if (g_distance == DISTANCE_INVALID) {
+        // 显示错误状态 "----"
+        Seg7Print(12, 12, 12, 12, 10, 10, 10, 10);  // 前4位显示横线，后4位空白
+    } else {
+        // 将距离值分解为各个数位显示
+        if (g_distance >= 1000) {
+            // 大于等于1000cm，显示前4位数字
+            d3 = g_distance / 1000;
+            d2 = (g_distance % 1000) / 100;
+            d1 = (g_distance % 100) / 10;
+            d0 = g_distance % 10;
+        } else if (g_distance >= 100) {
+            // 100-999cm，显示3位数字
+            d3 = 10;  // 空白
+            d2 = g_distance / 100;
+            d1 = (g_distance % 100) / 10;
+            d0 = g_distance % 10;
+        } else if (g_distance >= 10) {
+            // 10-99cm，显示2位数字
+            d3 = 10;  // 空白
+            d2 = 10;  // 空白
+            d1 = g_distance / 10;
+            d0 = g_distance % 10;
+        } else {
+            // 0-9cm，显示1位数字
+            d3 = 10;  // 空白
+            d2 = 10;  // 空白
+            d1 = 10;  // 空白
+            d0 = g_distance;
+        }
+        
+        // 显示: 距离值cm + 门状态标识
+        if (g_door_state == DOOR_OPEN) {
+            // 门开启状态，后4位显示 "oPEn"
+            Seg7Print(d3, d2, d1, d0, 0, 15, 8, 11);  // 距离 + o P E n
+        } else {
+            // 门关闭状态，后4位显示距离的cm单位或空白
+            Seg7Print(d3, d2, d1, d0, 10, 10, 10, 10);  // 距离 + 空白
+        }
+    }
+    
+    // 使用LED显示门状态
+    if (g_door_state == DOOR_OPEN) {
+        // 门开启：点亮LED
+        LedPrint(0x01);     // 点亮第一个LED表示门开启
+    } else {
+        // 门关闭：熄灭LED
+        LedPrint(0x00);     // 熄灭所有LED表示门关闭
+    }
 }

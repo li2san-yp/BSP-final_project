@@ -13,7 +13,11 @@
         "my_uart1.h": "c",
         "ultrasonic_module.h": "c",
         "sys.H": "cpp",
-        "Key.H": "cpp"
+        "Key.H": "cpp",
+        "temp_module.h": "c",
+        "radio.h": "c",
+        "fm_radio.h": "c",
+        "adc.h": "c"
     },
     "python-envs.defaultEnvManager": "ms-python.python:conda",
     "python-envs.defaultPackageManager": "ms-python.python:conda",

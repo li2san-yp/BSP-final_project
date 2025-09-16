@@ -27,8 +27,9 @@
 #include "temp_controlled_fan.h"
 #include "voice_module.h"
 #include "ultrasonic_module.h"
-// #include "my_uart1.h"
-// #include "nv_temp_threshold.h"
+#include "radio.h"
+#include "my_uart1.h"
+#include "nv_temp_threshold.h"
 
 // 添加直流电机温控模块
 

@@ -20,12 +20,14 @@ code int tempdata[]={239,197,175,160,150,142,135,129,124,120,116,113,109,107,104
 					  -6, -7, -7, -8, -8, -9, -9,-10,-10,-11,-11,-12,-13,-13,-14,-14, 
 					 -15,-16,-16,-17,-18,-19,-19,-20,-21,-22,-23,-24,-25,-26,-27,-28,
 					 -29,-30,-32,-33,-35,-36,-38,-40,-43,-46,-50,-55,-63,361};
-void ShowTemp()
-{
+void UpdateTemp() {
 	adc_temp = GetADC();
 	rt = adc_temp.Rt;
 	rt = rt >> 2;
 	temperature = tempdata[rt];
+}
+void ShowTemp()
+{
 	if(temperature < 0)
 		Seg7Print(10,10,10,10,10,12,-temperature/10%10,-temperature%10);
 	else

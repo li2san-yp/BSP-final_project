@@ -6,8 +6,11 @@ xdata uchar is_alarm[4]={0,0,0,0};       // 报警状态，1=报警 0=正常，�
 xdata uchar id=1;
 
 void my1S_callback(){
-    // SetBeep(1500,50);
-    ShowStatus();
-    CheckCountdownEvent(); 
-    MyUart1SendCurrentStatus(); // 每1s发送地铁当前的状态
+    UpdateTime();                     // 更新时间
+    UpdateTemp();                     // 更新温度
+    GetSpeed();                     // 更新速度
+    ShowStatus();                     // 显示当前状态
+    CheckCountdownEvent();               // 检查倒计时
+    // 发送状态
+    MyUart1SendCurrentStatus();          // 每1s发送地铁当前的状态
 }

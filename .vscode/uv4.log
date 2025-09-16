@@ -1,13 +1,11 @@
 Build target 'Target 1'
 compiling main.c...
-source\main.c(10): warning C206: 'MyUart1Init': missing function-prototype
-source\main.c(11): warning C206: 'NVTempThresholdInit': missing function-prototype
 compiling temp_module.c...
 compiling Nav_handler.c...
 compiling rtc_module.c...
+compiling speed_module.c...
 compiling voice_module.c...
 compiling core.c...
-source\core.c(12): warning C206: 'MyUart1SendCurrentStatus': missing function-prototype
 compiling nv_temp_threshold.c...
 compiling my_uart1.c...
 linking...
@@ -50,7 +48,54 @@ linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?DS1302INIT?DS1302
 
-Program Size: data=81.2 xdata=416 code=13176
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?FMRADIOINIT?FM_RADIO
+
+*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
+    SYMBOL:  RADIO_CONFIG
+    MODULE:  .\output\Nav_handler.obj (NAV_HANDLER)
+
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  RADIO_CONFIG
+    MODULE:  .\output\Nav_handler.obj (NAV_HANDLER)
+    ADDRESS: 241BH
+
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  RADIO_CONFIG
+    MODULE:  .\output\Nav_handler.obj (NAV_HANDLER)
+    ADDRESS: 2422H
+
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  RADIO_CONFIG
+    MODULE:  .\output\Nav_handler.obj (NAV_HANDLER)
+    ADDRESS: 242CH
+
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  RADIO_CONFIG
+    MODULE:  .\output\Nav_handler.obj (NAV_HANDLER)
+    ADDRESS: 242EH
+
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  RADIO_CONFIG
+    MODULE:  .\output\Nav_handler.obj (NAV_HANDLER)
+    ADDRESS: 2441H
+
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  RADIO_CONFIG
+    MODULE:  .\output\Nav_handler.obj (NAV_HANDLER)
+    ADDRESS: 2448H
+
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  RADIO_CONFIG
+    MODULE:  .\output\Nav_handler.obj (NAV_HANDLER)
+    ADDRESS: 2452H
+
+*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
+    SYMBOL:  RADIO_CONFIG
+    MODULE:  .\output\Nav_handler.obj (NAV_HANDLER)
+    ADDRESS: 2454H
+
+Program Size: data=87.2 xdata=434 code=13893
 creating hex file from ".\output\BSP_Demo"...
-".\output\BSP_Demo" - 0 Error(s), 16 Warning(s).
-Build Time Elapsed:  00:00:01
+".\output\BSP_Demo" - 0 Error(s), 23 Warning(s).
+Build Time Elapsed:  00:00:02

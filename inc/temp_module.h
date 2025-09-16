@@ -10,6 +10,7 @@ extern int  xdata rt;                   // 电阻值
 extern int  xdata temperature;                 // 温度值
 extern code int tempdata[];      // 温度查找表
 
-extern void ShowTemp();
+extern void UpdateTemp(void);
+extern void ShowTemp(void);
 
 #endif // TEMP_MODULE_H
