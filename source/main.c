@@ -9,8 +9,7 @@ void main() {
     Uart2Init(9600, Uart2UsedforEXT);
     MyUart1Init();  
     NVTempThresholdInit();
-    //InitRTC();
-    DS1302Init(rtc_time);
+    InitRTC();
     EXTInit(enumEXTPWM);
     UltrasonicInit();               // 超声波模块   
     Radio_Init();               // 收音机模块

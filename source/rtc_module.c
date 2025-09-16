@@ -6,16 +6,16 @@ bit mode = 0;
 TimeInfo xdata tinfo = {0, 0};
 unsigned char xdata station_id = 1; // 当前站点ID，初始为列车id
 
-// void InitRTC() {
-//     unsigned char InitTime;
-//     DS1302Init(rtc_time);
-//     get_speed_res = GetSpeed();
-//     station_id = id; // 初始为第一站
-//     mode = 0;
-//     InitTime = dist[station_id] * 3.6 / get_speed_res;
-//     rtc_time.minute = InitTime / 60;
-//     rtc_time.second = InitTime % 60;
-// }
+void InitRTC() {
+    unsigned char InitTime;
+    DS1302Init(rtc_time);
+    get_speed_res = GetSpeed();
+    station_id = id; // 初始为第一站
+    mode = 0;
+    InitTime = dist[station_id] * 3.6 / get_speed_res;
+    rtc_time.minute = InitTime / 60;
+    rtc_time.second = InitTime % 60;
+}
 void ResetTimer() {
     unsigned int xdata total_seconds;
     get_speed_res = GetSpeed();
@@ -31,18 +31,25 @@ void ResetTimer() {
     RTC_Write(rtc_time);
 }
 void UpdateTime() {
+    // 计算总秒数，以确保连续性
+    unsigned int total_seconds = rtc_time.minute * 60 + rtc_time.second;
+    
     rtc_time = RTC_Read();
-     if (rtc_time.minute == 0 && rtc_time.second == 0) {
+    // 检查是否需要重置计时器
+    if (total_seconds == 0) {
         mode = !mode;
         ResetTimer();
-    } else if (rtc_time.second == 0) {
-        rtc_time.second = 59;
-        rtc_time.minute--;
     } else {
-        rtc_time.second--;
+        // 减少一秒
+        total_seconds--;
+        // 重新计算分和秒
+        rtc_time.minute = total_seconds / 60;
+        rtc_time.second = total_seconds % 60;
+        // 写入新的时间
+        RTC_Write(rtc_time);
     }
-    RTC_Write(rtc_time);
-    tinfo.seconds = rtc_time.minute * 60 + rtc_time.second;
+    // 更新全局时间信息
+    tinfo.seconds = total_seconds;
     tinfo.time_mode = mode;
 }
 void ShowTime() {

@@ -24,7 +24,7 @@ void UltrasonicInit(void) {
     
     // 初始化步进电机
     StepMotorInit();
-    SetBeep(1000, 200);  // 初始化提示音
+    //SetBeep(1000, 200);  // 初始化提示音
     // 初始化门状态
     is_door_open[id] = 0;  // 门初始为关闭状态 
     g_distance = 0;
@@ -61,11 +61,11 @@ void UltrasonicUpdateAndDisplay(void) {
         // 距离小于10cm且门是关闭的，开门
         if (is_door_open[id] == 0 && tinfo.time_mode == 1) { //关门且车停止
             AutoDoor_Open();
-            SetBeep(800, 500);  // 关闭开门蜂鸣声
+            //SetBeep(800, 500);  // 关闭开门蜂鸣声
         }
         if(is_door_open[id] == 1 && tinfo.seconds == 1){ //开门且车启动
             AutoDoor_Close();
-            SetBeep(600, 500);  // 关闭关门蜂鸣声
+            //SetBeep(600, 500);  // 关闭关门蜂鸣声
         }
     }
     
