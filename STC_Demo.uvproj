@@ -397,9 +397,9 @@
               <FilePath>.\source\Nav_handler.c</FilePath>
             </File>
             <File>
-              <FileName>rtc_module.c</FileName>
+              <FileName>time_module.c</FileName>
               <FileType>1</FileType>
-              <FilePath>.\source\rtc_module.c</FilePath>
+              <FilePath>.\source\time_module.c</FilePath>
             </File>
             <File>
               <FileName>speed_module.c</FileName>

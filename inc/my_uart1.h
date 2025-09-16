@@ -7,7 +7,7 @@
 (2) 上位机命令接收：接收并解析上位机发送的控制命令
 
 通信协议格式：
-发送格式：BSP,id,temp,tempThresholds,speed,etaMin,etaSec,door,alarm\n
+发送格式：BSP,id,temp,tempThresholds,speed,etaMin,etaSec,mode,door,alarm\n
 字段说明（所有字段均为整型）：
 - BSP: 包头标识（固定为"BSP"）
 - id: 车辆ID（整型）
@@ -16,6 +16,7 @@
 - speed: 速度（整型）
 - etaMin: 预计到达时间分钟（整型）
 - etaSec: 预计到达时间秒数（整型）
+- mode: 运行模式（0运行中，1停站中）
 - door: 门状态（0关闭，1打开）
 - alarm: 报警状态（0无报警，1有报警）
 
@@ -39,7 +40,7 @@
 #define MY_UART1_TX_BUFFER_SIZE 32          // 发送缓冲区大小
 #define MY_UART1_RX_BUFFER_SIZE 32          // 接收缓冲区大小
 #define MY_UART1_FRAME_END      '\n'        // 帧结束符
-#define MY_UART1_FIELD_COUNT    9           // 数据字段数量（包含包头）
+#define MY_UART1_FIELD_COUNT    10          // 数据字段数量（包含包头）
 #define MY_UART1_FRAME_HEADER   "BSP"       // 数据包头标识
 #define MY_UART1_HEADER_SIZE    3            // 包头长度
 
@@ -81,7 +82,7 @@ extern char xdata g_txBuffer[MY_UART1_TX_BUFFER_SIZE];                 // 发送
 //    }
 
 // 通信协议示例（所有字段均为整型，带包头）：
-// 发送：BSP,1,23,45,2,30,1,0,0\n
-// 接收：BSP,2,25,40,5,15,30,1,1\n
+// 发送：BSP,1,23,45,2,30,1,0,0,0\n
+// 接收：BSP,2,25,40,5,15,30,1,1,1\n
 
 #endif

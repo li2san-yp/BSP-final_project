@@ -3,7 +3,7 @@
         "key.h": "c",
         "core.h": "c",
         "string.h": "c",
-        "rtc_module.h": "c",
+        "time_module.h": "c",
         "uart2.h": "c",
         "sys.h": "c",
         "stc15f2k60s2.h": "c",

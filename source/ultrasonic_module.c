@@ -70,7 +70,7 @@ void UltrasonicUpdateAndDisplay(void) {
     }
 
     if(g_distance == 0 && tinfo.time_mode == 0){ //车启动且距离为0
-            SetBeep(600, 500);  // 提醒
+            // SetBeep(600, 500);  // 提醒
         
     }
     

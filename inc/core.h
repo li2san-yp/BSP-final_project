@@ -23,7 +23,7 @@
 #include "temp_module.h"
 #include "speed_module.h"
 #include "Nav_handler.h"
-#include "rtc_module.h"
+#include "time_module.h"
 #include "temp_controlled_fan.h"
 #include "voice_module.h"
 #include "ultrasonic_module.h"

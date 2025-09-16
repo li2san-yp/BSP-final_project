@@ -2,7 +2,7 @@
 ".\source\STCBSP_V3.6.LIB",
 ".\output\temp_module.obj",
 ".\output\Nav_handler.obj",
-".\output\rtc_module.obj",
+".\output\time_module.obj",
 ".\output\speed_module.obj",
 ".\output\voice_module.obj",
 ".\output\core.obj",

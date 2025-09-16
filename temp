@@ -2,7 +2,7 @@
 Build target 'Target 1'
 compiling main.c...129.2 xdata=196 code=7943
 compiling temp_module.c...
-compiling rtc_module.c...0:00
+compiling time_module.c...0:00
 compiling voice_module.c... d:\BSP-final_project\STC_Demo.uvproj -j0 -
 compiling core.c...BSP-final_project\.vscode\uv4.log
 linking...

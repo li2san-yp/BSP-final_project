@@ -2,7 +2,9 @@
 自定义串口1模块的具体实现，提供下位机与上位机的通信功能
 */
 
+#include "my_uart1.h"
 #include "core.h"
+#include "time_module.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -90,7 +92,7 @@ static int ParseCommand(char* cmdStr) {
     unsigned int xdata tempCarId;
     unsigned int xdata tempTemp, tempTempThresholds;
     unsigned int xdata tempSpeed, tempEtaMin, tempEtaSec;
-    unsigned char xdata tempDoor, tempAlarm;
+    unsigned char xdata tempDoor, tempAlarm, tempMode;
 
     if (cmdStr == 0 || strlen(cmdStr) == 0) {
         return -1;
@@ -121,12 +123,17 @@ static int ParseCommand(char* cmdStr) {
             case 6:  // etaSec
                 tempEtaSec = (unsigned int)atoi(token);
                 break;
-            case 7:  // door
+            case 7:  // mode
+                tempMode = (unsigned char)atoi(token);
+                if (tempMode > 1)
+                    tempMode = 0;
+                break;
+            case 8:  // door
                 tempDoor = (unsigned char)atoi(token);
                 if (tempDoor > 1)
                     tempDoor = 0;
                 break;
-            case 8:  // alarm
+            case 9:  // alarm
                 tempAlarm = (unsigned char)atoi(token);
                 if (tempAlarm > 1)
                     tempAlarm = 0;
@@ -217,8 +224,8 @@ char MyUart1SendCurrentStatus(void)
     pos += my_utoa(id, &g_txBuffer[pos]); // 使用全局变量id
     g_txBuffer[pos++] = ',';
 
-    pos += my_utoa(station_id, &g_txBuffer[pos]); // 当前温度
-    g_txBuffer[pos++] = ',';
+    // pos += my_utoa(station_id, &g_txBuffer[pos]); // 当前温度
+    // g_txBuffer[pos++] = ',';
 
     pos += my_utoa(temperature, &g_txBuffer[pos]); // 当前温度
     g_txBuffer[pos++] = ',';
@@ -233,6 +240,9 @@ char MyUart1SendCurrentStatus(void)
     g_txBuffer[pos++] = ',';
 
     pos += my_utoa(rtc_time.second, &g_txBuffer[pos]); // ETA秒数
+    g_txBuffer[pos++] = ',';
+
+    pos += my_utoa(mode, &g_txBuffer[pos]); // 运行模式
     g_txBuffer[pos++] = ',';
 
     pos += my_utoa(is_door_open[id], &g_txBuffer[pos]); // 门状态

@@ -3,6 +3,9 @@
 
 #include "DS1302.H"
 
+#define RUNNING_MODE 0
+#define STOP_MODE 1
+
 typedef struct {
     unsigned int seconds;     // 剩余秒数
     unsigned char time_mode;  // 0 = dist/get_speed_res 模式，1 = 20s 模式
