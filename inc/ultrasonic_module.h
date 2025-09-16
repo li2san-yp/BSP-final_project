@@ -47,9 +47,16 @@ void AutoDoor_Open(void);
 void AutoDoor_Close(void);
 
 /**
- * @brief 更新显示
- * @note 显示当前距离和门状态
+ * @brief 紧急停止电机
+ * @note 立即停止门的运动
  */
-void AutoDoor_UpdateDisplay(void);
+void AutoDoor_EmergencyStop(void);
+
+/**
+ * @brief 获取门电机状态
+ * @return 1:电机空闲, 0:电机运行中
+ */
+unsigned char AutoDoor_IsMotorFree(void);
+
 
 #endif /* _ULTRASONIC_H_ */

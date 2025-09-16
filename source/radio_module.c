@@ -22,12 +22,14 @@
  * @brief 初始化收音机模块
  */
 void Radio_Init(void) {
+    BeepInit();
+    SetBeep(1000, 100); // 调试：短暂蜂鸣提示初始化开始
     if (!radio_initialized) {
         // 设置默认配置
-        radio_config.frequency = 905;   // 90.5MHz
-        radio_config.volume = 10;       // 音量10
+        radio_config.frequency = 1005;  // 100.5MHz - 尝试一个常见的FM频率
+        radio_config.volume = 12;       // 音量12 (增加音量)
         radio_config.GP1 = 1;          // 启用GP1指示灯
-        radio_config.GP2 = 0;          // 关闭GP2指示灯
+        radio_config.GP2 = 1;          // 启用GP2指示灯用于调试
         radio_config.GP3 = 0;          // 关闭GP3指示灯
         
         // 初始化收音机
@@ -35,6 +37,9 @@ void Radio_Init(void) {
         SetFMRadio(radio_config);      // 确保设置生效
         
         radio_initialized = 1;
+        
+        // 调试：短暂蜂鸣提示收音机已初始化
+        SetBeep(1000, 200);
     }
 }
 
@@ -74,4 +79,26 @@ unsigned char Radio_GetVolume(void) {
  */
 unsigned int Radio_GetFrequency(void) {
     return radio_config.frequency;
+}
+
+/**
+ * @brief 测试收音机功能
+ * @note 循环测试不同频率和音量，用于调试
+ */
+void Radio_Test(void) {
+        unsigned int test_frequencies[] = {905, 1005, 1035, 1077};  // 90.5, 100.5, 103.5, 107.7 MHz
+    unsigned char i;
+    if (!radio_initialized) {
+        Radio_Init();
+    }
+    
+    // 测试几个常见的FM频率
+
+    
+    for (i = 0; i < 4; i++) {
+        Radio_SetFrequency(test_frequencies[i]);
+        Radio_SetVolume(15);  // 最大音量测试
+        SetBeep(500 + i * 100, 100);  // 不同音调提示当前频率
+        // 这里可以添加延时让用户听收音机声音
+    }
 }

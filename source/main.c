@@ -1,5 +1,5 @@
 #include "core.h"
-//
+
 void main() {
     AdcInit(ADCexpEXT);
     DisplayerInit();
@@ -9,11 +9,13 @@ void main() {
     Uart2Init(9600, Uart2UsedforEXT);
     MyUart1Init();  
     NVTempThresholdInit();
-    EXTInit(enumEXTPWM);
+    // EXTInit(enumEXTPWM);
+    // UltrasonicInit();               // 超声波模块   
+    // Radio_Init();               // 收音机模块
     SetUart2Rxd(&Uart2RxBuf, 1, &Uart2RxBuf,0);  // 单字节接收，不匹配包头
     SetEventCallBack(enumEventUart2Rxd, myUart2Rxd_callback);
     SetEventCallBack(enumEventSys1S, my1S_callback);
-    SetEventCallBack(enumEventNav, NavHandler);
+    // SetEventCallBack(enumEventNav, NavHandler);
     MySTC_Init();
     // LedPrint(0);
     while (1) {

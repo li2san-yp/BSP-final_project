@@ -57,7 +57,6 @@ extern void MyUart1Init(void);                                    // 初始化�
 extern char MyUart1SendCurrentStatus(void);                      // 发送当前系统状态数据（使用全局id）
 extern void MyUart1ClearRxBuffer(void);                          // 清空接收缓冲区
 extern void MyUart1ProcessRxData(void);                          // 处理接收错误状态（可选调用）
-extern void MyUart1LoadTempThreshold(void);       // 从非易失存储加载温度阈值
 
 // 外部变量声明
 extern char xdata g_rxBuffer[MY_UART1_RX_BUFFER_SIZE];                 // 接收缓冲区

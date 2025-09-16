@@ -17,7 +17,8 @@
         "temp_module.h": "c",
         "radio.h": "c",
         "fm_radio.h": "c",
-        "adc.h": "c"
+        "adc.h": "c",
+        "temp_controlled_fan.h": "c"
     },
     "python-envs.defaultEnvManager": "ms-python.python:conda",
     "python-envs.defaultPackageManager": "ms-python.python:conda",

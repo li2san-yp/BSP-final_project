@@ -25,8 +25,6 @@ void UpdateTime() {
      if (rtc_time[id].minute == 0 && rtc_time[id].second == 0) {
         mode = !mode;
         ResetTimer();
-    } else if (rtc_time[id].second > 60 || rtc_time[id].minute > 2) {
-        ResetTimer();
     } else if (rtc_time[id].second == 0) {
         rtc_time[id].second = 59;
         rtc_time[id].minute--;

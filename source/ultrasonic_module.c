@@ -6,9 +6,15 @@
  */
 
 #include "core.h"
+#include "StepMotor.h"      // 添加步进电机头文件
 
 // 全局变量定义
 unsigned int g_distance = 0;               // 当前距离值
+
+// 步进电机配置参数
+#define DOOR_MOTOR_SPEED        100     // 门电机速度 (步/秒)
+#define DOOR_OPEN_STEPS         200     // 开门步数 (正转)
+#define DOOR_CLOSE_STEPS        -200    // 关门步数 (反转)
 
 /**
  * @brief 初始化自动门系统
@@ -16,6 +22,9 @@ unsigned int g_distance = 0;               // 当前距离值
 void UltrasonicInit(void) {
     // 初始化超声波模块 (使用EXT外设)
     EXTInit(enumEXTUltraSonic);
+    
+    // 初始化步进电机
+    StepMotorInit();
     
     // 初始化门状态
     is_door_open[id] = 0;  // 门初始为关闭状态 
@@ -65,74 +74,47 @@ void UltrasonicUpdateAndDisplay(void) {
  * @brief 开门操作
  */
 void AutoDoor_Open(void) {
-    is_door_open[id] = 1;           // 设置门状态为开启
-    //todo: 加 电机开始
-    //g_door_timer = DOOR_OPEN_TIME;      // 启动倒计时
+    // 检查电机是否空闲
+    if (GetStepMotorStatus(enumStepMotor1) == enumStepMotorFree) {
+        is_door_open[id] = 1;           // 设置门状态为开启
+        
+        // 启动步进电机开门 - 正转
+        if (SetStepMotor(enumStepMotor1, DOOR_MOTOR_SPEED, DOOR_OPEN_STEPS) == enumSetStepMotorOK) {
+            // 开门电机启动成功
+            // SetBeep(800, 200);  // 可选：开门提示音
+        }
+    }
 }
 
 /**
  * @brief 关门操作
  */
 void AutoDoor_Close(void) {
-    is_door_open[id] = 0;         // 设置门状态为关闭
-    //加 关电机
-    // g_door_timer = 0;                   // 停止倒计时
-    // SetBeep(600, 200);               // 关闭关门蜂鸣声
+    // 检查电机是否空闲
+    if (GetStepMotorStatus(enumStepMotor1) == enumStepMotorFree) {
+        is_door_open[id] = 0;         // 设置门状态为关闭
+        
+        // 启动步进电机关门 - 反转
+        if (SetStepMotor(enumStepMotor1, DOOR_MOTOR_SPEED, DOOR_CLOSE_STEPS) == enumSetStepMotorOK) {
+            // 关门电机启动成功
+            // SetBeep(600, 200);  // 可选：关门提示音
+        }
+    }
 }
 
 /**
- * @brief 更新显示
+ * @brief 紧急停止电机
+ * @note 立即停止门的运动
  */
-void AutoDoor_UpdateDisplay(void) {
-    unsigned char d0, d1, d2, d3;
-    
-    if (g_distance == DISTANCE_INVALID) {
-        // 显示错误状态 "----"
-        Seg7Print(12, 12, 12, 12, 10, 10, 10, 10);  // 前4位显示横线，后4位空白
-    } else {
-        // 将距离值分解为各个数位显示
-        if (g_distance >= 1000) {
-            // 大于等于1000cm，显示前4位数字
-            d3 = g_distance / 1000;
-            d2 = (g_distance % 1000) / 100;
-            d1 = (g_distance % 100) / 10;
-            d0 = g_distance % 10;
-        } else if (g_distance >= 100) {
-            // 100-999cm，显示3位数字
-            d3 = 10;  // 空白
-            d2 = g_distance / 100;
-            d1 = (g_distance % 100) / 10;
-            d0 = g_distance % 10;
-        } else if (g_distance >= 10) {
-            // 10-99cm，显示2位数字
-            d3 = 10;  // 空白
-            d2 = 10;  // 空白
-            d1 = g_distance / 10;
-            d0 = g_distance % 10;
-        } else {
-            // 0-9cm，显示1位数字
-            d3 = 10;  // 空白
-            d2 = 10;  // 空白
-            d1 = 10;  // 空白
-            d0 = g_distance;
-        }
-        
-        // 显示: 距离值cm + 门状态标识
-        if (g_door_state == DOOR_OPEN) {
-            // 门开启状态，后4位显示 "oPEn"
-            Seg7Print(d3, d2, d1, d0, 0, 15, 8, 11);  // 距离 + o P E n
-        } else {
-            // 门关闭状态，后4位显示距离的cm单位或空白
-            Seg7Print(d3, d2, d1, d0, 10, 10, 10, 10);  // 距离 + 空白
-        }
-    }
-    
-    // 使用LED显示门状态
-    if (g_door_state == DOOR_OPEN) {
-        // 门开启：点亮LED
-        LedPrint(0x01);     // 点亮第一个LED表示门开启
-    } else {
-        // 门关闭：熄灭LED
-        LedPrint(0x00);     // 熄灭所有LED表示门关闭
-    }
+void AutoDoor_EmergencyStop(void) {
+    EmStop(enumStepMotor1);  // 紧急停止步进电机
 }
+
+/**
+ * @brief 获取门电机状态
+ * @return 1:电机空闲, 0:电机运行中
+ */
+unsigned char AutoDoor_IsMotorFree(void) {
+    return (GetStepMotorStatus(enumStepMotor1) == enumStepMotorFree) ? 1 : 0;
+}
+

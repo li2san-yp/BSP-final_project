@@ -49,4 +49,10 @@ unsigned char Radio_GetVolume(void);
  */
 unsigned int Radio_GetFrequency(void);
 
+/**
+ * @brief 测试收音机功能
+ * @note 循环测试不同频率和音量，用于调试
+ */
+void Radio_Test(void);
+
 #endif // __RADIO_H

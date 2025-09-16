@@ -431,6 +431,26 @@
               <FileType>1</FileType>
               <FilePath>.\source\my_uart1.c</FilePath>
             </File>
+            <File>
+              <FileName>choose_id_module.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\source\choose_id_module.c</FilePath>
+            </File>
+            <File>
+              <FileName>radio_module.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\source\radio_module.c</FilePath>
+            </File>
+            <File>
+              <FileName>temp_controlled_fan.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\source\temp_controlled_fan.c</FilePath>
+            </File>
+            <File>
+              <FileName>ultrasonic_module.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\source\ultrasonic_module.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
