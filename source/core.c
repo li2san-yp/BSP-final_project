@@ -11,6 +11,7 @@ void my1S_callback(){
     GetSpeed();                     // 更新速度
     ShowStatus();                     // 显示当前状态
     CheckCountdownEvent();               // 检查倒计时
+
     // 发送状态
     MyUart1SendCurrentStatus();          // 每1s发送地铁当前的状态
 }

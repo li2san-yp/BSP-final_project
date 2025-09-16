@@ -1,5 +1,5 @@
 #include "core.h"
-
+//
 void main() {
     AdcInit(ADCexpEXT);
     DisplayerInit();
