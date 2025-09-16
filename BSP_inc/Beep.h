@@ -1,27 +1,27 @@
-/**********************************Beep V2.0 è¯´æ˜ ************************************************************************
-Beepç”¨äºæ§åˆ¶â€œSTC-Bå­¦ä¹ æ¿â€ä¸Šæ— æºèœ‚é¸£å™¨çš„å‘å£°ã€‚Beepæ¨¡å—å…±æä¾›1ä¸ªé©±åŠ¨å‡½æ•°ã€2ä¸ªåº”ç”¨å‡½æ•°ï¼š
-  (1)  BeepInit()ï¼šèœ‚é¸£å™¨æ¨¡å—é©±åŠ¨å‡½æ•°
-  (2)  Set_Beep(unsigned int Beep_freq, unsigned char Beep_time)ï¼šæ§åˆ¶èœ‚é¸£å™¨å‘å£°ï¼Œéé˜»å¡å‹
-	      å‡½æ•°å‚æ•°ï¼š
-        Beep_freqï¼šæŒ‡å®šå‘å£°é¢‘ç‡ï¼Œå•ä½Hzã€‚å°äº10å°†æ— è¾“å‡º  
-			  Beep_timeï¼šæŒ‡å®šå‘å£°æ—¶é•¿ã€‚å‘å£°æ—¶é•¿ï¼10*Beep_time	  (mS)  ï¼Œæœ€é•¿ 655350mS
-				å‡½æ•°è¿”å›å€¼ï¼šenumSetBeepOKï¼šè°ƒç”¨æˆåŠŸï¼ŒenumSetBeepFailï¼šè°ƒç”¨å¤±è´¥ï¼ˆæˆ–å› èœ‚é¸£å™¨æ­£åœ¨å‘éŸ³ï¼‰	 
-	(3)  GetBeepStatus(void):	è·å–Beepå½“å‰çŠ¶æ€,enmuBeepFree:ç©ºé—², enumBeepBusy ,æ­£åœ¨å‘éŸ³
-	(4)  Beepæ¨¡å—ä½¿ç”¨äº†STCå†…éƒ¨CCPæ¨¡å—1é€šé“
+/**********************************Beep V2.0 ËµÃ÷ ************************************************************************
+BeepÓÃÓÚ¿ØÖÆ¡°STC-BÑ§Ï°°å¡±ÉÏÎŞÔ´·äÃùÆ÷µÄ·¢Éù¡£BeepÄ£¿é¹²Ìá¹©1¸öÇı¶¯º¯Êı¡¢2¸öÓ¦ÓÃº¯Êı£º
+  (1)  BeepInit()£º·äÃùÆ÷Ä£¿éÇı¶¯º¯Êı
+  (2)  Set_Beep(unsigned int Beep_freq, unsigned char Beep_time)£º¿ØÖÆ·äÃùÆ÷·¢Éù£¬·Ç×èÈûĞÍ
+	      º¯Êı²ÎÊı£º
+        Beep_freq£ºÖ¸¶¨·¢ÉùÆµÂÊ£¬µ¥Î»Hz¡£Ğ¡ÓÚ10½«ÎŞÊä³ö  
+			  Beep_time£ºÖ¸¶¨·¢ÉùÊ±³¤¡£·¢ÉùÊ±³¤£½10*Beep_time	  (mS)  £¬×î³¤ 655350mS
+				º¯Êı·µ»ØÖµ£ºenumSetBeepOK£ºµ÷ÓÃ³É¹¦£¬enumSetBeepFail£ºµ÷ÓÃÊ§°Ü£¨»òÒò·äÃùÆ÷ÕıÔÚ·¢Òô£©	 
+	(3)  GetBeepStatus(void):	»ñÈ¡Beepµ±Ç°×´Ì¬,enmuBeepFree:¿ÕÏĞ, enumBeepBusy ,ÕıÔÚ·¢Òô
+	(4)  BeepÄ£¿éÊ¹ÓÃÁËSTCÄÚ²¿CCPÄ£¿é1Í¨µÀ
 
-ç¼–å†™ï¼šå¾æˆï¼ˆç”µè¯18008400450ï¼‰   2021å¹´3æœˆ3æ—¥è®¾è®¡ï¼Œ2021å¹´3æœˆ26æ—¥æ›´æ–°
+±àĞ´£ºĞì³É£¨µç»°18008400450£©   2021Äê3ÔÂ3ÈÕÉè¼Æ£¬2021Äê3ÔÂ26ÈÕ¸üĞÂ
 */
 
 #ifndef _beep_H_			
 #define _beep_H_		
 
-extern void BeepInit();										                             //  èœ‚é¸£å™¨åˆå§‹åŒ–
+extern void BeepInit();										                             //  ·äÃùÆ÷³õÊ¼»¯
 
-extern char SetBeep(unsigned int Beep_freq, unsigned int Beep_time);   //  å‘æŒ‡å®šé¢‘ç‡å£°éŸ³ï¼Œ å‘å£°æ—¶é•¿ï¼10Ã—Beep_time	  (mS)  ï¼Œæœ€é•¿ 655350mS
-                                                                       //  Beep_freq < 10 Hz, ä¸å‘éŸ³
-                                                                       //  å‡½æ•°è¿”å› enumSetBeepOKï¼šè°ƒç”¨æˆåŠŸï¼Œ   enumSetBeepFailï¼šè°ƒç”¨å¤±è´¥ï¼ˆè°ƒç”¨æ—¶æ­£åœ¨å‘éŸ³ï¼‰
+extern char SetBeep(unsigned int Beep_freq, unsigned int Beep_time);   //  ·¢Ö¸¶¨ÆµÂÊÉùÒô£¬ ·¢ÉùÊ±³¤£½10¡ÁBeep_time	  (mS)  £¬×î³¤ 655350mS
+                                                                       //  Beep_freq < 10 Hz, ²»·¢Òô
+                                                                       //  º¯Êı·µ»Ø enumSetBeepOK£ºµ÷ÓÃ³É¹¦£¬   enumSetBeepFail£ºµ÷ÓÃÊ§°Ü£¨µ÷ÓÃÊ±ÕıÔÚ·¢Òô£©
 
-extern unsigned char GetBeepStatus(void);                              //  è·å–çŠ¶æ€,enumBeepFree:è‡ªç”±, enumBeepBusy,æ­£åœ¨å‘å£°
+extern unsigned char GetBeepStatus(void);                              //  »ñÈ¡×´Ì¬,enumBeepFree:×ÔÓÉ, enumBeepBusy,ÕıÔÚ·¢Éù
 
 enum BeepActName {enumBeepFree=0,enumBeepBusy,enumSetBeepOK,enumSetBeepFail}; 
 

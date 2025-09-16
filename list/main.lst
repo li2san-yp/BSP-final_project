@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.7.0   MAIN                                                              09/16/2025 09:17:02 PAGE 1   
+C51 COMPILER V9.60.7.0   MAIN                                                              09/16/2025 09:26:37 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
@@ -14,25 +14,26 @@ line level    source
    4   1          AdcInit(ADCexpEXT);
    5   1          DisplayerInit();
    6   1          KeyInit();
-   7   1          SetDisplayerArea(0, 7);
-   8   1          Uart2Init(9600, Uart2UsedforEXT);
-   9   1          MyUart1Init();  
-  10   1          EXTInit(enumEXTPWM);
-  11   1          SetUart2Rxd(&Uart2RxBuf, 1, &Uart2RxBuf,0);  // 单字节接收，不匹配包头
-  12   1          SetEventCallBack(enumEventSys1S, my1S_callback);
-  13   1          SetEventCallBack(enumEventUart2Rxd, myUart2Rxd_callback);
-  14   1          SetEventCallBack(enumEventNav, NavHandler);
-  15   1          MySTC_Init();
-  16   1          LedPrint(0);
-  17   1          while (1) {
-  18   2              MySTC_OS();
-  19   2              DC_motor();  // 添加温控风扇控制
-  20   2          }
-  21   1      }
+   7   1          BeepInit();
+   8   1          SetDisplayerArea(0, 7);
+   9   1          Uart2Init(9600, Uart2UsedforEXT);
+  10   1          MyUart1Init();  
+  11   1          EXTInit(enumEXTPWM);
+  12   1          SetUart2Rxd(&Uart2RxBuf, 1, &Uart2RxBuf,0);  // 单字节接收，不匹配包头
+  13   1          SetEventCallBack(enumEventSys1S, my1S_callback);
+  14   1          SetEventCallBack(enumEventUart2Rxd, myUart2Rxd_callback);
+  15   1          SetEventCallBack(enumEventNav, NavHandler);
+  16   1          MySTC_Init();
+  17   1          LedPrint(0);
+  18   1          while (1) {
+  19   2              MySTC_OS();
+  20   2              DC_motor();  // 添加温控风扇控制
+  21   2          }
+  22   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    113    ----
+   CODE SIZE        =    116    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----

@@ -4,6 +4,7 @@ void main() {
     AdcInit(ADCexpEXT);
     DisplayerInit();
     KeyInit();
+    BeepInit();
     SetDisplayerArea(0, 7);
     Uart2Init(9600, Uart2UsedforEXT);
     MyUart1Init();  
