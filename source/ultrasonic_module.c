@@ -6,7 +6,6 @@
  */
 
 #include "core.h"
-#include "StepMotor.h"      // 添加步进电机头文件
 
 // 全局变量定义
 unsigned int g_distance = 0;               // 当前距离值
@@ -25,7 +24,7 @@ void UltrasonicInit(void) {
     
     // 初始化步进电机
     StepMotorInit();
-    
+    SetBeep(1000, 200);  // 初始化提示音
     // 初始化门状态
     is_door_open[id] = 0;  // 门初始为关闭状态 
     g_distance = 0;
@@ -62,7 +61,11 @@ void UltrasonicUpdateAndDisplay(void) {
         // 距离小于10cm且门是关闭的，开门
         if (is_door_open[id] == 0 && tinfo.time_mode == 1) { //关门且车停止
             AutoDoor_Open();
-            // SetBeep(800, 500);  // 关闭开门蜂鸣声
+            SetBeep(800, 500);  // 关闭开门蜂鸣声
+        }
+        if(is_door_open[id] == 1 && tinfo.seconds == 1){ //开门且车启动
+            AutoDoor_Close();
+            SetBeep(600, 500);  // 关闭关门蜂鸣声
         }
     }
     
@@ -75,11 +78,11 @@ void UltrasonicUpdateAndDisplay(void) {
  */
 void AutoDoor_Open(void) {
     // 检查电机是否空闲
-    if (GetStepMotorStatus(enumStepMotor1) == enumStepMotorFree) {
+    if (GetStepMotorStatus(enumStepMotor2) == enumStepMotorFree) {
         is_door_open[id] = 1;           // 设置门状态为开启
         
         // 启动步进电机开门 - 正转
-        if (SetStepMotor(enumStepMotor1, DOOR_MOTOR_SPEED, DOOR_OPEN_STEPS) == enumSetStepMotorOK) {
+        if (SetStepMotor(enumStepMotor2, DOOR_MOTOR_SPEED, DOOR_OPEN_STEPS) == enumSetStepMotorOK) {
             // 开门电机启动成功
             // SetBeep(800, 200);  // 可选：开门提示音
         }
@@ -91,11 +94,11 @@ void AutoDoor_Open(void) {
  */
 void AutoDoor_Close(void) {
     // 检查电机是否空闲
-    if (GetStepMotorStatus(enumStepMotor1) == enumStepMotorFree) {
+    if (GetStepMotorStatus(enumStepMotor2) == enumStepMotorFree) {
         is_door_open[id] = 0;         // 设置门状态为关闭
         
         // 启动步进电机关门 - 反转
-        if (SetStepMotor(enumStepMotor1, DOOR_MOTOR_SPEED, DOOR_CLOSE_STEPS) == enumSetStepMotorOK) {
+        if (SetStepMotor(enumStepMotor2, DOOR_MOTOR_SPEED, DOOR_CLOSE_STEPS) == enumSetStepMotorOK) {
             // 关门电机启动成功
             // SetBeep(600, 200);  // 可选：关门提示音
         }
@@ -107,7 +110,7 @@ void AutoDoor_Close(void) {
  * @note 立即停止门的运动
  */
 void AutoDoor_EmergencyStop(void) {
-    EmStop(enumStepMotor1);  // 紧急停止步进电机
+    EmStop(enumStepMotor2);  // 紧急停止步进电机
 }
 
 /**
@@ -115,6 +118,6 @@ void AutoDoor_EmergencyStop(void) {
  * @return 1:电机空闲, 0:电机运行中
  */
 unsigned char AutoDoor_IsMotorFree(void) {
-    return (GetStepMotorStatus(enumStepMotor1) == enumStepMotorFree) ? 1 : 0;
+    return (GetStepMotorStatus(enumStepMotor2) == enumStepMotorFree) ? 1 : 0;
 }
 

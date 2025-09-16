@@ -50,9 +50,9 @@ void CheckCountdownEvent()
     rest_total_seconds = tinfo.seconds;
 
     // 在特定时间点播放对应语音 - 使用字符串字面量与正确示例保持一致
-    if (rest_total_seconds == 12 && tinfo.time_mode == 0)
+    if (rest_total_seconds == 20 && tinfo.time_mode == 0)
     {
-        Uart2Print(VOICE_STRING_1[id], sizeof(VOICE_STRING_1[id]));
+        Uart2Print(VOICE_STRING_1[station_id], sizeof(VOICE_STRING_1[station_id]));
     }
     else if (rest_total_seconds == 5 && tinfo.time_mode == 1)
     {
@@ -60,6 +60,6 @@ void CheckCountdownEvent()
     }
     else if (rest_total_seconds == 0 && tinfo.time_mode == 1)
     {
-        Uart2Print(VOICE_STRING_3[id], sizeof(VOICE_STRING_3[id]));
+        Uart2Print(VOICE_STRING_3[station_id], sizeof(VOICE_STRING_3[station_id]));
     }
 }

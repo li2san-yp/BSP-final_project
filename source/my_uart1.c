@@ -81,88 +81,88 @@ void MyUart1ProcessRxData(void)
 /**
  * @brief 解析接收到的命令字符串
  */
-// static int ParseCommand(char* cmdStr) {
-//     char xdata tempBuffer[MY_UART1_RX_BUFFER_SIZE];
+static int ParseCommand(char* cmdStr) {
+    char xdata tempBuffer[MY_UART1_RX_BUFFER_SIZE];
 
-//     char xdata *token;
-//     int xdata fieldIndex = 0;
+    char xdata *token;
+    int xdata fieldIndex = 0;
 
-//     unsigned int xdata tempCarId;
-//     unsigned int xdata tempTemp, tempTempThresholds;
-//     unsigned int xdata tempSpeed, tempEtaMin, tempEtaSec;
-//     unsigned char xdata tempDoor, tempAlarm;
+    unsigned int xdata tempCarId;
+    unsigned int xdata tempTemp, tempTempThresholds;
+    unsigned int xdata tempSpeed, tempEtaMin, tempEtaSec;
+    unsigned char xdata tempDoor, tempAlarm;
 
-//     if (cmdStr == 0 || strlen(cmdStr) == 0) {
-//         return -1;
-//     }
+    if (cmdStr == 0 || strlen(cmdStr) == 0) {
+        return -1;
+    }
 
-//     strcpy(tempBuffer, cmdStr);
+    strcpy(tempBuffer, cmdStr);
 
-//     token = strtok(tempBuffer, ",");
-//     while (token != 0 && fieldIndex < MY_UART1_FIELD_COUNT) {
-//         switch (fieldIndex) {
-//             case 0:  // 包头BSP，跳过验证
-//                 break;
-//             case 1:  // id
-//                 tempCarId = (unsigned int)atoi(token);
-//                 break;
-//             case 2:  // temp
-//                 tempTemp = (unsigned int)atoi(token);
-//                 break;
-//             case 3:  // tempThresholds
-//                 tempTempThresholds = (unsigned int)atoi(token);
-//                 break;
-//             case 4:  // speed
-//                 tempSpeed = (unsigned int)atoi(token);
-//                 break;
-//             case 5:  // etaMin
-//                 tempEtaMin = (unsigned int)atoi(token);
-//                 break;
-//             case 6:  // etaSec
-//                 tempEtaSec = (unsigned int)atoi(token);
-//                 break;
-//             case 7:  // door
-//                 tempDoor = (unsigned char)atoi(token);
-//                 if (tempDoor > 1)
-//                     tempDoor = 0;
-//                 break;
-//             case 8:  // alarm
-//                 tempAlarm = (unsigned char)atoi(token);
-//                 if (tempAlarm > 1)
-//                     tempAlarm = 0;
-//                 break;
-//         }
+    token = strtok(tempBuffer, ",");
+    while (token != 0 && fieldIndex < MY_UART1_FIELD_COUNT) {
+        switch (fieldIndex) {
+            case 0:  // 包头BSP，跳过验证
+                break;
+            case 1:  // id
+                tempCarId = (unsigned int)atoi(token);
+                break;
+            case 2:  // temp
+                tempTemp = (unsigned int)atoi(token);
+                break;
+            case 3:  // tempThresholds
+                tempTempThresholds = (unsigned int)atoi(token);
+                break;
+            case 4:  // speed
+                tempSpeed = (unsigned int)atoi(token);
+                break;
+            case 5:  // etaMin
+                tempEtaMin = (unsigned int)atoi(token);
+                break;
+            case 6:  // etaSec
+                tempEtaSec = (unsigned int)atoi(token);
+                break;
+            case 7:  // door
+                tempDoor = (unsigned char)atoi(token);
+                if (tempDoor > 1)
+                    tempDoor = 0;
+                break;
+            case 8:  // alarm
+                tempAlarm = (unsigned char)atoi(token);
+                if (tempAlarm > 1)
+                    tempAlarm = 0;
+                break;
+        }
 
-//         fieldIndex++;
-//         token = strtok(0, ",");
-//     }
+        fieldIndex++;
+        token = strtok(0, ",");
+    }
 
-//     if (fieldIndex < MY_UART1_FIELD_COUNT) {
-//         return -1;
-//     }
+    if (fieldIndex < MY_UART1_FIELD_COUNT) {
+        return -1;
+    }
 
-//     // 直接更新各模块的全局变量
-//     // id = tempCarId;  // 全局车辆ID固定，不需要更新
+    // 直接更新各模块的全局变量
+    // id = tempCarId;  // 全局车辆ID固定，不需要更新
 
-//     // temp, etaMin, etaSec 这三个值在现实中不可直接修改，不接受上位机修改
-//     // temp[id] = tempTemp;  // 注释掉：温度值应由传感器读取
+    // temp, etaMin, etaSec 这三个值在现实中不可直接修改，不接受上位机修改
+    // temp[id] = tempTemp;  // 注释掉：温度值应由传感器读取
 
-//     // 温度阈值可以设置，同时保存到非易失存储
-//     if (tempThresholds[id] != tempTempThresholds) {
-//         tempThresholds[id] = tempTempThresholds;        // 更新内存中的值
-//         NVTempThresholdUpdate(tempTempThresholds);  // 保存到EEPROM
-//     }
+    // 温度阈值可以设置，同时保存到非易失存储
+    if (tempThresholds[id] != tempTempThresholds) {
+        tempThresholds[id] = tempTempThresholds;        // 更新内存中的值
+        NVTempThresholdUpdate(tempTempThresholds);  // 保存到EEPROM
+    }
 
-//     speed[id] = tempSpeed;  // 速度可以设置
+    speed[id] = tempSpeed;  // 速度可以设置
 
-//     // rtc_time[id].minute = tempEtaMin;  // 注释掉：ETA由系统计算
-//     // rtc_time[id].second = tempEtaSec;  // 注释掉：ETA由系统计算
+    // rtc_time[id].minute = tempEtaMin;  // 注释掉：ETA由系统计算
+    // rtc_time[id].second = tempEtaSec;  // 注释掉：ETA由系统计算
 
-//     is_door_open[id] = tempDoor;  // 门状态可以控制
-//     is_alarm[id] = tempAlarm;     // 报警状态可以控制
+    is_door_open[id] = tempDoor;  // 门状态可以控制
+    is_alarm[id] = tempAlarm;     // 报警状态可以控制
 
-//     return 0;
-// }
+    return 0;
+}
 
 // 整形转字符串（无符号，十进制，返回写入的字符数）
 static int my_utoa(unsigned int value, char *buf)
@@ -223,19 +223,19 @@ char MyUart1SendCurrentStatus(void)
     pos += my_utoa(tempThresholds[id], &g_txBuffer[pos]); // 温度阈值
     g_txBuffer[pos++] = ',';
 
-    // pos += my_utoa(speed[id], &g_txBuffer[pos]); // 当前速度
-    // g_txBuffer[pos++] = ',';
+    pos += my_utoa(speed[id], &g_txBuffer[pos]); // 当前速度
+    g_txBuffer[pos++] = ',';
 
-    // pos += my_utoa(rtc_time[id].minute, &g_txBuffer[pos]); // ETA分钟
-    // g_txBuffer[pos++] = ',';
+    pos += my_utoa(rtc_time.minute, &g_txBuffer[pos]); // ETA分钟
+    g_txBuffer[pos++] = ',';
 
-    // pos += my_utoa(rtc_time[id].second, &g_txBuffer[pos]); // ETA秒数
-    // g_txBuffer[pos++] = ',';
+    pos += my_utoa(rtc_time.second, &g_txBuffer[pos]); // ETA秒数
+    g_txBuffer[pos++] = ',';
 
-    // pos += my_utoa(is_door_open[id], &g_txBuffer[pos]); // 门状态
-    // g_txBuffer[pos++] = ',';
+    pos += my_utoa(is_door_open[id], &g_txBuffer[pos]); // 门状态
+    g_txBuffer[pos++] = ',';
 
-    // pos += my_utoa(is_alarm[id], &g_txBuffer[pos]); // 报警状态
+    pos += my_utoa(is_alarm[id], &g_txBuffer[pos]); // 报警状态
 
     // 结尾换行
     g_txBuffer[pos++] = '\n';

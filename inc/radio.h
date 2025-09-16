@@ -19,40 +19,5 @@ extern unsigned char radio_initialized;
  */
 void Radio_Init(void);
 
-/**
- * @brief 处理导航键音量控制
- * @note 左键降低音量，右键升高音量
- */
-void Radio_HandleNavigation(void);
-
-/**
- * @brief 设置收音机频率
- * @param frequency 频率值 (887-1080, 单位0.1MHz)
- */
-void Radio_SetFrequency(unsigned int frequency);
-
-/**
- * @brief 设置收音机音量
- * @param volume 音量值 (0-15)
- */
-void Radio_SetVolume(unsigned char volume);
-
-/**
- * @brief 获取当前音量
- * @return 当前音量值
- */
-unsigned char Radio_GetVolume(void);
-
-/**
- * @brief 获取当前频率
- * @return 当前频率值
- */
-unsigned int Radio_GetFrequency(void);
-
-/**
- * @brief 测试收音机功能
- * @note 循环测试不同频率和音量，用于调试
- */
-void Radio_Test(void);
 
 #endif // __RADIO_H
