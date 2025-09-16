@@ -217,6 +217,9 @@ char MyUart1SendCurrentStatus(void)
     pos += my_utoa(id, &g_txBuffer[pos]); // 使用全局变量id
     g_txBuffer[pos++] = ',';
 
+    pos += my_utoa(station_id, &g_txBuffer[pos]); // 当前温度
+    g_txBuffer[pos++] = ',';
+
     pos += my_utoa(temperature, &g_txBuffer[pos]); // 当前温度
     g_txBuffer[pos++] = ',';
 

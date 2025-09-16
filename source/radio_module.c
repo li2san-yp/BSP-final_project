@@ -22,7 +22,6 @@
  * @brief 初始化收音机模块
  */
 void Radio_Init(void) {
-    BeepInit();
     // SetBeep(1000, 100); // 调试：短暂蜂鸣提示初始化开始
     if (!radio_initialized) {
         // 设置默认配置

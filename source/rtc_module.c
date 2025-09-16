@@ -7,14 +7,11 @@ TimeInfo xdata tinfo = {0, 0};
 unsigned char xdata station_id = 1; // 当前站点ID，初始为列车id
 
 void InitRTC() {
-    unsigned char InitTime;
     DS1302Init(rtc_time);
-    get_speed_res = GetSpeed();
-    station_id = id; // 初始为第一站
-    mode = 0;
-    InitTime = dist[station_id] * 3.6 / get_speed_res;
-    rtc_time.minute = InitTime / 60;
-    rtc_time.second = InitTime % 60;
+    station_id = id; 
+    mode = 1;
+    rtc_time.minute = 0;
+    rtc_time.second = 1;
 }
 void ResetTimer() {
     unsigned int xdata total_seconds;

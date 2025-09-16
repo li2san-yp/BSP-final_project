@@ -20,7 +20,7 @@ unsigned int g_distance = 0;               // 当前距离值
  */
 void UltrasonicInit(void) {
     // 初始化超声波模块 (使用EXT外设)
-    EXTInit(enumEXTUltraSonic);
+    //EXTInit(enumEXTUltraSonic);
     
     // 初始化步进电机
     StepMotorInit();
@@ -67,6 +67,11 @@ void UltrasonicUpdateAndDisplay(void) {
             AutoDoor_Close();
             //SetBeep(600, 500);  // 关闭关门蜂鸣声
         }
+    }
+
+    if(g_distance == 0 && tinfo.time_mode == 0){ //车启动且距离为0
+            SetBeep(600, 500);  // 提醒
+        
     }
     
     // 更新显示
