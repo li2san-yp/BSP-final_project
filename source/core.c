@@ -9,5 +9,5 @@ void my1S_callback(){
     // SetBeep(1500,50);
     ShowStatus();
     CheckCountdownEvent(); 
-    //MyUart1SendCurrentStatus(); // 每1s发送地铁当前的状态
+    MyUart1SendCurrentStatus(); // 每1s发送地铁当前的状态
 }

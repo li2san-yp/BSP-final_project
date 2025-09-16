@@ -324,7 +324,7 @@
               <MiscControls></MiscControls>
               <Define></Define>
               <Undefine></Undefine>
-              <IncludePath>.\inc</IncludePath>
+              <IncludePath>.\inc;.\BSP_inc</IncludePath>
             </VariousControls>
           </C51>
           <Ax51>

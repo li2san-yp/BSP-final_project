@@ -4,6 +4,7 @@
             "name": "Target 1",
             "includePath": [
                 "c:\\Users\\75990\\Desktop\\BSP-final_project\\inc",
+                "c:\\Users\\75990\\Desktop\\BSP-final_project\\BSP_inc",
                 "D:\\Software\\keil5\\core\\C51\\INC",
                 "c:\\Users\\75990\\Desktop\\BSP-final_project\\source"
             ],
