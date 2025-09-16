@@ -7,10 +7,10 @@
 (2) 上位机命令接收：接收并解析上位机发送的控制命令
 
 通信协议格式：
-发送格式：BSP,carId,temp,tempThresholds,speed,etaMin,etaSec,door,alarm\n
+发送格式：BSP,id,temp,tempThresholds,speed,etaMin,etaSec,door,alarm\n
 字段说明（所有字段均为整型）：
 - BSP: 包头标识（固定为"BSP"）
-- carId: 车辆ID（整型）
+- id: 车辆ID（整型）
 - temp: 当前温度（整型）
 - tempThresholds: 温度阈值（整型）
 - speed: 速度（整型）
@@ -57,7 +57,7 @@ extern void MyUart1Init(void);                                    // 初始化�
 extern char MyUart1SendCurrentStatus(void);                      // 发送当前系统状态数据（使用全局id）
 extern void MyUart1ClearRxBuffer(void);                          // 清空接收缓冲区
 extern void MyUart1ProcessRxData(void);                          // 处理接收错误状态（可选调用）
-extern void MyUart1LoadTempThreshold(unsigned char carId);       // 从非易失存储加载温度阈值
+extern void MyUart1LoadTempThreshold(void);       // 从非易失存储加载温度阈值
 
 // 外部变量声明
 extern char xdata g_rxBuffer[MY_UART1_RX_BUFFER_SIZE];                 // 接收缓冲区

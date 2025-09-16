@@ -25,19 +25,31 @@ static char NVIsValidThreshold(unsigned char threshold)
 
 /**
  * @brief 初始化温度阈值非易失存储模块
+ * 加载当前车辆ID对应的温度阈值到内存中
  */
 void NVTempThresholdInit(void)
 {
+    unsigned char xdata threshold;
+    
     s_nv_isInitialized = 1;
     s_nv_lastWriteCarId = 0xFF;
+    
+    // 从EEPROM加载当前车辆的温度阈值到内存
+    threshold = M24C02_Read(id);
+    
+    // 如果读取到有效值，更新到内存中的tempThresholds数组
+    if (threshold != NV_TEMP_THRESHOLD_INVALID && NVIsValidThreshold(threshold)) {
+        tempThresholds[id] = threshold;
+    }
+    // 如果读取失败或无效，保持内存中的默认值不变
 }
 
 /**
  * @brief 读取指定车辆的阈值
- * @param carId 车辆ID（0-255）
+ * @param id 车辆ID（0-255）
  * @return 读取的阈值，若为 NV_TEMP_THRESHOLD_INVALID 表示未设置或错误
  */
-unsigned char NVTempThresholdRead(unsigned char carId)
+unsigned char NVTempThresholdRead()
 {
     unsigned char xdata storedValue;
     
@@ -45,7 +57,7 @@ unsigned char NVTempThresholdRead(unsigned char carId)
         NVTempThresholdInit();
     }
 
-    storedValue = M24C02_Read(carId);
+    storedValue = M24C02_Read(id);
 
     if (storedValue == NV_TEMP_THRESHOLD_INVALID || !NVIsValidThreshold(storedValue)) {
         return NV_TEMP_THRESHOLD_DEFAULT;
@@ -56,11 +68,11 @@ unsigned char NVTempThresholdRead(unsigned char carId)
 
 /**
  * @brief 写入指定车辆的阈值
- * @param carId 车辆ID（0-255）
+ * @param id 车辆ID（0-255）
  * @param threshold 新阈值
  * @return 0成功，-1失败
  */
-char NVTempThresholdWrite(unsigned char carId, unsigned char threshold)
+char NVTempThresholdWrite(unsigned char threshold)
 {
     if (!s_nv_isInitialized) {
         NVTempThresholdInit();
@@ -70,8 +82,8 @@ char NVTempThresholdWrite(unsigned char carId, unsigned char threshold)
         return -1;
     }
 
-    M24C02_Write(carId, threshold);
-    s_nv_lastWriteCarId = carId;
+    M24C02_Write(id, threshold);
+    s_nv_lastWriteCarId = id;
     return 0;
 }
 
@@ -79,7 +91,7 @@ char NVTempThresholdWrite(unsigned char carId, unsigned char threshold)
  * @brief 智能更新：只有当值改变时才写入
  * @return 1=写入，0=未写入，-1=错误
  */
-int NVTempThresholdUpdate(unsigned char carId, unsigned char threshold)
+int NVTempThresholdUpdate(unsigned char threshold)
 {
     unsigned char xdata current;
     
@@ -91,11 +103,11 @@ int NVTempThresholdUpdate(unsigned char carId, unsigned char threshold)
         return -1;
     }
 
-    current = NVTempThresholdRead(carId);
+    current = NVTempThresholdRead();
     if (current == threshold) {
         return 0; // 未写入
     }
 
-    return NVTempThresholdWrite(carId, threshold) == 0 ? 1 : -1;
+    return NVTempThresholdWrite(threshold) == 0 ? 1 : -1;
 }
 

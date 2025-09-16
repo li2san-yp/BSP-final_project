@@ -27,16 +27,15 @@
 #include "temp_controlled_fan.h"
 #include "voice_module.h"
 #include "ultrasonic_module.h"
-#include "my_uart1.h"
-#include "nv_temp_threshold.h"
+// #include "my_uart1.h"
+// #include "nv_temp_threshold.h"
 
 // 添加直流电机温控模块
-extern void DC_motor(void);
 
 extern code unsigned long SysClock;
 extern xdata uchar is_door_open[4];   // 门状态，1=开门 0=关门
 extern xdata uchar is_alarm[4];        // 报警状态，1=报警 0=正常
-extern unsigned char id;
+extern xdata unsigned char id;
 
 void my1S_callback();
 

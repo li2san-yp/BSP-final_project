@@ -1,9 +1,24 @@
 Build target 'Target 1'
 compiling main.c...
+source\main.c(10): warning C206: 'MyUart1Init': missing function-prototype
+source\main.c(11): warning C206: 'NVTempThresholdInit': missing function-prototype
+compiling temp_module.c...
+compiling Nav_handler.c...
+compiling rtc_module.c...
+compiling voice_module.c...
 compiling core.c...
+source\core.c(12): warning C206: 'MyUart1SendCurrentStatus': missing function-prototype
+compiling nv_temp_threshold.c...
+compiling my_uart1.c...
 linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_SETBEEP?BEEP
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?GETBEEPSTATUS?BEEP
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?_LEDPRINT?DISPLAYER
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_GETKEYACT?KEY
@@ -30,21 +45,12 @@ linking...
     SEGMENT: ?PR?MYUART1PROCESSRXDATA?MY_UART1
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_MYUART1LOADTEMPTHRESHOLD?MY_UART1
+    SEGMENT: ?PR?MYUART1LOADTEMPTHRESHOLD?MY_UART1
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?DS1302INIT?DS1302
 
-*** WARNING L1: UNRESOLVED EXTERNAL SYMBOL
-    SYMBOL:  DC_MOTOR
-    MODULE:  .\output\main.obj (MAIN)
-
-*** WARNING L2: REFERENCE MADE TO UNRESOLVED EXTERNAL
-    SYMBOL:  DC_MOTOR
-    MODULE:  .\output\main.obj (MAIN)
-    ADDRESS: 2870H
-
-Program Size: data=79.2 xdata=419 code=13083
+Program Size: data=81.2 xdata=416 code=13176
 creating hex file from ".\output\BSP_Demo"...
-".\output\BSP_Demo" - 0 Error(s), 13 Warning(s).
+".\output\BSP_Demo" - 0 Error(s), 16 Warning(s).
 Build Time Elapsed:  00:00:01

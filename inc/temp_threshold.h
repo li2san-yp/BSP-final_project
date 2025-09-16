@@ -35,8 +35,8 @@
 
 // 旧函数声明（实现为对 NV API 的包装，见 source/temp_threshold.c）
 extern void TempThresholdInit(void);                                        // 初始化温度阈值存储模块（兼容）
-extern unsigned char TempThresholdRead(unsigned char carId);                // 读取指定车辆的温度阈值（兼容）
-extern char TempThresholdWrite(unsigned char carId, unsigned char threshold); // 写入指定车辆的温度阈值（兼容）
-extern char TempThresholdUpdate(unsigned char carId, unsigned char newThreshold); // 更新温度阈值（兼容）
+extern unsigned char TempThresholdRead(unsigned char id);                // 读取指定车辆的温度阈值（兼容）
+extern char TempThresholdWrite(unsigned char id, unsigned char threshold); // 写入指定车辆的温度阈值（兼容）
+extern char TempThresholdUpdate(unsigned char id, unsigned char newThreshold); // 更新温度阈值（兼容）
 
 #endif

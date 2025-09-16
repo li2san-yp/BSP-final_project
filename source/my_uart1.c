@@ -13,7 +13,7 @@
 char xdata g_rxBuffer[MY_UART1_RX_BUFFER_SIZE] = {0};
 char xdata g_txBuffer[MY_UART1_TX_BUFFER_SIZE] = {0};
 static xdata MyUart1RxStatus_t s_rxStatus = MY_UART1_RX_IDLE;
-static char xdata s_headerMatch[MY_UART1_HEADER_SIZE + 1] = MY_UART1_FRAME_HEADER;
+static char xdata s_headerMatch[MY_UART1_HEADER_SIZE] = MY_UART1_FRAME_HEADER;
 
 // 内部函数声明
 static void Uart1RxdCallback(void);
@@ -51,8 +51,6 @@ void MyUart1Init(void) {
     SetUart1Rxd(g_rxBuffer, MY_UART1_RX_BUFFER_SIZE, s_headerMatch, MY_UART1_HEADER_SIZE);
     s_rxStatus = MY_UART1_RX_IDLE;
 
-    // 初始化温度阈值非易失存储模块
-    NVTempThresholdInit();
 }
 
 /**
@@ -99,7 +97,7 @@ static int ParseCommand(char* cmdStr) {
         switch (fieldIndex) {
             case 0:  // 包头BSP，跳过验证
                 break;
-            case 1:  // carId
+            case 1:  // id
                 tempCarId = (unsigned int)atoi(token);
                 break;
             case 2:  // temp
@@ -146,7 +144,7 @@ static int ParseCommand(char* cmdStr) {
     // 温度阈值可以设置，同时保存到非易失存储
     if (tempThresholds[id] != tempTempThresholds) {
         tempThresholds[id] = tempTempThresholds;        // 更新内存中的值
-        NVTempThresholdUpdate(id, tempTempThresholds);  // 保存到EEPROM
+        NVTempThresholdUpdate(tempTempThresholds);  // 保存到EEPROM
     }
 
     speed[id] = tempSpeed;  // 速度可以设置
@@ -207,7 +205,7 @@ char MyUart1SendCurrentStatus(void) {
     pos += my_utoa(id, &g_txBuffer[pos]);  // 使用全局变量id
     g_txBuffer[pos++] = ',';
 
-    pos += my_utoa(temperature[id], &g_txBuffer[pos]);  // 当前温度（使用数组）
+    pos += my_utoa(temperature, &g_txBuffer[pos]);  // 当前温度
     g_txBuffer[pos++] = ',';
 
     pos += my_utoa(tempThresholds[id], &g_txBuffer[pos]);  // 温度阈值
@@ -241,16 +239,16 @@ char MyUart1SendCurrentStatus(void) {
 
 /**
  * @brief 从非易失存储加载指定车辆的温度阈值
- * @param carId 车辆ID
+ * @param id 车辆ID
  */
-void MyUart1LoadTempThreshold(unsigned char carId) {
+void MyUart1LoadTempThreshold() {
     unsigned char xdata threshold;
 
-    threshold = NVTempThresholdRead(carId);
+    threshold = NVTempThresholdRead();
 
     // 如果读取到有效值，更新到内存中
     if (threshold != 0xFF) {  // 0xFF表示未初始化或读取失败
-        tempThresholds[carId] = threshold;
+        tempThresholds[id] = threshold;
     }
     // 如果读取失败，保持内存中的默认值不变
 }
