@@ -8,14 +8,14 @@
 // 初始化本机的列车ID
 void InitTrainID(void)
 {
-    id = NVM_Read(CURRENT_TRAIN_ID_ADDR); // 读取本机的列车ID
+    id = M24C02_Read(CURRENT_TRAIN_ID_ADDR); // 读取本机的列车ID
 }
 
 // 设置本机的列车ID
 void SetTrainID(unsigned char new_id)
 {
     // 存储新ID到EEPROM
-    NVM_Write(CURRENT_TRAIN_ID_ADDR, new_id);
+    M24C02_Write(CURRENT_TRAIN_ID_ADDR, new_id);
     id = new_id;
 }
 

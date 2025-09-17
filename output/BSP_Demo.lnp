@@ -13,7 +13,8 @@
 ".\output\temp_controlled_fan.obj",
 ".\output\ultrasonic_module.obj",
 ".\output\train_id_module.obj",
-".\output\music_module.obj" 
+".\output\music_module.obj",
+".\output\real_time_module.obj" 
 TO ".\output\BSP_Demo" 
 PRINT(".\list\BSP_Demo.m51") RAMSIZE(256) 
 XDATA( 0X0000-0X07FF )

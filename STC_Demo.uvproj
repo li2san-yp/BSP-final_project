@@ -456,6 +456,11 @@
               <FileType>1</FileType>
               <FilePath>.\source\music_module.c</FilePath>
             </File>
+            <File>
+              <FileName>real_time_module.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\source\real_time_module.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>

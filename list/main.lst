@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.7.0   MAIN                                                              09/17/2025 21:11:33 PAGE 1   
+C51 COMPILER V9.60.7.0   MAIN                                                              09/17/2025 22:52:53 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
@@ -19,7 +19,7 @@ line level    source
    9   1          Uart2Init(9600, Uart2UsedforEXT);
   10   1          MyUart1Init();  
   11   1          NVTempThresholdInit();
-  12   1          SetTrainID(2);
+  12   1          // SetTrainID(3);
   13   1          InitTrainID();                // 初始化列车ID
   14   1          InitRTC();
   15   1          EXTInit(enumEXTPWM);
@@ -39,7 +39,7 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    136    ----
+   CODE SIZE        =    131    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
