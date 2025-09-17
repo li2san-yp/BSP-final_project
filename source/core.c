@@ -13,6 +13,7 @@ void my1S_callback()
     ShowStatus();                 // 显示当前状态
     CheckCountdownEvent();        // 检查倒计时
     UltrasonicUpdateAndDisplay(); // 更新并显示超声波数据
+    is_play_music();
     MyUart1SendCurrentStatus(); // 每1s发送地铁当前的状态
     // if (parity % 2 == 1)
     // {

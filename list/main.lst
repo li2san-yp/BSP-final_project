@@ -1,10 +1,10 @@
-C51 COMPILER V9.60.7.0   MAIN                                                              09/16/2025 23:08:05 PAGE 1   
+C51 COMPILER V9.60.7.0   MAIN                                                              09/17/2025 10:19:45 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
 OBJECT MODULE PLACED IN .\output\main.obj
-COMPILER INVOKED BY: D:\Software\keil5\core\C51\BIN\C51.EXE source\main.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\inc;.\BSP_in
-                    -c) DEBUG OBJECTEXTEND PRINT(.\list\main.lst) TABS(2) OBJECT(.\output\main.obj)
+COMPILER INVOKED BY: D:\Keil_v5\C51\BIN\C51.EXE source\main.c OPTIMIZE(8,SPEED) BROWSE INCDIR(.\inc;.\BSP_inc) DEBUG OBJ
+                    -ECTEXTEND PRINT(.\list\main.lst) TABS(2) OBJECT(.\output\main.obj)
 
 line level    source
 
@@ -23,21 +23,22 @@ line level    source
   13   1          EXTInit(enumEXTPWM);
   14   1          UltrasonicInit();               // 超声波模块   
   15   1          Radio_Init();               // 收音机模块
-  16   1          InitTrainID();                // 初始化列车ID
-  17   1          SetUart2Rxd(&Uart2RxBuf, 1, &Uart2RxBuf,0);  // 单字节接收，不匹配包头
-  18   1          SetEventCallBack(enumEventUart2Rxd, myUart2Rxd_callback);
-  19   1          SetEventCallBack(enumEventSys1S, my1S_callback);
-  20   1          SetEventCallBack(enumEventNav, NavHandler);
-  21   1          MySTC_Init();
-  22   1          // LedPrint(0);
-  23   1          while (1) {
-  24   2              MySTC_OS();
-  25   2          }
-  26   1      }
+  16   1          SetTrainID(1);
+  17   1          InitTrainID();                // 初始化列车ID
+  18   1          SetUart2Rxd(&Uart2RxBuf, 1, &Uart2RxBuf,0);  // 单字节接收，不匹配包头
+  19   1          SetEventCallBack(enumEventUart2Rxd, myUart2Rxd_callback);
+  20   1          SetEventCallBack(enumEventSys1S, my1S_callback);
+  21   1          SetEventCallBack(enumEventNav, NavHandler);
+  22   1          MySTC_Init();
+  23   1          // LedPrint(0);
+  24   1          while (1) {
+  25   2              MySTC_OS();
+  26   2          }
+  27   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    123    ----
+   CODE SIZE        =    128    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----

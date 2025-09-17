@@ -238,8 +238,8 @@
       <tvExp>0</tvExp>
       <tvExpOptDlg>0</tvExpOptDlg>
       <bDave2>0</bDave2>
-      <PathWithFileName>.\source\rtc_module.c</PathWithFileName>
-      <FilenameWithoutPath>rtc_module.c</FilenameWithoutPath>
+      <PathWithFileName>.\source\time_module.c</PathWithFileName>
+      <FilenameWithoutPath>time_module.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>
@@ -360,6 +360,18 @@
       <bDave2>0</bDave2>
       <PathWithFileName>.\source\train_id_module.c</PathWithFileName>
       <FilenameWithoutPath>train_id_module.c</FilenameWithoutPath>
+      <RteFlg>0</RteFlg>
+      <bShared>0</bShared>
+    </File>
+    <File>
+      <GroupNumber>1</GroupNumber>
+      <FileNumber>16</FileNumber>
+      <FileType>1</FileType>
+      <tvExp>0</tvExp>
+      <tvExpOptDlg>0</tvExpOptDlg>
+      <bDave2>0</bDave2>
+      <PathWithFileName>.\source\music_module.c</PathWithFileName>
+      <FilenameWithoutPath>music_module.c</FilenameWithoutPath>
       <RteFlg>0</RteFlg>
       <bShared>0</bShared>
     </File>

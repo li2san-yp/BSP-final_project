@@ -451,6 +451,11 @@
               <FileType>1</FileType>
               <FilePath>.\source\train_id_module.c</FilePath>
             </File>
+            <File>
+              <FileName>music_module.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\source\music_module.c</FilePath>
+            </File>
           </Files>
         </Group>
       </Groups>
