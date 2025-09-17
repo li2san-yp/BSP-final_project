@@ -11,7 +11,6 @@ compiling core.c...
 compiling nv_temp_threshold.c...
 compiling my_uart1.c...
 compiling temp_controlled_fan.c...
-compiling ultrasonic_module.c...
 compiling train_id_module.c...
 compiling music_module.c...
 linking...
@@ -28,13 +27,13 @@ linking...
     SEGMENT: ?PR?GETUART2TXSTATUS?UART2
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?CO?TIME_MODULE
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?MYUART1PROCESSRXDATA?MY_UART1
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?TEMP_CONTROLLED_MOTOR?TEMP_CONTROLLED_FAN
-
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_SETTRAINID?TRAIN_ID_MODULE
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?PLAY_MUSIC?MUSIC_MODULE
@@ -57,10 +56,7 @@ linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_EXTINIT?EXT
 
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?BEEPINIT?BEEP
-
-Program Size: data=115.3 xdata=435 code=16450
+Program Size: data=114.3 xdata=435 code=16031
 creating hex file from ".\output\BSP_Demo"...
-".\output\BSP_Demo" - 0 Error(s), 17 Warning(s).
-Build Time Elapsed:  00:00:03
+".\output\BSP_Demo" - 0 Error(s), 16 Warning(s).
+Build Time Elapsed:  00:00:02

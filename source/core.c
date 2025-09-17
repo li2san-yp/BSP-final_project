@@ -7,14 +7,17 @@ xdata char id;
 
 void my1S_callback()
 {
-    UpdateTime();                 // 更新时间
-    UpdateTemp();                 // 更新温度
-    CheckCountdownEvent();        // 检查倒计时
+    // Uart2Print(VOICE_STRING_1[1], sizeof(VOICE_STRING_1[1]));
+
+    UpdateTime();          // 更新时间
+    CheckCountdownEvent(); // 检查倒计时
+    UpdateTemp();          // 更新温度
     // UltrasonicUpdateAndDisplay(); // 更新并显示超声波数据
     is_play_music();
     MyUart1SendCurrentStatus(); // 每1s发送地铁当前的状态
 }
 
-void my100ms_callback(){
-    ShowStatus();                 // 显示当前状态
+void my100ms_callback()
+{
+    ShowStatus(); // 显示当前状态
 }

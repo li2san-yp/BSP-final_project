@@ -1,6 +1,6 @@
 #include "core.h"
 
-unsigned char xdata speed[4]={50,50,50,50}; // 每辆地铁的当前速度，改为char节省内存
+unsigned char xdata speed[4]={50,25,50,50}; // 每辆地铁的当前速度，改为char节省内存
 
 void ShowSpeed()
 {

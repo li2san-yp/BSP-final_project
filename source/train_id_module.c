@@ -4,7 +4,6 @@
 
 // 在EEPROM中存储本机ID的地址
 #define CURRENT_TRAIN_ID_ADDR 0x10
-#define DEFAULT_TRAIN_ID 0
 
 // 初始化本机的列车ID
 void InitTrainID(void)
