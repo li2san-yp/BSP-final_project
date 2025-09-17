@@ -230,17 +230,13 @@ static int ParseCommand(char* cmdStr) {
         is_door_open[id] = tempDoor;  // 门状态可以控制
         is_alarm[id] = tempAlarm;     // 报警状态可以控制
 
-        // 更新实时时间变量
-        real_hour = tempRealHour;
-        real_minute = tempRealMinute;
-        real_second = tempRealSecond;
-    } else { // BSP1 只处理实时时间
-        // 更新实时时间变量
-        real_hour = tempRealHour;
-        real_minute = tempRealMinute;
-        real_second = tempRealSecond;
-    }
-
+    } 
+    // 更新实时时间变量
+    real_hour = tempRealHour;
+    real_minute = tempRealMinute;
+    real_second = tempRealSecond;
+    UpdateRealTimeFromUart1(); // 同步到DS1302
+    
     return 0;
 }
 
