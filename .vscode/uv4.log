@@ -1,18 +1,5 @@
 Build target 'Target 1'
 compiling main.c...
-compiling temp_module.c...
-compiling Nav_handler.c...
-source\Nav_handler.c(42): warning C206: 'ShowSpeed': missing function-prototype
-compiling time_module.c...
-compiling speed_module.c...
-compiling voice_module.c...
-source\voice_module.c(5): warning C231: 'voice_time_1': redefinition
-compiling core.c...
-compiling nv_temp_threshold.c...
-compiling my_uart1.c...
-compiling temp_controlled_fan.c...
-compiling train_id_module.c...
-compiling music_module.c...
 linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?_GETKEYACT?KEY
@@ -24,6 +11,12 @@ linking...
     SEGMENT: ?PR?GETSYSPERFORMANCE?SYS
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?GETWEIGHT?EXT
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
+    SEGMENT: ?PR?GETDECODE?EXT
+
+*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?GETUART2TXSTATUS?UART2
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
@@ -31,9 +24,6 @@ linking...
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?MYUART1PROCESSRXDATA?MY_UART1
-
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?TEMP_CONTROLLED_MOTOR?TEMP_CONTROLLED_FAN
 
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?PLAY_MUSIC?MUSIC_MODULE
@@ -47,16 +37,7 @@ linking...
 *** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
     SEGMENT: ?PR?DS1302INIT?DS1302
 
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?GETWEIGHT?EXT
-
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?GETDECODE?EXT
-
-*** WARNING L16: UNCALLED SEGMENT, IGNORED FOR OVERLAY PROCESS
-    SEGMENT: ?PR?_EXTINIT?EXT
-
-Program Size: data=114.3 xdata=435 code=16031
+Program Size: data=105.3 xdata=430 code=16054
 creating hex file from ".\output\BSP_Demo"...
-".\output\BSP_Demo" - 0 Error(s), 16 Warning(s).
-Build Time Elapsed:  00:00:02
+".\output\BSP_Demo" - 0 Error(s), 12 Warning(s).
+Build Time Elapsed:  00:00:01

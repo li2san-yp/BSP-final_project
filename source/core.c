@@ -15,6 +15,7 @@ void my1S_callback()
     // UltrasonicUpdateAndDisplay(); // 更新并显示超声波数据
     is_play_music();
     MyUart1SendCurrentStatus(); // 每1s发送地铁当前的状态
+    temp_controlled_motor();
 }
 
 void my100ms_callback()

@@ -9,10 +9,10 @@ void main() {
     Uart2Init(9600, Uart2UsedforEXT);
     MyUart1Init();  
     NVTempThresholdInit();
-    SetTrainID(1);
+    // SetTrainID(2);
     InitTrainID();                // 初始化列车ID
     InitRTC();
-    //EXTInit(enumEXTPWM);
+    EXTInit(enumEXTPWM);
     //UltrasonicInit();               // 超声波模块   
     Radio_Init();               // 收音机模块
     SetUart2Rxd(&Uart2RxBuf, 1, &Uart2RxBuf,0);  // 单字节接收，不匹配包头
