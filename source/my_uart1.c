@@ -159,11 +159,11 @@ static int ParseCommand(char* cmdStr) {
         tempThresholds[id] = tempTempThresholds;        // 更新内存中的值
         NVTempThresholdUpdate(tempTempThresholds);  // 保存到EEPROM
     }
-
-    speed[id] = tempSpeed;  // 速度可以设置
-
-    // rtc_time[id].minute = tempEtaMin;  // 注释掉：ETA由系统计算
-    // rtc_time[id].second = tempEtaSec;  // 注释掉：ETA由系统计算
+    
+    if(speed[id] != tempSpeed) {
+        speed[id] = tempSpeed;  // 更新内存中的值
+        onSpeedChange();        // 触发速度变化处理
+    }
 
     is_door_open[id] = tempDoor;  // 门状态可以控制
     is_alarm[id] = tempAlarm;     // 报警状态可以控制
@@ -224,8 +224,8 @@ char MyUart1SendCurrentStatus(void)
     pos += my_utoa(id, &g_txBuffer[pos]); // 使用全局变量id
     g_txBuffer[pos++] = ',';
 
-    // pos += my_utoa(station_id, &g_txBuffer[pos]); // 当前温度
-    // g_txBuffer[pos++] = ',';
+    pos += my_utoa(station_id, &g_txBuffer[pos]); // 当前温度
+    g_txBuffer[pos++] = ',';
 
     pos += my_utoa(temperature, &g_txBuffer[pos]); // 当前温度
     g_txBuffer[pos++] = ',';
@@ -236,10 +236,10 @@ char MyUart1SendCurrentStatus(void)
     pos += my_utoa(speed[id], &g_txBuffer[pos]); // 当前速度
     g_txBuffer[pos++] = ',';
 
-    pos += my_utoa(rtc_time.minute, &g_txBuffer[pos]); // ETA分钟
+    pos += my_utoa(rest_arrive_minute, &g_txBuffer[pos]); // ETA分钟
     g_txBuffer[pos++] = ',';
 
-    pos += my_utoa(rtc_time.second, &g_txBuffer[pos]); // ETA秒数
+    pos += my_utoa(rest_arrive_second, &g_txBuffer[pos]); // ETA秒数
     g_txBuffer[pos++] = ',';
 
     pos += my_utoa(mode, &g_txBuffer[pos]); // 运行模式

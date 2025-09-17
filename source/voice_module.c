@@ -2,7 +2,7 @@
 
 unsigned char xdata Uart2RxBuf = 0; // 串口2接收字节
 unsigned char xdata Uart2Busy = 0;  // =0：语言合成模块空闲  =1：语言合成模块正在播放语音中
-unsigned char xdata voice_time_1[5] = {0, 20, 20 ,20, 20}; 
+unsigned int xdata voice_time_1[5] = {0, 15, 15, 15, 15}; 
 
 code unsigned char VOICE_STRING_1[5][300] = {
     {0}, 
@@ -43,22 +43,20 @@ void myUart2Rxd_callback()
 // 检查倒计时事件并播放对应语音
 void CheckCountdownEvent()
 {
-    unsigned int xdata rest_total_seconds;
     // 如果语音模块正忙，直接返回，不进行新的播放
     if (Uart2Busy == 1)
         return;
-    rest_total_seconds = tinfo.seconds;
 
     // 在特定时间点播放对应语音 - 使用字符串字面量与正确示例保持一致
-    if (rest_total_seconds == voice_time_1[station_id] && tinfo.time_mode == 0)
+    if (rest_total_seconds == voice_time_1[station_id] && mode == 0)
     {
         Uart2Print(VOICE_STRING_1[station_id], sizeof(VOICE_STRING_1[station_id]));
     }
-    else if (rest_total_seconds == 5 && tinfo.time_mode == 1)
+    else if (rest_total_seconds == 5 && mode == 1)
     {
         Uart2Print(VOICE_STRING_2, sizeof(VOICE_STRING_2));
     }
-    else if (rest_total_seconds == 0 && tinfo.time_mode == 1)
+    else if (rest_total_seconds == 0 && mode == 1)
     {
         Uart2Print(VOICE_STRING_3[station_id], sizeof(VOICE_STRING_3[station_id]));
     }

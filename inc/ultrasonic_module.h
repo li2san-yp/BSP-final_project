@@ -58,5 +58,10 @@ void AutoDoor_EmergencyStop(void);
  */
 unsigned char AutoDoor_IsMotorFree(void);
 
+/**
+ * @brief 获取超声波模块状态
+ * @return 1:模块有效, 0:模块无效或未连接
+ */
+unsigned char IsUltrasonicValid(void);
 
 #endif /* _ULTRASONIC_H_ */

@@ -38,8 +38,9 @@
 extern code unsigned long SysClock;
 extern xdata uchar is_door_open[4];   // 门状态，1=开门 0=关门
 extern xdata uchar is_alarm[4];        // 报警状态，1=报警 0=正常
-extern xdata unsigned char id;
+extern xdata char id;
 
 void my1S_callback();
+void my100ms_callback();
 
 #endif // CORE_H
