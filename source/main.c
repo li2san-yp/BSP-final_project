@@ -12,8 +12,8 @@ void main() {
     // SetTrainID(3);
     InitTrainID();                // 初始化列车ID
     InitRTC();
-    EXTInit(enumEXTPWM);
-    UltrasonicInit();               // 超声波模块   
+    // EXTInit(enumEXTPWM);
+    // UltrasonicInit();               // 超声波模块   
     Radio_Init();               // 收音机模块
     MusicPlayerInit(); 
     set_music();

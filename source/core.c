@@ -12,7 +12,7 @@ void my1S_callback()
     UpdateTime();          // 更新时间
     CheckCountdownEvent(); // 检查倒计时
     UpdateTemp();          // 更新温度
-    UltrasonicUpdateAndDisplay(); // 更新并显示超声波数据
+    // UltrasonicUpdateAndDisplay(); // 更新并显示超声波数据
     is_play_music();
     MyUart1SendCurrentStatus(); // 每1s发送地铁当前的状态
     temp_controlled_motor();

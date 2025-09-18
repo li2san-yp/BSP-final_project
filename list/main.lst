@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.7.0   MAIN                                                              09/18/2025 10:47:23 PAGE 1   
+C51 COMPILER V9.60.7.0   MAIN                                                              09/18/2025 11:05:05 PAGE 1   
 
 
 C51 COMPILER V9.60.7.0, COMPILATION OF MODULE MAIN
@@ -22,8 +22,8 @@ line level    source
   12   1          // SetTrainID(3);
   13   1          InitTrainID();                // 初始化列车ID
   14   1          InitRTC();
-  15   1          EXTInit(enumEXTPWM);
-  16   1          UltrasonicInit();               // 超声波模块   
+  15   1          // EXTInit(enumEXTPWM);
+  16   1          // UltrasonicInit();               // 超声波模块   
   17   1          Radio_Init();               // 收音机模块
   18   1          MusicPlayerInit(); 
   19   1          set_music();
@@ -41,7 +41,7 @@ line level    source
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    137    ----
+   CODE SIZE        =    129    ----
    CONSTANT SIZE    =   ----    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
