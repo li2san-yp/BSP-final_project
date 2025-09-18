@@ -2,13 +2,15 @@
 
 这是一个用于演示与教学的嵌入式+上位机项目，模拟“地铁车厢”场景，包含下位机固件（STC15 系列）与上位机（Qt 桌面应用）两部分。项目旨在展示物联网场景下的感知、决策、执行与通信闭环：温度采集、阈值管理、风扇控制、车门与安防监测、语音/音乐播放、非易失存储与串口协议。
 
-![项目整体框架图](大作业报告\images\22-46-17.png)
-
+<figure>
+  <img src="Final Project Report\images\22-46-17.png" alt="实时监控页示意图" width="400">
+  <figcaption>项目整体框架图</figcaption>
+</figure>
 
 ## 目录
 
-- 目录结构(##目录结构（简要）)
-- 模块概览(##模块概览)
+- [目录结构](##目录结构（简要）)
+- [模块概览](##模块概览)
   - 下位机模块
   - 上位机功能
 
@@ -47,11 +49,20 @@
 - Qt 桌面应用提供多车厢实时状态表、报警日志、远程指令下发、历史数据导出与诊断页面
 - 使用 `QSerialPort` 管理串口，按照 BSP 协议解析帧并更新 UI
 
-![实时监控页示意图](大作业报告\images\21-05-51.png)
 
-![远程监控页示意图](大作业报告/images/21-06-37.png)
+<figure>
+  <img src="Final Project Report\images\21-05-51.png" alt="实时监控页示意图" width="400">
+  <figcaption>实时监控页示意图</figcaption>
+</figure>
 
-![温度历史曲线示意图](大作业报告/images/21-06-59.png)
+<figure>
+  <img src="Final Project Report\images\21-06-37.png" alt="实时监控页示意图" width="400">
+  <figcaption>远程监控页示意图</figcaption>
+</figure>
 
+<figure>
+  <img src="Final Project Report\images\21-06-59.png" alt="实时监控页示意图" width="400">
+  <figcaption>温度历史曲线示意图</figcaption>
+</figure>
 
 
