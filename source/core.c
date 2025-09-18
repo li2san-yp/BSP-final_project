@@ -1,7 +1,7 @@
 #include "core.h"
 
 code unsigned long SysClock = 11059200;
-xdata uchar is_door_open[4] = {0, 0, 0, 0}; // 门状态，1=开门 0=关门，使用XDATA段
+xdata uchar is_door_open[4] = {1,1,1,1}; // 门状态，1=开门 0=关门，使用XDATA段
 xdata uchar is_alarm[4] = {0, 0, 0, 0};     // 报警状态，1=报警 0=正常，使用XDATA段
 xdata char id;
 

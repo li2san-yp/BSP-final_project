@@ -26,6 +26,7 @@ void UpdateTime()
     if (rest_total_seconds <= 0)
     {
         mode = !mode;
+        is_door_open[id] = !is_door_open[id]; // 切换门状态
         ResetTimer();
         if (mode == 0 && station_id > 0 && station_id < 5)
         {

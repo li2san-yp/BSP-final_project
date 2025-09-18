@@ -4,7 +4,7 @@ void main() {
     AdcInit(ADCexpEXT);
     DisplayerInit();
     KeyInit();
-    // BeepInit();
+    BeepInit();
     SetDisplayerArea(0, 7);
     Uart2Init(9600, Uart2UsedforEXT);
     MyUart1Init();  
@@ -12,8 +12,8 @@ void main() {
     // SetTrainID(3);
     InitTrainID();                // 初始化列车ID
     InitRTC();
-    // EXTInit(enumEXTPWM);
-    // UltrasonicInit();               // 超声波模块   
+    EXTInit(enumEXTPWM);
+    UltrasonicInit();               // 超声波模块   
     Radio_Init();               // 收音机模块
     MusicPlayerInit(); 
     set_music();

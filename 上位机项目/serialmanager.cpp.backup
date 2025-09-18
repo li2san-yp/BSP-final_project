@@ -1,0 +1,165 @@
+#include "SerialManager.h"
+#include <void SerialManager::sendCommand(int carId, const QByteArray &cmd) {
+    // 将命令写入指定车厢串口（carId=0 表示广播）
+    // qDebug() << "Sending to car" << carId << ":" << cmd; // 已注释：调试信息
+    
+    if(carId <= 0) {
+        // 广播到所有串口
+        for(QSerialPort *p : ports) {
+            if(!p->isOpen()) {
+                // 尝试重新打开串口
+                if(!p->open(QIODevice::ReadWrite)) {
+                    qWarning() << "无法重新打开串口" << p->portName() << "跳过发送命令";
+                    continue;
+                } else {
+                    // 重新打开成功，重新设置连接和清空缓冲区
+                    p->clear(QSerialPort::AllDirections);
+                    connect(p, &QSerialPort::readyRead, this, &SerialManager::handleReadyRead, Qt::UniqueConnection);
+                    qDebug() << "成功重新打开串口" << p->portName();
+                }
+            }
+            p->write(cmd);
+        }
+    } else if(carId <= ports.size()) {
+        QSerialPort *targetPort = ports[carId-1];
+        if(!targetPort->isOpen()) {
+            // 尝试重新打开指定串口
+            if(!targetPort->open(QIODevice::ReadWrite)) {
+                qWarning() << "无法重新打开串口" << targetPort->portName() << "命令发送失败";
+                return;
+            } else {
+                // 重新打开成功，重新设置连接和清空缓冲区
+                targetPort->clear(QSerialPort::AllDirections);
+                connect(targetPort, &QSerialPort::readyRead, this, &SerialManager::handleReadyRead, Qt::UniqueConnection);
+                qDebug() << "成功重新打开串口" << targetPort->portName();
+            }
+        }
+        targetPort->write(cmd);
+        // qDebug() << cmd; // 已注释：调试信息
+    }
+}tInfo>
+#include <QThread>
+#include <QDebug>
+
+SerialManager::SerialManager(QObject *parent) : QObject(parent) {
+    // 假设使用 COM2, COM3, COM5
+    int comNumber[3]={2,3,5};
+    for(int i = 0; i < 3; ++i) {
+        QSerialPort *serial = new QSerialPort(this);
+        // 配置串口参数
+        serial->setBaudRate(QSerialPort::Baud115200);
+        serial->setDataBits(QSerialPort::Data8);
+        serial->setParity(QSerialPort::NoParity);
+        serial->setStopBits(QSerialPort::OneStop);
+        serial->setFlowControl(QSerialPort::NoFlowControl);
+        serial->setPortName(QString("COM%1").arg(comNumber[i]));
+        if(serial->open(QIODevice::ReadWrite)) {
+            // 清空串口缓冲区，防止残留数据造成误报警
+            serial->clear(QSerialPort::AllDirections);
+            QThread::msleep(100); // 等待清空完成
+            
+            // 异步读取：收到数据时触发 readyRead()
+            connect(serial, &QSerialPort::readyRead, this, &SerialManager::handleReadyRead);
+            // qDebug() << "Successfully opened and cleared" << serial->portName();
+        } else {
+            qWarning() << "无法打开串口" << serial->portName();
+        }
+        ports.append(serial);
+    }
+}
+
+SerialManager::~SerialManager() {
+    for(QSerialPort *p : ports) {
+        if(p->isOpen()) p->close();
+    }
+}
+
+void SerialManager::sendCommand(int carId, const QByteArray &cmd) {
+    // 将命令写入指定车厢串口（carId=0 表示广播）
+    qDebug() << "Sending to car" << carId << ":" << cmd;
+    if(carId <= 0) {
+        for(QSerialPort *p : ports) p->write(cmd);
+    } else if(carId <= ports.size()) {
+        ports[carId-1]->write(cmd);
+        qDebug() << cmd;
+    }
+}
+
+// 处理串口可读数据
+void SerialManager::handleReadyRead() {
+    QSerialPort *port = qobject_cast<QSerialPort*>(sender());
+    if(!port) return;
+    QByteArray data = port->readAll();
+    // append to buffer
+    QByteArray &buf = recvBuffers[port];
+    buf.append(data);
+    // split by newline (支持 \r\n 或 \n)
+    int idx = -1;
+    while((idx = buf.indexOf('\n')) != -1) {
+        QByteArray line = buf.left(idx);
+        // remove optional CR
+        if(!line.isEmpty() && line.endsWith('\r')) line.chop(1);
+        // remove trailing NUL padding (接收端规定发送方在换行后用 NUL(0) 填充到 32 字节)
+        while(!line.isEmpty() && line.endsWith('\0')) line.chop(1);
+        // remove leading NUL padding (下位机可能在帧前也有 NUL 填充)
+        while(!line.isEmpty() && line.startsWith('\0')) line.remove(0, 1);
+        QString frame = QString::fromUtf8(line);
+        // parse this complete frame
+        parseFrame(frame, port);
+        // remove processed frame + newline
+        buf.remove(0, idx + 1);
+    }
+}
+
+void SerialManager::parseFrame(const QString &frame, QSerialPort *port) {
+    // 新协议：帧以包头 BSP 开始，形如: BSP,carId,temp,tempThreshold,speed,etaMin,etaSec,door,alarm
+    // qDebug() << "Parsing frame:" << frame; // 添加调试输出
+    QStringList parts = frame.split(',', Qt::KeepEmptyParts);
+    // qDebug() << "Frame parts count:" << parts.size() << "Parts:" << parts; // 调试字段数量和内容
+    
+    if(parts.size() != 9) {
+        // qDebug() << "Frame rejected: expected 9 parts, got" << parts.size();
+        return; // header + 8 numeric fields
+    }
+    if(parts[0] != QLatin1String("BSP")) {
+        // qDebug() << "Frame rejected: header not BSP, got" << parts[0];
+        return; // 必须以 BSP 开头
+    }
+    
+    bool ok = true;
+    int carId = parts[1].toInt(&ok); 
+    
+    int temp = parts[2].toInt(&ok); 
+    
+    int tempThreshold = parts[3].toInt(&ok); 
+    
+    int speed = parts[4].toInt(&ok); 
+    
+    int etaMin = parts[5].toInt(&ok); 
+    
+    int etaSec = parts[6].toInt(&ok); 
+    
+    int doorVal = parts[7].toInt(&ok); 
+    
+    int alarmVal = parts[8].toInt(&ok); 
+    
+    // 转换门和报警状态 - 注意：即使值不是0/1也应该能处理
+    bool doorOpen = (doorVal != 0); // 改为非0即为开启
+    bool alarmOn = (alarmVal != 0);  // 改为非0即为报警
+    
+    // qDebug() << "Successfully parsed frame - carId:" << carId << "temp:" << temp
+             // << "speed:" << speed << "etaSec:" << etaSec << "door:" << doorOpen << "alarm:" << alarmOn;
+
+    emit dataReceived(carId, temp, tempThreshold, speed, etaMin, etaSec, doorOpen, alarmOn);
+    if(alarmOn) {
+        QString msg = tr("车厢%1异常: 温度 %2℃, 车速 %3, 到站 %4分%5秒, 门 %6")
+                          .arg(carId).arg(temp).arg(speed).arg(etaMin).arg(etaSec).arg(doorOpen ? tr("打开") : tr("关闭"));
+        emit alarmTriggered(carId, tr("安防报警"), msg);
+    }
+}
+
+// （可选）监测写入完成信号:contentReference[oaicite:13]{index=13}
+void SerialManager::handleBytesWritten(qint64 bytes) {
+    Q_UNUSED(bytes);
+    // 可用于确认数据发送情况
+}
