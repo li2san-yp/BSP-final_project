@@ -7,6 +7,7 @@ void is_play_music()
 {
     unsigned char state = GetPlayerMode();
     if (is_door_open[id] && state == enumModeStop){
+        
         SetPlayerMode(enumModePlay);
     }
     else if (!is_door_open[id] && state == enumModePlay){
@@ -14,7 +15,7 @@ void is_play_music()
     }
 }
 
-// 播放音乐
-void play_music(){
-    SetMusic(135, 0xFA, sound, sizeof(sound)/sizeof(sound[0]), enumMscDrvSeg7andLed);
+void set_music() 
+{
+    SetMusic(135, 0xFA, sound, sizeof(sound)/sizeof(sound[0]), enumMscNull);
 }
