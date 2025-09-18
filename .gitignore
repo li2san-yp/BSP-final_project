@@ -11,5 +11,5 @@
 *.obj
 *.__i
 *.map
-# *.hex
+*.hex
 *.htm
