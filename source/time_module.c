@@ -68,7 +68,13 @@ void ShowTime()
 
 void ShowMode()
 {
-    Seg7Print(10, 10, 10, 10, 10, 10, 10, mode);
+    if (mode == 0) { // 行驶模式
+        Seg7Print(10, 56, 59, 52, 52, 50, 52, 48); // 显示0表示行驶
+        return;
+    } else { // 停站模式
+        Seg7Print(57, 58, 53, 54, 54, 50, 52, 48); // 显示1表示停站
+        return;
+    }
 }
 
 void onSpeedChange()

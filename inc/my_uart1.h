@@ -7,11 +7,9 @@
 (2) 上位机命令接收：接收并解析上位机发送的控制命令
 
 通信协议格式：
-BSP0格式（控制指令）：BSP0,id,temp,tempThresholds,speed,etaMin,etaSec,mode,door,alarm,real_hour,real_minute,real_second\n
-BSP1格式（实时时间）：BSP1,real_hour,real_minute,real_second\n
-
-BSP0字段说明（所有字段均为整型）：
-- BSP0: 控制指令包头标识（固定为"BSP0"）
+发送格式：BSP,id,temp,tempThresholds,speed,etaMin,etaSec,mode,door,alarm,real_hour,real_minute,real_second\n
+字段说明（所有字段均为整型）：
+- BSP: 包头标识（固定为"BSP"）
 - id: 车辆ID（整型）
 - temp: 当前温度（整型）
 - tempThresholds: 温度阈值（整型）
@@ -21,12 +19,6 @@ BSP0字段说明（所有字段均为整型）：
 - mode: 运行模式（0运行中，1停站中）
 - door: 门状态（0关闭，1打开）
 - alarm: 报警状态（0无报警，1有报警）
-- real_hour: 实时小时（0-23）
-- real_minute: 实时分钟（0-59）
-- real_second: 实时秒数（0-59）
-
-BSP1字段说明（所有字段均为整型）：
-- BSP1: 实时时间包头标识（固定为"BSP1"）
 - real_hour: 实时小时（0-23）
 - real_minute: 实时分钟（0-59）
 - real_second: 实时秒数（0-59）
@@ -51,11 +43,9 @@ BSP1字段说明（所有字段均为整型）：
 #define MY_UART1_TX_BUFFER_SIZE 50          // 发送缓冲区大小
 #define MY_UART1_RX_BUFFER_SIZE 50          // 接收缓冲区大小
 #define MY_UART1_FRAME_END      '\n'        // 帧结束符
-#define MY_UART1_FIELD_COUNT_BSP0   13      // BSP0数据字段数量（包含包头）
-#define MY_UART1_FIELD_COUNT_BSP1   4       // BSP1数据字段数量（包含包头）
-#define MY_UART1_FRAME_HEADER_BSP0  "BSP0"  // 控制指令包头标识
-#define MY_UART1_FRAME_HEADER_BSP1  "BSP1"  // 实时时间包头标识
-#define MY_UART1_HEADER_SIZE        4       // 包头长度
+#define MY_UART1_FIELD_COUNT    13          // 数据字段数量（包含包头）
+#define MY_UART1_FRAME_HEADER   "BSP"       // 数据包头标识
+#define MY_UART1_HEADER_SIZE    3            // 包头长度
 
 
 // 接收状态枚举
@@ -95,8 +85,7 @@ extern char xdata g_txBuffer[MY_UART1_TX_BUFFER_SIZE];                 // 发送
 //    }
 
 // 通信协议示例（所有字段均为整型，带包头）：
-// 控制指令发送：BSP0,1,23,45,2,30,1,0,0,0,14,30,25\n
-// 控制指令接收：BSP0,2,25,40,5,15,30,1,1,1,15,45,10\n
-// 实时时间接收：BSP1,14,30,25\n
+// 发送：BSP,1,23,45,2,30,1,0,0,0,14,30,25\n
+// 接收：BSP,2,25,40,5,15,30,1,1,1,15,45,10\n
 
 #endif

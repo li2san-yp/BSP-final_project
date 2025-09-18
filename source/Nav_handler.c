@@ -12,11 +12,11 @@ void NavHandler()
 
     if (navUp == enumKeyPress) {     // 向上键
         displayMode++;
-        if (displayMode > 3) displayMode = 0;  // 循环切换
+        if (displayMode > 4) displayMode = 0;  // 循环切换
     }
     if (navDown == enumKeyPress) {   // 向下键
         displayMode--;
-        if (displayMode < 0) displayMode = 3;  // 循环切换
+        if (displayMode < 0) displayMode = 4;  // 循环切换
     }
     if (navLeft == enumKeyPress) {
         if (radio_config.volume > 0) {
@@ -41,6 +41,7 @@ void ShowStatus()
       case 1: ShowTemp();  break;
       case 2: ShowSpeed(); break;
       case 3: ShowMode();  break;
+      case 4: ShowRealTime(); break;
       default: break;
   }
 }

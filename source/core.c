@@ -16,6 +16,7 @@ void my1S_callback()
     is_play_music();
     MyUart1SendCurrentStatus(); // 每1s发送地铁当前的状态
     temp_controlled_motor();
+    UpdateRealTimePerSecond(); // 更新时间
 }
 
 void my100ms_callback()
