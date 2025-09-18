@@ -32,6 +32,7 @@
 #include "nv_temp_threshold.h"
 #include "train_id_module.h"
 #include "music_module.h"
+#include "real_time_module.h"
 
 // 添加直流电机温控模块
 

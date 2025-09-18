@@ -5,6 +5,7 @@
 #include "my_uart1.h"
 #include "core.h"
 #include "time_module.h"
+#include "real_time_module.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -14,7 +15,7 @@
 char xdata g_rxBuffer[MY_UART1_RX_BUFFER_SIZE] = {0};
 char xdata g_txBuffer[MY_UART1_TX_BUFFER_SIZE] = {0};
 static xdata MyUart1RxStatus_t s_rxStatus = MY_UART1_RX_IDLE;
-static char xdata s_headerMatch[MY_UART1_HEADER_SIZE] = MY_UART1_FRAME_HEADER;
+static char xdata s_headerMatch[4] = "BSP"; // 公共包头匹配
 
 // 内部函数声明
 static void Uart1RxdCallback(void);
@@ -54,7 +55,8 @@ void MyUart1Init(void)
     memset(g_rxBuffer, 0, MY_UART1_RX_BUFFER_SIZE);
     memset(g_txBuffer, 0, MY_UART1_TX_BUFFER_SIZE);
     SetEventCallBack(enumEventUart1Rxd, Uart1RxdCallback);
-    SetUart1Rxd(g_rxBuffer, MY_UART1_RX_BUFFER_SIZE, s_headerMatch, MY_UART1_HEADER_SIZE);
+    // 设置"BSP"作为公共包头匹配，在解析时区分BSP0和BSP1
+    SetUart1Rxd(g_rxBuffer, MY_UART1_RX_BUFFER_SIZE, s_headerMatch, 3);
     s_rxStatus = MY_UART1_RX_IDLE;
 }
 
@@ -85,14 +87,16 @@ void MyUart1ProcessRxData(void)
  */
 static int ParseCommand(char* cmdStr) {
     char xdata tempBuffer[MY_UART1_RX_BUFFER_SIZE];
-
     char xdata *token;
     int xdata fieldIndex = 0;
+    int xdata expectedFieldCount = 0;
+    char xdata packetType = 0; // 0=BSP0, 1=BSP1
 
     unsigned int xdata tempCarId;
     unsigned int xdata tempTemp, tempTempThresholds;
     unsigned int xdata tempSpeed, tempEtaMin, tempEtaSec;
     unsigned char xdata tempDoor, tempAlarm, tempMode;
+    unsigned int xdata tempRealHour, tempRealMinute, tempRealSecond;
 
     if (cmdStr == 0 || strlen(cmdStr) == 0) {
         return -1;
@@ -101,73 +105,138 @@ static int ParseCommand(char* cmdStr) {
     strcpy(tempBuffer, cmdStr);
 
     token = strtok(tempBuffer, ",");
-    while (token != 0 && fieldIndex < MY_UART1_FIELD_COUNT) {
-        switch (fieldIndex) {
-            case 0:  // 包头BSP，跳过验证
-                break;
-            case 1:  // id
-                tempCarId = (unsigned int)atoi(token);
-                break;
-            case 2:  // temp
-                tempTemp = (unsigned int)atoi(token);
-                break;
-            case 3:  // tempThresholds
-                tempTempThresholds = (unsigned int)atoi(token);
-                break;
-            case 4:  // speed
-                tempSpeed = (unsigned int)atoi(token);
-                break;
-            case 5:  // etaMin
-                tempEtaMin = (unsigned int)atoi(token);
-                break;
-            case 6:  // etaSec
-                tempEtaSec = (unsigned int)atoi(token);
-                break;
-            case 7:  // mode
-                tempMode = (unsigned char)atoi(token);
-                if (tempMode > 1)
-                    tempMode = 0;
-                break;
-            case 8:  // door
-                tempDoor = (unsigned char)atoi(token);
-                if (tempDoor > 1)
-                    tempDoor = 0;
-                break;
-            case 9:  // alarm
-                tempAlarm = (unsigned char)atoi(token);
-                if (tempAlarm > 1)
-                    tempAlarm = 0;
-                break;
+    
+    // 检查包头类型，区分BSP0和BSP1
+    if (token != 0) {
+        if (strncmp(token, "BSP", 3) == 0) {
+            if (strlen(token) >= 4) {
+                if (token[3] == '0') {
+                    packetType = 0;
+                    expectedFieldCount = MY_UART1_FIELD_COUNT_BSP0;
+                } else if (token[3] == '1') {
+                    packetType = 1;
+                    expectedFieldCount = MY_UART1_FIELD_COUNT_BSP1;
+                } else {
+                    return -1; // 未知BSP类型
+                }
+            } else {
+                return -1; // 包头长度不对
+            }
+        } else {
+            return -1; // 不是BSP包头
+        }
+        fieldIndex = 1; // 跳过包头
+        token = strtok(0, ",");
+    }
+
+    while (token != 0 && fieldIndex < expectedFieldCount) {
+        if (packetType == 0) { // BSP0 控制指令
+            switch (fieldIndex) {
+                case 1:  // id
+                    tempCarId = (unsigned int)atoi(token);
+                    break;
+                case 2:  // temp
+                    tempTemp = (unsigned int)atoi(token);
+                    break;
+                case 3:  // tempThresholds
+                    tempTempThresholds = (unsigned int)atoi(token);
+                    break;
+                case 4:  // speed
+                    tempSpeed = (unsigned int)atoi(token);
+                    break;
+                case 5:  // etaMin
+                    tempEtaMin = (unsigned int)atoi(token);
+                    break;
+                case 6:  // etaSec
+                    tempEtaSec = (unsigned int)atoi(token);
+                    break;
+                case 7:  // mode
+                    tempMode = (unsigned char)atoi(token);
+                    if (tempMode > 1)
+                        tempMode = 0;
+                    break;
+                case 8:  // door
+                    tempDoor = (unsigned char)atoi(token);
+                    if (tempDoor > 1)
+                        tempDoor = 0;
+                    break;
+                case 9:  // alarm
+                    tempAlarm = (unsigned char)atoi(token);
+                    if (tempAlarm > 1)
+                        tempAlarm = 0;
+                    break;
+                case 10:  // real_hour
+                    tempRealHour = (unsigned int)atoi(token);
+                    if (tempRealHour > 23)
+                        tempRealHour = 0;
+                    break;
+                case 11:  // real_minute
+                    tempRealMinute = (unsigned int)atoi(token);
+                    if (tempRealMinute > 59)
+                        tempRealMinute = 0;
+                    break;
+                case 12:  // real_second
+                    tempRealSecond = (unsigned int)atoi(token);
+                    if (tempRealSecond > 59)
+                        tempRealSecond = 0;
+                    break;
+            }
+        } else { // BSP1 实时时间
+            switch (fieldIndex) {
+                case 1:  // real_hour
+                    tempRealHour = (unsigned int)atoi(token);
+                    if (tempRealHour > 23)
+                        tempRealHour = 0;
+                    break;
+                case 2:  // real_minute
+                    tempRealMinute = (unsigned int)atoi(token);
+                    if (tempRealMinute > 59)
+                        tempRealMinute = 0;
+                    break;
+                case 3:  // real_second
+                    tempRealSecond = (unsigned int)atoi(token);
+                    if (tempRealSecond > 59)
+                        tempRealSecond = 0;
+                    break;
+            }
         }
 
         fieldIndex++;
         token = strtok(0, ",");
     }
 
-    if (fieldIndex < MY_UART1_FIELD_COUNT) {
+    if (fieldIndex < expectedFieldCount) {
         return -1;
     }
 
-    // 直接更新各模块的全局变量
-    // id = tempCarId;  // 全局车辆ID固定，不需要更新
+    if (packetType == 0) { // BSP0 控制指令处理
+        // 直接更新各模块的全局变量
+        // id = tempCarId;  // 全局车辆ID固定，不需要更新
 
-    // temp, etaMin, etaSec 这三个值在现实中不可直接修改，不接受上位机修改
-    // temp[id] = tempTemp;  // 注释掉：温度值应由传感器读取
+        // temp, etaMin, etaSec 这三个值在现实中不可直接修改，不接受上位机修改
+        // temp[id] = tempTemp;  // 注释掉：温度值应由传感器读取
 
-    // 温度阈值可以设置，同时保存到非易失存储
-    if (tempThresholds[id] != tempTempThresholds) {
-        tempThresholds[id] = tempTempThresholds;        // 更新内存中的值
-        NVTempThresholdUpdate(tempTempThresholds);  // 保存到EEPROM
-    }
+        // 温度阈值可以设置，同时保存到非易失存储
+        if (tempThresholds[id] != tempTempThresholds) {
+            tempThresholds[id] = tempTempThresholds;        // 更新内存中的值
+            NVTempThresholdUpdate(tempTempThresholds);  // 保存到EEPROM
+        }
+        
+        if(speed[id] != tempSpeed) {
+            speed[id] = tempSpeed;  // 更新内存中的值
+            onSpeedChange();        // 触发速度变化处理
+        }
+
+        is_door_open[id] = tempDoor;  // 门状态可以控制
+        is_alarm[id] = tempAlarm;     // 报警状态可以控制
+
+    } 
+    // 更新实时时间变量
+    real_hour = tempRealHour;
+    real_minute = tempRealMinute;
+    real_second = tempRealSecond;
+    UpdateRealTimeFromUart1(); // 同步到DS1302
     
-    if(speed[id] != tempSpeed) {
-        speed[id] = tempSpeed;  // 更新内存中的值
-        onSpeedChange();        // 触发速度变化处理
-    }
-
-    is_door_open[id] = tempDoor;  // 门状态可以控制
-    is_alarm[id] = tempAlarm;     // 报警状态可以控制
-
     return 0;
 }
 
@@ -216,7 +285,7 @@ char MyUart1SendCurrentStatus(void)
     memset(g_txBuffer, 0, MY_UART1_TX_BUFFER_SIZE);
 
     // 拼接包头
-    strcpy(g_txBuffer, MY_UART1_FRAME_HEADER);
+    strcpy(g_txBuffer, MY_UART1_FRAME_HEADER_BSP0);
     pos = strlen(g_txBuffer);
     g_txBuffer[pos++] = ',';
 
@@ -249,6 +318,15 @@ char MyUart1SendCurrentStatus(void)
     g_txBuffer[pos++] = ',';
 
     pos += my_utoa(is_alarm[id], &g_txBuffer[pos]); // 报警状态
+    g_txBuffer[pos++] = ',';
+
+    pos += my_utoa(real_hour, &g_txBuffer[pos]); // 实时小时
+    g_txBuffer[pos++] = ',';
+
+    pos += my_utoa(real_minute, &g_txBuffer[pos]); // 实时分钟
+    g_txBuffer[pos++] = ',';
+
+    pos += my_utoa(real_second, &g_txBuffer[pos]); // 实时秒数
 
     // 结尾换行
     g_txBuffer[pos++] = '\n';
@@ -259,6 +337,6 @@ char MyUart1SendCurrentStatus(void)
         return enumUart1TxFailure;
     }
 
-    // 固定发送32字节
+    // 固定发送50字节
     return Uart1Print(g_txBuffer, MY_UART1_TX_BUFFER_SIZE);
 }

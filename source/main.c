@@ -9,7 +9,7 @@ void main() {
     Uart2Init(9600, Uart2UsedforEXT);
     MyUart1Init();  
     NVTempThresholdInit();
-    // SetTrainID(2);
+    // SetTrainID(3);
     InitTrainID();                // 初始化列车ID
     InitRTC();
     EXTInit(enumEXTPWM);
