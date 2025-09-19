@@ -1,7 +1,6 @@
 #include "core.h"
 
-// Use data segment for frequently accessed variables
-char xdata displayMode = 0;   // 移至xdata段以节省data空间
+char xdata displayMode = 0;
 // 导航键事件回调
 void NavHandler()
 {

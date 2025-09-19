@@ -145,7 +145,6 @@ void UltrasonicUpdateAndDisplay(void)
             if(state == enumModePlay)
             {
                 SetPlayerMode(enumModeStop);
-                // SetBeep(1000,100);
             }
         }
     }
@@ -160,9 +159,7 @@ void UltrasonicUpdateAndDisplay(void)
             if(state == enumModeStop)
             {
                 SetPlayerMode(enumModePlay);
-                // SetBeep(2000,100);
             }
-            // SetBeep(800, 200);  // 可选：开门提示音
         }
     }
 
